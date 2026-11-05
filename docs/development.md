@@ -55,6 +55,7 @@ pwsh -NoProfile -File scripts/prepare-tesseract.ps1 -SourceRoot 'D:/tools/tesser
 在新环境先准备编译和测试需要的原生资源：
 
 ```powershell
+python scripts/check-source-inputs.py
 pwsh -NoProfile -File scripts/prepare-desktop-resources.ps1
 $env:PROTOC = Join-Path (Get-Location) '.local-archive/tooling/protoc-36.2/bin/protoc.exe'
 cargo fmt --all -- --check
@@ -67,6 +68,8 @@ pnpm desktop:build
 ```
 
 共享 DTO 不手工修改；生成后检查 `packages/contracts/src/generated` 的差异并一并提交。桌面测试串行运行，避免多个 WebView/渲染测试争抢资源。测试数据使用新建的隔离目录，勿以日常知识库作为写入夹具。
+
+源码预检核对 Rust 字面量 `include_str!` / `include_bytes!` 引用的文件是否已提交；动态生成的原生资源仍由准备脚本验证。合成问答/检索数据位于 `crates/pkms-app/tests/fixtures/quality`，不依赖本地实验目录。
 
 浏览器上传测试自动查找标准安装位置的 Edge/Chrome，也可通过 `CHROME_BIN` 指定可执行文件。标为 ignored 的真实 E5 模型测试需要另外准备模型并设置 `PKMS_E5_MODEL_DIR`；它们不因普通测试通过就算作已经执行。
 

@@ -1,5 +1,12 @@
 name: Prepare Windows build
 description: Pinned tools and reusable pnpm, Rust and native-resource caches
+outputs:
+  native-cache-key:
+    description: Exact native download cache key
+    value: ${{ steps.native-cache.outputs.cache-primary-key }}
+  native-cache-hit:
+    description: Whether the exact native download cache was restored
+    value: ${{ steps.native-cache.outputs.cache-hit }}
 runs:
   using: composite
   steps:
@@ -25,7 +32,8 @@ runs:
         if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve pnpm store' }
         "path=$storePath" >> $env:GITHUB_OUTPUT
     - name: pnpm package cache
-      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      id: pnpm-cache
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: ${{ steps.pnpm.outputs.path }}
         key: windows-x64-pnpm-10.25.0-${{ hashFiles('pnpm-lock.yaml') }}
@@ -36,10 +44,12 @@ runs:
         shared-key: windows-x64-rust-1.98-v1
         workspaces: '. -> target'
         cache-workspace-crates: 'true'
+        cache-on-failure: 'true'
         cache-bin: 'false'
         save-if: ${{ github.event_name != 'pull_request' }}
     - name: Verified native downloads
-      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      id: native-cache
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: |
           .local-archive/dependencies/pdfium-7881
@@ -54,3 +64,9 @@ runs:
       run: |
         pnpm install --frozen-lockfile
         if ($LASTEXITCODE -ne 0) { throw 'Frontend dependency installation failed' }
+    - name: Preserve installed packages before later checks
+      if: github.event_name != 'pull_request' && steps.pnpm-cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: ${{ steps.pnpm.outputs.path }}
+        key: ${{ steps.pnpm-cache.outputs.cache-primary-key }}

@@ -66,11 +66,11 @@ fn export_real_answers(split: &str) {
     fs::create_dir_all(&root).unwrap();
     let (fixture_bytes, expected_hash): (&[u8], &str) = match split {
         "development" => (
-            include_bytes!("../../../scripts/w4-quality/fixtures/development.json"),
+            include_bytes!("fixtures/quality/development.json"),
             "77b0b5e43320fa1829e3f78bd0ae45b36166e3addbd6ae6a47b1be76cb983c7b",
         ),
         "reserved" => (
-            include_bytes!("../../../scripts/w4-quality/fixtures/reserved.json"),
+            include_bytes!("fixtures/quality/reserved.json"),
             "42bb03e02f0aaa72acf394d708838359a7ac594ced7be59aa9cd39e9dc87fd43",
         ),
         _ => panic!("unsupported fixture split"),

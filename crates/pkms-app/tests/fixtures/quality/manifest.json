@@ -1,0 +1,17 @@
+{
+  "format": "pkms-synthetic-quality-v1",
+  "provenance": "Authored synthetic facts; no user files; fixtures may be used with PKMS tests.",
+  "split_policy": "Reserved authored before observing development outputs; not independently labelled or blind until reviewed.",
+  "files": {
+    "development.json": {
+      "sha256": "77b0b5e43320fa1829e3f78bd0ae45b36166e3addbd6ae6a47b1be76cb983c7b",
+      "documents": 20,
+      "queries": 50
+    },
+    "reserved.json": {
+      "sha256": "42bb03e02f0aaa72acf394d708838359a7ac594ced7be59aa9cd39e9dc87fd43",
+      "documents": 19,
+      "queries": 50
+    }
+  }
+}

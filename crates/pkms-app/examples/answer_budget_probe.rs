@@ -39,9 +39,8 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         "deepseek-flash",
     )?;
     let secret = vault::load(&source)?.ok_or("existing synthetic credential required")?;
-    let fixture: serde_json::Value = serde_json::from_slice(include_bytes!(
-        "../../../scripts/w4-quality/fixtures/development.json"
-    ))?;
+    let fixture: serde_json::Value =
+        serde_json::from_slice(include_bytes!("../tests/fixtures/quality/development.json"))?;
     let question = fixture["queries"]
         .as_array()
         .unwrap()

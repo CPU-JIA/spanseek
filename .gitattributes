@@ -13,3 +13,5 @@
 third-party/** -text
 apps/desktop/src/export-renderer/licenses/** -text
 crates/pkms-core/src/migrations/*.sql -text
+crates/pkms-app/tests/fixtures/quality/development.json -text
+crates/pkms-app/tests/fixtures/quality/reserved.json -text
