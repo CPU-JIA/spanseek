@@ -65,6 +65,12 @@ git push origin v1.0.1
 
 下载该 tag 的安装包，完成隔离安装、启动、关键内容保存/重开和卸载验证，再检查 Release 草稿与校验值，最后按授权公开。修改同一草稿可重跑该 tag 的流程；已有公开 Release 会被拒绝覆盖。
 
-官网源码在 `docs/download`。实际安装包由独立部署步骤放入 `docs/download/downloads/`，并按同一份包更新安装页大小、日期和哈希；不要把本机构建的校验值套给 Actions 构建。官网及下载目录不会在本工作流中自动部署。
+官网源码在 `docs/download`。安装页的大小、构建日期和哈希是模板字段，不绑定某一次本机构建。下载并核验 Actions 的全部制品后，用下面的命令生成一个新的本地预览目录：
+
+```powershell
+pwsh -NoProfile -File scripts/prepare-download-site.ps1 -ReleaseDirectory '<已解压的制品目录>' -Output '.local-archive/test-runs/download-site-<日期>/site'
+```
+
+脚本核对 `BUILD-INFO.json`、安装包和全部 `SHA256SUMS.txt` 条目，仅复制 Git 跟踪的官网、网页指南与校验后的制品，生成 `site/docs/download/install.html`。本地开发记录不会进入输出；既有目录不会被覆盖。通过 HTTP 服务预览输出目录，并核对下载与哈希复制后，再按授权部署整个输出目录。官网及下载目录不会在 Actions 或此脚本中自动部署。
 
 参考：[GitHub 缓存机制](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)、[Rust cache](https://github.com/Swatinem/rust-cache)、[Windows runner 软件清单](https://github.com/actions/runner-images/blob/main/images/windows/Windows2025-Readme.md)。
