@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "evidence-report-default",
+  "title": "# {{title}}",
+  "question": "> 研究问题：{{question}}",
+  "section_heading": "## {{heading}}",
+  "paragraph": "{{text}} {{citation}}",
+  "sources_heading": "## 来源",
+  "source_line": "- [{{citation}}] {{title}} — {{locator}}",
+  "citation_format": "[E{{number}}]"
+}

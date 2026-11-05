@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#17181B" />
+    <meta
+      name="description"
+      content="跨索 spanseek 移动捕获：快速记录、分享保存、离线阅读、摘录与桌面续读。"
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon-192.png" sizes="192x192" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>跨索 捕捉 · spanseek</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">跨索 · SPANSEEK</p>
+        <h1>随手捕捉</h1>
+      </div>
+      <div class="top-actions">
+        <button id="workspace-pill" class="pill workspace" type="button" title="当前知识库">
+          未绑定
+        </button>
+        <span id="connection" class="pill" data-online="true">在线</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="view-capture" class="view" data-view="capture">
+        <details class="bind-box">
+          <summary>知识库绑定与续读</summary>
+          <p class="meta">当前：<code id="workspace-label"></code></p>
+          <label class="field">
+            <span>桌面知识库 ID</span>
+            <input
+              id="workspace-id"
+              maxlength="200"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="与桌面工作区一致"
+            />
+          </label>
+          <button id="bind-workspace" class="ghost" type="button">绑定 / 切换</button>
+          <p id="workspace-status" class="status" role="status" aria-live="polite"></p>
+          <p class="meta">切换只改变当前显示的库；旧库数据保留且不会与新库混合。</p>
+
+          <div class="sync-panel">
+            <h3>实时同步</h3>
+            <p id="sync-profile-label" class="meta">未加入同步</p>
+            <label class="field">
+              <span>同步服务器</span>
+              <input
+                id="sync-endpoint"
+                inputmode="url"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="https://sync.example.com"
+              />
+            </label>
+            <label class="field">
+              <span>本机名称</span>
+              <input id="sync-device-name" maxlength="80" autocomplete="off" value="手机" />
+            </label>
+            <label class="field">
+              <span>配对 ID（由桌面生成）</span>
+              <input id="sync-invite-id" autocomplete="off" spellcheck="false" />
+            </label>
+            <label class="field">
+              <span>配对码</span>
+              <input id="sync-code" autocomplete="one-time-code" spellcheck="false" />
+            </label>
+            <div class="row">
+              <button id="sync-pair" class="primary" type="button">加入同步</button>
+              <button id="sync-now" class="ghost" type="button">同步现在</button>
+            </div>
+            <p id="sync-status" class="status" role="status" aria-live="polite"></p>
+            <ul id="sync-conflicts" class="card-list" aria-label="同步冲突"></ul>
+            <p class="meta">设备签名与工作区密钥只保存在本机浏览器存储；服务器只接收加密对象。</p>
+          </div>
+        </details>
+
+        <form id="capture-form" class="stack">
+          <label class="field">
+            <span>标题（可选）</span>
+            <input id="capture-title" name="title" maxlength="120" autocomplete="off" />
+          </label>
+          <label class="field">
+            <span>内容</span>
+            <textarea
+              id="capture-body"
+              name="body"
+              rows="7"
+              required
+              placeholder="记下一个想法、链接或片段…"
+            ></textarea>
+          </label>
+          <div class="row">
+            <button class="primary" type="submit">保存捕捉</button>
+            <button id="paste-button" class="ghost" type="button">粘贴</button>
+          </div>
+          <p id="capture-status" class="status" role="status" aria-live="polite"></p>
+        </form>
+
+        <section class="voice-section" aria-labelledby="voice-title">
+          <div class="section-head">
+            <h2 id="voice-title">语音捕捉</h2>
+            <span id="voice-status" class="status" role="status" aria-live="polite"></span>
+          </div>
+          <div class="row">
+            <button id="voice-record" class="primary" type="button">开始录音</button>
+            <span id="voice-timer" class="voice-timer">0:00</span>
+          </div>
+          <p class="meta">
+            录音保存在本机浏览器，可导出音频后在桌面「语音速记」导入。实时同步尚未接入。
+          </p>
+          <ul id="voice-list" class="card-list" aria-label="手机录音"></ul>
+        </section>
+
+        <div class="section-head">
+          <h2>最近捕捉</h2>
+          <button id="export-button" class="link" type="button">导出续读包</button>
+        </div>
+        <ul id="capture-list" class="card-list" aria-label="最近捕捉"></ul>
+        <label class="import">
+          <span>导入桌面续读包或旧版 JSON</span>
+          <input id="import-input" type="file" accept="application/json" />
+        </label>
+      </section>
+
+      <section id="view-read" class="view" data-view="read" hidden>
+        <div id="reader-empty" class="empty">
+          <h2>离线阅读</h2>
+          <p>在“捕捉”里选择一条内容即可阅读；滚动位置会按知识库记住。</p>
+        </div>
+        <article id="reader" hidden>
+          <button id="back-to-list" class="link" type="button">← 返回列表</button>
+          <h2 id="reader-title"></h2>
+          <p id="reader-meta" class="meta"></p>
+          <div id="reader-body" class="reader-body"></div>
+          <a id="reader-source" class="source" target="_blank" rel="noreferrer" hidden></a>
+          <div class="excerpt-box">
+            <label class="field">
+              <span>摘录</span>
+              <textarea
+                id="excerpt-text"
+                rows="3"
+                placeholder="选中正文后点“保存摘录”，或在这里输入…"
+              ></textarea>
+            </label>
+            <button id="save-excerpt" class="primary" type="button">保存摘录</button>
+            <p id="excerpt-status" class="status" role="status" aria-live="polite"></p>
+          </div>
+        </article>
+      </section>
+
+      <section id="view-excerpts" class="view" data-view="excerpts" hidden>
+        <div class="section-head">
+          <h2>摘录</h2>
+          <span id="excerpt-count" class="pill" data-online="true">0</span>
+        </div>
+        <ul id="excerpt-list" class="card-list" aria-label="摘录"></ul>
+      </section>
+    </main>
+
+    <nav class="tabbar" aria-label="主导航">
+      <button data-target="capture" class="tab active" type="button">捕捉</button>
+      <button data-target="read" class="tab" type="button">阅读</button>
+      <button data-target="excerpts" class="tab" type="button">摘录</button>
+    </nav>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

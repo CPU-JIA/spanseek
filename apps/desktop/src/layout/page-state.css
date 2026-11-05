@@ -1,0 +1,61 @@
+.page-state {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: min(100%, 440px);
+  min-height: 220px;
+  margin: auto;
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.page-state-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-panel);
+  color: var(--text-faint);
+  background: var(--canvas);
+}
+.page-state[data-kind='error'] .page-state-icon {
+  color: var(--error);
+  background: var(--error-bg);
+}
+.page-state-copy {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  min-width: 0;
+  max-width: 54ch;
+}
+.page-state strong {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.page-state p {
+  max-width: 52ch;
+  margin: 0 auto;
+  overflow-wrap: anywhere;
+}
+.page-state-action {
+  margin-top: 2px;
+}
+.page-state.compact {
+  min-height: 160px;
+  padding: 24px 12px;
+}
+@media (max-height: 520px) {
+  .page-state {
+    min-height: 150px;
+    padding-block: 20px;
+  }
+}

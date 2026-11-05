@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>voice-sync-browser-test</title>
+  </head>
+  <body>
+    <p id="status">starting…</p>
+    <script type="module">
+      import { uploadVoiceCapture } from '../sync.js';
+
+      const status = document.querySelector('#status');
+      const fixture = JSON.parse(atob(location.hash.slice(1)));
+      const profile = {
+        ...fixture.profile,
+        edPrivateJwk: fixture.edPrivateJwk,
+        keys: { '1': fixture.workspaceKeyBase64 },
+      };
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const recorder = new MediaRecorder(stream, {
+          mimeType: MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+            ? 'audio/webm;codecs=opus'
+            : 'audio/webm',
+        });
+        const chunks = [];
+        recorder.addEventListener('dataavailable', (event) => {
+          if (event.data.size > 0) chunks.push(event.data);
+        });
+        const stopped = new Promise((resolve) => recorder.addEventListener('stop', resolve, { once: true }));
+        recorder.start(250);
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        recorder.stop();
+        await stopped;
+        stream.getTracks().forEach((track) => track.stop());
+        const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+        await uploadVoiceCapture(profile, {
+          id: fixture.captureId,
+          durationMs: 800,
+          blob,
+        });
+        status.textContent = 'UPLOADED';
+        document.title = 'UPLOADED';
+      } catch (error) {
+        status.textContent = `ERROR ${error?.message || error}`;
+        document.title = `ERROR ${error?.message || error}`;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.pdf binary
+*.zip binary
+*.mp4 binary
+*.webm binary
+*.woff2 binary
+
+# Preserve upstream license bytes and frozen SQL; native manifests pin hashes.
+third-party/** -text
+apps/desktop/src/export-renderer/licenses/** -text
+crates/pkms-core/src/migrations/*.sql -text

@@ -1,0 +1,32 @@
+.ai-trust-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  margin: 12px 0;
+  padding: 9px 11px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+  border-radius: var(--radius-panel, 8px);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--text);
+}
+.ai-trust-note > svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--accent);
+}
+.ai-trust-note > p {
+  min-width: 0;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.ai-trust-note-compact {
+  margin: 8px 0 0;
+  padding: 7px 9px;
+}
+.ai-trust-note-compact > p {
+  font-size: 11px;
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "spanseek",
+  "mainBinaryName": "spanseek",
+  "version": "1.0.1",
+  "identifier": "com.pkms.desktop",
+  "build": {
+    "beforeDevCommand": "pwsh -NoProfile -File ../../scripts/prepare-desktop-resources.ps1 -Dev",
+    "beforeBuildCommand": "pnpm build && pwsh -NoProfile -File ../../scripts/prepare-desktop-resources.ps1 -Release",
+    "beforeBundleCommand": "pwsh -NoProfile -File ../../scripts/sync-native-binaries.ps1 -Profile release",
+    "devUrl": "http://127.0.0.1:5173",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "跨索 spanseek · 个人知识库",
+        "width": 1120,
+        "height": 780,
+        "minWidth": 720,
+        "minHeight": 540
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; font-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http://pkms-image.localhost pkms-image:; media-src 'self' blob:; connect-src 'self' ipc: http://ipc.localhost http://pkms-source.localhost pkms-source:; object-src 'none'; frame-src 'none'; base-uri 'self'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "publisher": "spanseek",
+    "targets": ["nsis"],
+    "windows": {
+      "nsis": {
+        "installerHooks": "nsis/hooks.nsh",
+        "template": "nsis/installer.nsi",
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "languages": ["SimpChinese", "English"]
+      }
+    },
+    "externalBin": [
+      "../../../.local-archive/bundle/spanseek-worker",
+      "../../../.local-archive/bundle/spanseek-inference"
+    ],
+    "resources": {
+      "../../../.local-archive/dependencies/pdfium-7881/bin/pdfium.dll": "pdfium/pdfium.dll",
+      "../../../.local-archive/dependencies/pdfium-7881/LICENSE": "pdfium/LICENSE",
+      "../../../.local-archive/dependencies/pdfium-7881/licenses/": "pdfium/licenses/",
+      "../../../.local-archive/dependencies/pdfium-7881/VERSION": "pdfium/VERSION",
+      "../../../.local-archive/dependencies/tesseract-5.4.0.20240606/": "tesseract/",
+      "../../../third-party/tempfile/LICENSE-MIT": "licenses/tempfile/LICENSE-MIT",
+      "../../../third-party/tempfile/LICENSE-APACHE": "licenses/tempfile/LICENSE-APACHE",
+      "../../../third-party/tempfile/PKMS-PATCH.md": "licenses/tempfile/PKMS-PATCH.md",
+      "../../../third-party/inter/LICENSE.txt": "licenses/inter/LICENSE.txt",
+      "../../../third-party/calamine/LICENSE-MIT.md": "licenses/calamine/LICENSE-MIT.md",
+      "../../../third-party/calamine/PATCHES.md": "licenses/calamine/PATCHES.md",
+      "../../../third-party/rich-format/": "licenses/rich-format/",
+      "../../../third-party/docx-preview/LICENSE": "licenses/docx-preview/LICENSE",
+      "../../../third-party/jszip/LICENSE.markdown": "licenses/jszip/LICENSE.markdown"
+    },
+    "category": "Productivity",
+    "shortDescription": "跨索 spanseek：本地个人知识管理系统",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.ico"]
+  }
+}

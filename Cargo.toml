@@ -1,0 +1,48 @@
+[workspace]
+members = ["crates/pkms-core", "crates/pkms-cli", "crates/pkms-app", "crates/pkms-worker", "crates/pkms-inference", "crates/pkms-sync", "crates/pkms-sync-server", "crates/pkms-sync-client", "crates/pkms-sync-engine", "crates/pkms-external", "apps/desktop/src-tauri"]
+resolver = "2"
+exclude = ["third-party/tempfile", "third-party/mobi"]
+
+[patch.crates-io]
+tempfile = { path = "third-party/tempfile" }
+mobi = { path = "third-party/mobi" }
+
+[workspace.package]
+version = "1.0.1"
+edition = "2024"
+rust-version = "1.98"
+publish = false
+
+[workspace.dependencies]
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+clap = { version = "4", features = ["derive"] }
+fs2 = "0.4.3"
+file-id = "0.2.3"
+image = { version = "0.25.10", default-features = false, features = ["png", "jpeg", "webp"] }
+jieba-rs = "0.11.0"
+pinyin = "0.10"
+fast2s = "0.3"
+pulldown-cmark = { version = "0.13", default-features = false }
+tar = "0.4"
+pdfium-render = { version = "=0.9.4", default-features = false, features = ["pdfium_7881"] }
+ring = "0.17"
+x25519-dalek = { version = "2", features = ["static_secrets"] }
+reqwest = { version = "=0.13.5", default-features = false, features = ["rustls", "gzip", "brotli", "blocking", "json", "multipart"] }
+scraper = { version = "=0.27.0", default-features = false }
+encoding_rs = "0.8.35"
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "time", "net", "macros"] }
+rusqlite = { version = "0.40.2", default-features = false, features = ["bundled", "backup"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10.9"
+tempfile = "3"
+thiserror = "2"
+axum = "0.8.9"
+base64 = "0.22.1"
+calamine = { path = "third-party/calamine", features = ["dates"] }
+undoc = { version = "0.27.1", default-features = false, features = ["doc", "codepages"] }
+tower-http = { version = "0.6.11", features = ["cors"] }
+ts-rs = "12.0.1"
+unicode-normalization = "0.1.24"
+uuid = { version = "1", features = ["v4"] }
+zip = { version = "8.2.0", default-features = false }

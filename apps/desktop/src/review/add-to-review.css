@@ -1,0 +1,30 @@
+.add-to-review {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+.add-to-review > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  min-height: 32px;
+  font-size: 12px;
+}
+.add-to-review-error {
+  position: absolute;
+  z-index: 8;
+  top: calc(100% + 6px);
+  right: 0;
+  width: max-content;
+  max-width: min(320px, 75vw);
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.6;
+  box-shadow: var(--shadow-menu);
+  white-space: normal;
+}

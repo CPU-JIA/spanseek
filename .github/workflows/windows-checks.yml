@@ -1,0 +1,122 @@
+name: Windows checks and build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+jobs:
+  windows:
+    runs-on: windows-2025
+    timeout-minutes: 180
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+      TEMP: ${{ github.workspace }}/.local-archive/test-runs/ci
+      TMP: ${{ github.workspace }}/.local-archive/test-runs/ci
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Reject inconsistent release versions
+        env:
+          RELEASE_TAG: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || '' }}
+        run: |
+          if ($env:RELEASE_TAG) { node scripts/check-version.mjs --tag $env:RELEASE_TAG }
+          else { node scripts/check-version.mjs }
+          if ($LASTEXITCODE -ne 0) { throw 'Version check failed' }
+      - name: Prepare tools and caches
+        uses: ./.github/actions/windows-setup
+      - name: Rust formatting
+        run: cargo fmt --all -- --check
+      - name: Prepare and verify native resources
+        run: |
+          ./scripts/prepare-desktop-resources.ps1
+          if ($LASTEXITCODE -ne 0) { throw 'Native resource preparation failed' }
+          $protocPath = Join-Path $env:GITHUB_WORKSPACE '.local-archive/tooling/protoc-36.2/bin/protoc.exe'
+          "PROTOC=$protocPath" >> $env:GITHUB_ENV
+      - name: Rust workspace tests
+        run: cargo test --workspace --locked
+      - name: Rust Clippy
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
+      - name: Generate contracts and reject drift
+        run: |
+          pnpm contracts:generate
+          if ($LASTEXITCODE -ne 0) { throw 'Contract generation failed' }
+          $contractChanges = git status --porcelain --untracked-files=all -- packages/contracts/src/generated
+          if ($LASTEXITCODE -ne 0) { throw 'Contract status check failed' }
+          if ($contractChanges) { throw 'Regenerate and commit the Rust-defined TypeScript contracts.' }
+      - name: TypeScript checks
+        run: pnpm typecheck
+      - name: Serial frontend behavior tests
+        run: pnpm --filter @pkms/desktop exec node --experimental-strip-types --test --test-concurrency=1 tests/*.test.mjs
+      - name: Frontend production build
+        run: pnpm --filter @pkms/desktop build
+      - name: Build unsigned Windows installer
+        if: github.event_name != 'pull_request'
+        run: pnpm desktop:build
+      - name: Collect installer, checksums and inventory
+        if: github.event_name != 'pull_request'
+        run: ./scripts/package-release.ps1
+      - name: Retain build artifacts
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: spanseek-windows-x64-${{ github.sha }}
+          path: .local-archive/release/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  release-draft:
+    needs: windows
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-2025
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Download the checked build
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: spanseek-windows-x64-${{ github.sha }}
+          path: release
+      - name: Create or update draft only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          $info = Get-Content -LiteralPath release/BUILD-INFO.json -Raw | ConvertFrom-Json
+          if ($env:RELEASE_TAG -ne "v$($info.version)") { throw 'Tag and downloaded artifact version differ' }
+          $headers = @{ Authorization = "Bearer $env:GH_TOKEN"; Accept = 'application/vnd.github+json' }
+          $existing = $null
+          try { $existing = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:GH_REPO/releases/tags/$env:RELEASE_TAG" -Headers $headers }
+          catch { if ([int]$_.Exception.Response.StatusCode -ne 404) { throw } }
+          $files = @(Get-ChildItem -LiteralPath release -File | ForEach-Object { $_.FullName })
+          if ($existing) {
+            if (-not $existing.draft) { throw 'An already published release will not be overwritten' }
+            gh release upload $env:RELEASE_TAG @files --clobber
+          } else {
+            gh release create $env:RELEASE_TAG @files --verify-tag --draft --title "跨索 spanseek $($info.version)" --notes-file release/RELEASE-NOTES.md
+          }
+          if ($LASTEXITCODE -ne 0) { throw 'Release draft upload failed' }

@@ -1,0 +1,53 @@
+{
+  "name": "@pkms/desktop",
+  "version": "1.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@pkms/contracts": "workspace:*",
+    "@tauri-apps/api": "2.12.1",
+    "@tiptap/core": "3.31.4",
+    "@tiptap/extension-code-block": "3.31.4",
+    "@tiptap/extension-list": "3.31.4",
+    "@tiptap/extension-table": "3.31.4",
+    "@tiptap/extension-task-item": "3.31.4",
+    "@tiptap/extension-task-list": "3.31.4",
+    "@tiptap/extension-unique-id": "3.31.4",
+    "@tiptap/pm": "3.31.4",
+    "@tiptap/react": "3.31.4",
+    "@tiptap/starter-kit": "3.31.4",
+    "docx-preview": "0.4.1",
+    "katex": "0.19.0",
+    "lucide-react": "1.49.0",
+    "mermaid": "12.1.0",
+    "parse5": "8.0.1",
+    "pdfjs-dist": "6.3.289",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-markdown": "^10.1.0",
+    "remark-frontmatter": "5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "6.0.0",
+    "remark-parse": "11.0.0",
+    "unified": "11.0.5",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.1",
+    "@types/mdast": "4.0.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "mdast-util-from-markdown": "2.1.0",
+    "micromark-util-types": "2.0.3",
+    "typescript": "~5.9.3",
+    "vite": "8.3.2"
+  }
+}

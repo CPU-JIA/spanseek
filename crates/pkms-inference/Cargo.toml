@@ -1,0 +1,53 @@
+[package]
+name = "pkms-inference"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "pkms-inference"
+path = "src/main.rs"
+required-features = ["runtime"]
+
+[features]
+default = []
+ollama = ["dep:reqwest", "dep:tokio"]
+remote = ["dep:reqwest", "dep:tokio"]
+embedding = ["dep:fastembed", "dep:tokenizers"]
+vector = ["dep:lancedb", "dep:arrow-array", "dep:arrow-schema", "dep:futures", "dep:tokio"]
+# Replacement-carrier backend for the SRS P1 "swap the vector store"
+# measurement: the same projection contract without LanceDB or Arrow. Not
+# part of `runtime`, so production paths keep using the Lance projection.
+vector-flat = []
+runtime = ["ollama", "embedding", "vector"]
+
+[dependencies]
+pkms-core = { path = "../pkms-core" }
+serde.workspace = true
+# Generation files store normalized f64 vectors and an exact retry compares
+# them bit for bit, so parsing must be exact rather than best-effort.
+serde_json = { workspace = true, features = ["float_roundtrip"] }
+sha2.workspace = true
+thiserror.workspace = true
+reqwest = { workspace = true, features = ["json"], optional = true }
+tokio = { workspace = true, features = ["rt-multi-thread"], optional = true }
+fastembed = { version = "=7.1.0", default-features = false, features = ["ort-download-binaries-rustls-tls"], optional = true }
+tokenizers = { version = "=0.23.2", default-features = false, features = ["onig"], optional = true }
+# 0.39.0 job.rs references Error::Http unconditionally; upstream gates that
+# variant behind remote. Our adapter still accepts only a local filesystem Path.
+lancedb = { version = "=0.39.0", default-features = false, features = ["remote"], optional = true }
+arrow-array = { version = "58.0.0", optional = true }
+arrow-schema = { version = "58.0.0", optional = true }
+futures = { version = "0.3", optional = true }
+
+[dev-dependencies]
+tempfile.workspace = true
+tokio.workspace = true
+
+# Live provider calls need the real HTTP client, so the target only exists when
+# the remote transport is compiled in.
+[[test]]
+name = "remote_live"
+path = "tests/remote_live.rs"
+required-features = ["remote"]

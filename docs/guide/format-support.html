@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17181B" />
+    <meta name="color-scheme" content="light dark" />
+    <title>格式支持 · 跨索 spanseek</title>
+    <script>
+      try {
+        if (localStorage.getItem('spanseek-theme-v2') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
+    </script>
+    <link rel="icon" href="../download/favicon.ico?v=20261022" sizes="any" />
+    <link rel="stylesheet" href="../download/styles.css?v=20261022-3" />
+    <link rel="stylesheet" href="doc.css?v=20261022" />
+    <script src="../download/download.js" defer></script>
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+          <img
+            src="../download/assets/icon.svg?v=20261022"
+            width="30"
+            height="30"
+            alt=""
+            aria-hidden="true"
+          /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="../download/index.html#workspace">产品</a>
+          <a href="../download/brand.html">品牌</a>
+          <a href="../download/index.html#principles">原则</a>
+          <a href="../download/install.html">下载</a>
+          <a href="../download/index.html#docs">文档</a>
+        </nav>
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
+              ></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.4 14.3A8.5 8.5 0 0 1 9.7 3.6 8.5 8.5 0 1 0 20.4 14.3Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="doc-main">
+      <div class="doc-shell">
+        <nav class="doc-breadcrumb" aria-label="面包屑">
+          <a href="../download/index.html">跨索 spanseek</a>
+          <span aria-hidden="true">/</span>
+          <span>格式支持</span>
+        </nav>
+        <article class="doc-article">
+          <h1 id="spanseek-101-格式支持表">spanseek 1.0.1 格式支持表</h1>
+          <p>
+            本表登记当前版本支持的格式与边界，不把“能够导入”写成“无损理解”。每个“部分支持”都附已知损失；未实测的组合不冒充通过。
+          </p>
+          <p>等级定义：</p>
+          <ul>
+            <li>
+              <strong>完整</strong>：导入、阅读、摘录、备份/恢复全链有证据，且没有已知内容损失。
+            </li>
+            <li><strong>部分</strong>：主链可用，但有明确列出的损失或不支持项。</li>
+            <li><strong>仅引用</strong>：只保留指向原件的引用/计数，不进入正文能力。</li>
+            <li><strong>未验</strong>：实现可能存在，但当前版本没有可复现证据。</li>
+          </ul>
+          <p>
+            说明：资料随完整备份与恢复，不提供单篇 Markdown 导出；笔记提供 Markdown / HTML / DOCX /
+            PDF 与完整包导出。
+          </p>
+          <h2 id="1-资料格式">1. 资料格式</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>形态</th>
+                <th>导入</th>
+                <th>阅读</th>
+                <th>摘录</th>
+                <th>随完整包恢复</th>
+                <th>等级与边界</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TXT</td>
+                <td>是</td>
+                <td>原文/文本阅读</td>
+                <td>是（块锚）</td>
+                <td>是</td>
+                <td>完整（按 UTF-8 文本）</td>
+              </tr>
+              <tr>
+                <td>Markdown</td>
+                <td>是（原件不可变）</td>
+                <td>渲染 + 可摘录原文</td>
+                <td>是（块锚）</td>
+                <td>是</td>
+                <td>部分：来源内语法按文本保留，渲染失败回原文</td>
+              </tr>
+              <tr>
+                <td>HTML</td>
+                <td>是（正文提取）</td>
+                <td>是</td>
+                <td>是</td>
+                <td>是</td>
+                <td>部分：脚本/样式/交互不执行，原件保留</td>
+              </tr>
+              <tr>
+                <td>PDF</td>
+                <td>是</td>
+                <td>PDFium 连续阅读、目录、缩放、适宽/适页</td>
+                <td>字符/区域</td>
+                <td>是</td>
+                <td>部分：复杂多栏、跨页表格仍有损失</td>
+              </tr>
+              <tr>
+                <td>DOCX</td>
+                <td>是</td>
+                <td>Word 精确版式（Word 可用）或内置语义渲染</td>
+                <td>是（原文视图）</td>
+                <td>是</td>
+                <td>部分：复杂分页、字体替换与嵌入对象可能不同</td>
+              </tr>
+              <tr>
+                <td>DOC（Word 97–2003）</td>
+                <td>是（边界检查 + 纯 Rust 解析）</td>
+                <td>Word 精确版式缓存，或内置原文阅读</td>
+                <td>是（原文视图）</td>
+                <td>是</td>
+                <td>部分：修订删除项过滤；无 Word 时不承诺精确分页</td>
+              </tr>
+              <tr>
+                <td>XLSX</td>
+                <td>是</td>
+                <td>工作表、公式缓存/来源、日期/时间/百分比、合并范围</td>
+                <td>是</td>
+                <td>是</td>
+                <td>部分：图表/透视表等对象不进入正文</td>
+              </tr>
+              <tr>
+                <td>XLS（BIFF8）</td>
+                <td>是</td>
+                <td>多工作表、单元格、日期、公式来源、合并文本</td>
+                <td>是</td>
+                <td>是</td>
+                <td>部分：宏、图表对象与复杂格式不执行；引用修复已 vendor</td>
+              </tr>
+              <tr>
+                <td>CSV</td>
+                <td>是</td>
+                <td>表格文本阅读</td>
+                <td>是</td>
+                <td>是</td>
+                <td>部分：编码与分隔符按导入检查，不推断业务类型</td>
+              </tr>
+              <tr>
+                <td>PPTX</td>
+                <td>是</td>
+                <td>演示顺序、表格、图片、图表缓存、SmartArt、备注</td>
+                <td>是</td>
+                <td>是</td>
+                <td>部分：动画、切换、嵌入媒体和精确版式不进入阅读投影</td>
+              </tr>
+              <tr>
+                <td>EPUB</td>
+                <td>是</td>
+                <td>封面、内置目录、章节、正文图片</td>
+                <td>是</td>
+                <td>是</td>
+                <td>部分：固定版式 EPUB、脚本和 DRM 不支持</td>
+              </tr>
+              <tr>
+                <td>MOBI</td>
+                <td>是（DRM 明确拒绝）</td>
+                <td>封面、目录、章节、正文图片</td>
+                <td>是</td>
+                <td>是</td>
+                <td>部分：AZW3/DRM/复杂排版不承诺</td>
+              </tr>
+              <tr>
+                <td>扫描 PDF + OCR</td>
+                <td>是</td>
+                <td>显示 OCR 状态并阅读</td>
+                <td>是（词框映射）</td>
+                <td>是</td>
+                <td>部分：中文质量、低质扫描与手写需实机验收</td>
+              </tr>
+              <tr>
+                <td>PDF 表格</td>
+                <td>是（字符几何）</td>
+                <td>表格预览 + Markdown 复制</td>
+                <td>是（bbox 回原文）</td>
+                <td>是</td>
+                <td>部分：合并单元格、跨页表格不保证</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2 id="2-笔记块与互操作">2. 笔记、块与互操作</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>形态</th>
+                <th>导入</th>
+                <th>阅读</th>
+                <th>操作</th>
+                <th>导出</th>
+                <th>恢复</th>
+                <th>等级与边界</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>原生笔记 D1/D2/D3</td>
+                <td>是</td>
+                <td>是</td>
+                <td>属性、版本历史、冲突处理</td>
+                <td>Markdown / HTML / DOCX / PDF / 完整包</td>
+                <td>是</td>
+                <td>完整（按 schema 契约）</td>
+              </tr>
+              <tr>
+                <td>稳定块数据库</td>
+                <td>是</td>
+                <td>是</td>
+                <td>引用、属性、排序、复制、嵌入、块历史</td>
+                <td>随笔记</td>
+                <td>是</td>
+                <td>当前修改投影与不可变修订同源；块身份不复用</td>
+              </tr>
+              <tr>
+                <td>Obsidian/Markdown vault</td>
+                <td>是（CLI）</td>
+                <td>是</td>
+                <td>双链/嵌入</td>
+                <td>是（CLI）</td>
+                <td>是</td>
+                <td>部分：插件语法与非图片附件不转正文</td>
+              </tr>
+              <tr>
+                <td>双链与嵌入</td>
+                <td>是</td>
+                <td>是</td>
+                <td>标题/块锚、固定版本、循环与深度保护</td>
+                <td>是</td>
+                <td>是</td>
+                <td>完整（受 3 层嵌入与预算限制）</td>
+              </tr>
+              <tr>
+                <td>YAML frontmatter</td>
+                <td>是</td>
+                <td>是</td>
+                <td>保留未知键</td>
+                <td>是</td>
+                <td>是</td>
+                <td>完整（单块约束）</td>
+              </tr>
+              <tr>
+                <td>图片附件</td>
+                <td>是（PNG/JPEG/WebP）</td>
+                <td>是</td>
+                <td>插入/说明</td>
+                <td>打包</td>
+                <td>是</td>
+                <td>部分：单张 ≤20 MiB；不抓远程图片</td>
+              </tr>
+              <tr>
+                <td>BibTeX / CSL-JSON</td>
+                <td>是</td>
+                <td>是</td>
+                <td>引用选择器</td>
+                <td>随报告</td>
+                <td>是</td>
+                <td>部分：只消费已实现字段，未知字段保留</td>
+              </tr>
+              <tr>
+                <td>CSL 引文</td>
+                <td>是</td>
+                <td>是</td>
+                <td>
+                  样式选择、自定义/依赖样式、locator、note
+                  序号、in-text、文献表、多条目选择器、样式恢复、手写修改警告
+                </td>
+                <td>HTML / DOCX / PDF</td>
+                <td>是</td>
+                <td>
+                  部分：更广 locale/field 与在线样式库仍未逐一实机回归；同 marker 多次出现按
+                  occurrence 渲染；手写保护为区块级指纹而非逐条合并
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h2 id="3-检索与索引">3. 检索与索引</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>能力</th>
+                <th>状态</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>中文分词与繁简折叠</td>
+                <td>支持</td>
+                <td>FTS 与查询使用同一规范化</td>
+              </tr>
+              <tr>
+                <td>关键词 + 语义融合</td>
+                <td>支持</td>
+                <td>无语义配置时明确回退关键词，不伪造命中</td>
+              </tr>
+              <tr>
+                <td>块检索</td>
+                <td>支持</td>
+                <td>稳定块 ID、别名、keyset 分页、引用计数</td>
+              </tr>
+              <tr>
+                <td>10k/50k 图谱布局</td>
+                <td>支持</td>
+                <td>视口裁剪、路径高亮、facet/AND 标签与性能探针</td>
+              </tr>
+              <tr>
+                <td>搜索历史</td>
+                <td>支持</td>
+                <td>按物理 workspace 隔离，不保存结果正文</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2 id="4-明确边界">4. 明确边界</h2>
+          <ul>
+            <li>不可执行宏、脚本、远程图片、外部嵌入或 DRM 内容。</li>
+            <li>
+              Office/EPUB 阅读是只读投影，不承诺与 Office/阅读器逐像素一致；可摘录原文始终独立保留。
+            </li>
+            <li>OCR 仍需真实设备上的中文质量、第三方读屏与安装包验收，不能由单元测试代替。</li>
+            <li>
+              同步与协作需要配置服务和设备权限；不同物理设备、网络与辅助技术的覆盖边界见<a
+                href="known-issues.html"
+                >已知问题</a
+              >。
+            </li>
+          </ul>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+            <img
+              src="../download/assets/icon.svg?v=20261022"
+              width="28"
+              height="28"
+              alt=""
+              aria-hidden="true"
+            /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+          </a>
+          <p>本地优先的个人知识库。<br />为长期保存而设计。</p>
+        </div>
+
+        <nav class="footer-group" aria-label="产品">
+          <strong>产品</strong>
+          <a href="../download/index.html#workspace">工作区</a>
+          <a href="../download/brand.html">品牌故事</a>
+          <a href="../download/index.html#principles">设计原则</a>
+          <a href="../download/install.html">下载</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="文档">
+          <strong>文档</strong>
+          <a href="quick-start.html">快速上手</a>
+          <a href="user-guide.html">用户指南</a>
+          <a href="known-issues.html">已知问题</a>
+          <a href="../download/install.html">安装说明</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="法律与隐私">
+          <strong>法律与隐私</strong>
+          <a href="privacy.html">隐私说明</a>
+          <a href="third-party-notices.html">第三方许可</a>
+          <a href="license.html">使用许可</a>
+          <a href="changelog.html">版本记录</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">
+        <span>© 2026 跨索 spanseek</span>
+      </div>
+    </footer>
+  </body>
+</html>

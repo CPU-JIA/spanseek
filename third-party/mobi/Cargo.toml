@@ -1,0 +1,30 @@
+[package]
+name = "mobi"
+version = "0.8.0"
+authors = ["Wojciech Kępka <wojciech@wkepka.dev>"]
+edition = "2018"
+license = "MIT"
+repository = "https://github.com/vv9k/mobi-rs"
+keywords = ["mobi", "ebook", "library", "e-book", "format"]
+readme = "README.md"
+categories = ["parsing"]
+description = "A library for handling MOBI format files"
+
+[features]
+default = []
+time = ["chrono"]
+
+[lib]
+name = "mobi"
+
+[dependencies]
+chrono = { version = "0.4", optional = true }
+encoding = "0.2.0"
+indexmap = "1.6.0"
+thiserror = "1"
+
+[dev-dependencies]
+pretty_assertions = "1"
+
+[package.metadata.docs.rs]
+all-features = true

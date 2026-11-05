@@ -1,0 +1,294 @@
+.task-center {
+  color: var(--text);
+}
+.task-content {
+  min-width: 0;
+}
+.task-row.is-target {
+  border-radius: var(--radius-panel);
+  padding-inline: 12px;
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
+  background: var(--accent-soft);
+}
+.task-located {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  padding: 10px 12px;
+}
+.task-located-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.task-located > p {
+  font-size: 12px;
+  margin-block: 6px 0;
+}
+.task-located-label {
+  display: block;
+  color: var(--accent);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+.task-center > .page-frame-body {
+  padding: 20px 24px 32px;
+}
+.source-task-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.source-task-events {
+  padding-left: 20px;
+}
+.source-task-events li {
+  margin: 8px 0;
+}
+.source-task-events small {
+  color: var(--muted);
+}
+.task-center p {
+  line-height: 1.6;
+}
+.task-section {
+  max-width: 1120px;
+  margin-top: 24px;
+}
+.task-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.task-section h2 small {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+.task-section > .muted {
+  font-size: 12px;
+}
+.task-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding: 16px 0;
+}
+.task-row > svg {
+  flex-shrink: 0;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.task-body {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.task-body > strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+}
+.task-body > small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+.task-body p {
+  margin: 7px 0;
+  font-size: 12px;
+}
+.task-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+}
+.task-status svg {
+  flex-shrink: 0;
+}
+.task-status-failed,
+.task-failure {
+  color: var(--error);
+}
+.task-report {
+  background: var(--canvas);
+  padding: 10px 12px;
+  border-radius: var(--radius-control);
+  margin-top: 12px;
+  font-size: 12px;
+}
+.task-center details {
+  font-size: 12px;
+  margin: 7px 0;
+}
+.task-center summary {
+  cursor: pointer;
+  width: fit-content;
+  min-height: 32px;
+  line-height: 1.6;
+  padding-block: 6px;
+}
+.task-center details code {
+  display: block;
+  padding-top: 8px;
+}
+.task-center .secondary-button,
+.task-center .text-button {
+  min-height: 32px;
+  font-size: 12px;
+  padding: 6px 10px;
+}
+.task-error {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  max-width: 1120px;
+  background: var(--error-bg);
+  color: var(--error);
+  border-radius: var(--radius-panel);
+  margin-top: 16px;
+}
+.task-error > svg {
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.task-error > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.task-error p {
+  margin: 2px 0;
+  font-size: 12px;
+}
+/* A request the backend refused for good is gone from the queue, so this line
+   names what was dropped instead of leaving a bare error message behind. */
+.task-notice {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  max-width: 1120px;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--canvas);
+  color: var(--text);
+}
+.task-notice > svg {
+  margin-top: 5px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.task-notice > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.task-notice p {
+  margin: 2px 0;
+  font-size: 12px;
+}
+.task-empty {
+  color: var(--muted);
+  padding: 24px 16px;
+  border-radius: var(--radius-panel);
+  background: var(--canvas);
+  font-size: 13px;
+}
+.task-empty.task-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.task-state.page-state {
+  width: 100%;
+  max-width: none;
+  min-height: 160px;
+  padding-inline: 12px;
+}
+.export-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.export-controls select {
+  min-height: 32px;
+  background: var(--canvas);
+  color: var(--text);
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-control);
+  padding: 6px 8px;
+  font-size: 12px;
+  max-width: 108px;
+}
+@media (max-width: 720px) {
+  .task-center > .page-frame-body {
+    padding-inline: 16px;
+  }
+  .task-row,
+  .task-section h2 {
+    flex-wrap: wrap;
+  }
+}
+
+.task-center [hidden] {
+  display: none;
+}
+.view-switch.task-kind-tabs {
+  flex-wrap: wrap;
+}
+.view-switch.task-kind-tabs button {
+  width: auto;
+  min-width: max-content;
+  height: auto;
+  min-height: 30px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+@media (max-height: 620px) {
+  .task-center > .page-frame-header {
+    min-height: 40px;
+    padding-block: 4px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .task-center > .page-frame-header .page-frame-heading {
+    flex: 1 1 auto;
+  }
+  .task-center > .page-frame-header .page-frame-actions {
+    width: auto;
+    flex: 0 0 auto;
+  }
+  .task-center > .page-frame-header h1 {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .task-center > .page-frame-header .page-frame-heading > p,
+  .task-center .task-section > h2,
+  .task-center .task-section > .muted {
+    display: none;
+  }
+  .task-center > .page-frame-toolbar {
+    min-height: 38px;
+    padding-block: 4px;
+  }
+  .task-center .task-kind-tabs {
+    max-width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .task-center > .page-frame-body {
+    padding: 8px 12px;
+  }
+  .task-center .task-section {
+    margin-top: 8px;
+  }
+}

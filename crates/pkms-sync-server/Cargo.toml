@@ -1,0 +1,32 @@
+[package]
+name = "pkms-sync-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+name = "pkms_sync_server"
+path = "src/lib.rs"
+
+[[bin]]
+name = "pkms-sync-server"
+path = "src/main.rs"
+
+[dependencies]
+axum.workspace = true
+base64.workspace = true
+chrono.workspace = true
+clap.workspace = true
+pkms-sync = { path = "../pkms-sync" }
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tower-http.workspace = true
+
+[dev-dependencies]
+pkms-sync-client = { path = "../pkms-sync-client" }
+reqwest.workspace = true
+tempfile.workspace = true
+uuid.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

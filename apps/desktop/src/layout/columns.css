@@ -1,0 +1,65 @@
+.column-resizer {
+  flex: 0 0 1px;
+  width: 1px;
+  position: relative;
+  background: color-mix(in srgb, var(--line) 55%, transparent);
+  cursor: col-resize;
+  touch-action: none;
+  z-index: 12;
+  outline: none;
+}
+.column-resizer::before {
+  content: '';
+  position: absolute;
+  width: 9px;
+  inset: 0 auto 0 -4px;
+}
+.column-resizer::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--muted);
+  opacity: 0;
+  transition:
+    background-color 120ms,
+    opacity 120ms;
+}
+.column-resizer:hover::after {
+  opacity: 0.4;
+}
+.column-resizer:focus-visible::after {
+  background: var(--accent);
+  opacity: 0.85;
+}
+:root[data-resizing='columns'] .column-resizer::after {
+  background: var(--accent);
+  opacity: 0.7;
+}
+.column-resizer[aria-disabled='true'] {
+  cursor: default;
+}
+:root[data-resizing='columns'],
+:root[data-resizing='columns'] * {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+.sidebar.resizable,
+.note-list.resizable {
+  border-right: 0;
+}
+.sidebar-toggle {
+  border-radius: 7px;
+  color: var(--muted);
+}
+.sidebar-toggle:hover,
+.sidebar-toggle[aria-expanded='true']:hover {
+  color: var(--text);
+  background: var(--hover);
+}
+.workspace-button small {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

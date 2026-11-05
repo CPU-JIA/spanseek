@@ -1,0 +1,432 @@
+.review-page {
+  container: review-page / inline-size;
+  color: var(--text);
+}
+.review-page > .page-frame-body {
+  gap: 12px;
+  padding: 18px 24px 24px;
+}
+.review-page > .page-frame-body > * {
+  max-width: 1120px;
+  flex-shrink: 0;
+}
+.review-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 240px;
+  max-width: none;
+}
+.review-page > .page-frame-body > .review-content {
+  max-width: none;
+}
+.review-muted {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.review-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.review-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 3px;
+  border-radius: var(--radius-panel);
+  background: var(--canvas);
+}
+.review-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border-color: transparent;
+  border-radius: var(--radius-control);
+  padding: 6px 12px;
+  color: var(--muted);
+}
+/* A tab badge carries a count read from the queue, so an em dash always means
+   "not counted yet" (still reading, or the read failed) instead of a fake 0. */
+.review-tab-count {
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--canvas);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.review-tabs button[aria-pressed='true'] .review-tab-count {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.review-tab-count[data-known='no'] {
+  color: var(--text-faint);
+}
+.review-tabs button[aria-pressed='true'] {
+  background: var(--surface);
+  border-color: var(--line);
+  font-weight: 600;
+  color: var(--text);
+}
+.review-page button,
+.review-page select,
+.review-page input {
+  min-height: 32px;
+  font: inherit;
+  font-size: 13px;
+}
+.review-page select,
+.review-page input {
+  padding: 6px 10px;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-control);
+  background: var(--canvas);
+  color: var(--text);
+  max-width: 100%;
+}
+.review-toolbar :is(label, .choice-field) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  min-width: 0;
+  max-width: 100%;
+}
+.review-toolbar .ui-select {
+  max-width: min(260px, 100%);
+}
+.review-workspace {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+}
+.review-list {
+  border-right: 1px solid var(--line);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 640px;
+  overflow: auto;
+  background: var(--sidebar);
+}
+.review-list button {
+  flex-shrink: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 6px;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  border-radius: var(--radius-control);
+}
+.review-list button:hover:not(:disabled),
+.review-tabs button:hover:not(:disabled) {
+  background: var(--hover);
+}
+.review-list button[aria-current='true'] {
+  background: var(--accent-soft);
+  border-color: transparent;
+}
+.review-list strong {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  font-weight: 500;
+}
+.review-list span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.review-detail {
+  padding: 24px;
+  min-width: 0;
+}
+.review-detail h2 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+.review-excerpt {
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 360px;
+  overflow: auto;
+  font-size: 14px;
+  margin: 20px 0;
+}
+.review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 16px;
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.review-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.review-snooze {
+  margin-top: 16px;
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.review-snooze :is(label, .choice-field) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+.review-notice {
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 10px 12px;
+  border-radius: var(--radius-panel);
+  background: var(--canvas);
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.review-notice[role='alert'] {
+  color: var(--error);
+  background: var(--error-bg);
+}
+.review-empty {
+  width: min(100%, 360px);
+  margin: auto;
+  flex-shrink: 0;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--canvas);
+  border-radius: var(--radius-card);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.review-empty svg {
+  margin-bottom: 12px;
+  color: var(--text-faint);
+}
+.review-empty.page-state {
+  flex: 0 1 auto;
+  min-height: 0;
+  padding: 40px 24px;
+}
+.review-history {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+.review-history summary {
+  cursor: pointer;
+  min-height: 32px;
+  line-height: 32px;
+}
+.review-history ol {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+.review-history li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.review-history time,
+.review-history small {
+  color: var(--muted);
+}
+.review-history small {
+  grid-column: 1 / -1;
+}
+/* The pager inside the scrolling list stays reachable at the bottom. */
+.review-list .pagination {
+  position: sticky;
+  bottom: 0;
+  padding: 8px 0 0;
+  border-top: 0;
+  background: var(--sidebar);
+}
+/* The 主题 pager is a toolbar control next to the picker, not a panel footer. */
+.review-toolbar .review-collections-pager {
+  flex: 1 1 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0;
+  border-top: 0;
+}
+.review-toolbar .review-collections-pager .pagination-window {
+  flex: 1 1 100%;
+}
+/* The history pager continues the list instead of starting a new panel. */
+.review-history .pagination {
+  padding: 8px 0 0;
+  border-top: 0;
+}
+@media (max-width: 740px) {
+  .review-page > .page-frame-body {
+    padding-inline: 16px;
+  }
+}
+@container review-page (max-width: 680px) {
+  .review-workspace {
+    grid-template-columns: 1fr;
+  }
+  .review-list {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    max-height: 220px;
+  }
+  .review-detail {
+    padding: 20px 16px;
+  }
+}
+
+/* The queue and the selected review are alternative panes, with fixed pagination. */
+.review-page > .page-frame-body {
+  min-height: 0;
+  overflow: hidden;
+  padding: 12px 16px;
+  gap: 8px;
+}
+.review-page > .page-frame-body > .review-content {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.review-workspace {
+  display: flex;
+  flex: 1 1 0;
+  min-height: 0;
+}
+.review-queue-scroll,
+.review-detail-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto;
+  min-width: 0;
+  scrollbar-gutter: stable;
+}
+.review-queue-scroll[hidden] {
+  display: none;
+}
+.review-list {
+  min-height: 0;
+  max-height: none;
+  overflow: visible;
+  border-right: 0;
+}
+.review-detail {
+  padding: 16px 20px;
+}
+.review-detail h2 {
+  margin: 4px 0 12px;
+}
+.review-history > div {
+  min-width: 0;
+}
+.review-page > .page-frame-body > .review-notice {
+  max-height: 30%;
+  overflow: auto;
+}
+@media (max-height: 620px) {
+  .review-page > .page-frame-header {
+    min-height: 36px;
+    padding: 4px 10px;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+  .review-page > .page-frame-header .page-frame-heading {
+    min-width: 0;
+    flex: 1 1 0;
+  }
+  .review-page > .page-frame-header .page-frame-heading > p {
+    display: none;
+  }
+  .review-page > .page-frame-header h1 {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .review-page > .page-frame-toolbar {
+    padding: 3px 8px;
+  }
+  .review-toolbar {
+    gap: 5px;
+  }
+  .review-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+    padding: 1px;
+  }
+  .review-tabs button {
+    min-height: 24px;
+    padding: 3px 6px;
+    font-size: 12px;
+  }
+  .review-page > .page-frame-body {
+    padding: 4px 8px 6px;
+    gap: 4px;
+  }
+  .review-detail {
+    padding: 10px 12px;
+  }
+  .review-detail h2 {
+    font-size: 17px;
+  }
+  .review-toolbar button,
+  .review-history summary {
+    min-height: 24px;
+  }
+}
+
+.review-toolbar .source-collection-picker {
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 1 320px;
+}
+.review-toolbar .source-collection-picker .source-field-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+.review-toolbar .source-collection-picker .source-field-label > span {
+  flex: 0 0 auto;
+  font-size: 12px;
+}
+@media (max-height: 620px) {
+  .review-page {
+    --footer-height: 40px;
+  }
+  .review-page .page-frame-actions {
+    width: auto;
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  .review-page > .page-frame-toolbar {
+    min-height: 32px;
+  }
+}

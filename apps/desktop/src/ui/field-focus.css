@@ -1,0 +1,21 @@
+/* One focus frame per field, including portalled dialogs. Text fields use
+   their existing border; grouped search/composer fields use the outer shell.
+   Buttons, links, checkboxes and radios keep their keyboard focus indicator. */
+html:root
+  body
+  :is(
+    input:not([type='checkbox'], [type='radio'], [type='range'], [type='file']),
+    textarea,
+    select
+  ):enabled:focus,
+html:root body button.ui-select:enabled:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  outline-offset: 0;
+  box-shadow: none;
+}
+html:root body .ui-combobox:focus-within {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: none;
+}

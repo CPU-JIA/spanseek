@@ -1,0 +1,24 @@
+.ui-section-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.ui-section-switch > button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.ui-section-switch > button[aria-pressed='true'] {
+  background: var(--accent-soft);
+  color: var(--text);
+}

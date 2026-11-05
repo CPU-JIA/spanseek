@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17181B" />
+    <meta name="color-scheme" content="light dark" />
+    <title>$title$ · 跨索 spanseek</title>
+    <script>
+      try {
+        if (localStorage.getItem('spanseek-theme-v2') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
+    </script>
+    <link rel="icon" href="../download/favicon.ico?v=20261022" sizes="any" />
+    <link rel="stylesheet" href="../download/styles.css?v=20261022-3" />
+    <link rel="stylesheet" href="doc.css?v=20261022" />
+    <script src="../download/download.js" defer></script>
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+          <img
+            src="../download/assets/icon.svg?v=20261022"
+            width="30"
+            height="30"
+            alt=""
+            aria-hidden="true"
+          /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="../download/index.html#workspace">产品</a>
+          <a href="../download/brand.html">品牌</a>
+          <a href="../download/index.html#principles">原则</a>
+          <a href="../download/install.html">下载</a>
+          <a href="../download/index.html#docs">文档</a>
+        </nav>
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
+              ></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.4 14.3A8.5 8.5 0 0 1 9.7 3.6 8.5 8.5 0 1 0 20.4 14.3Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="doc-main">
+      <div class="doc-shell">
+        <nav class="doc-breadcrumb" aria-label="面包屑">
+          <a href="../download/index.html">跨索 spanseek</a>
+          <span aria-hidden="true">/</span>
+          <span>$title$</span>
+        </nav>
+        <article class="doc-article">$body$</article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+            <img
+              src="../download/assets/icon.svg?v=20261022"
+              width="28"
+              height="28"
+              alt=""
+              aria-hidden="true"
+            /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+          </a>
+          <p>本地优先的个人知识库。<br />为长期保存而设计。</p>
+        </div>
+
+        <nav class="footer-group" aria-label="产品">
+          <strong>产品</strong>
+          <a href="../download/index.html#workspace">工作区</a>
+          <a href="../download/brand.html">品牌故事</a>
+          <a href="../download/index.html#principles">设计原则</a>
+          <a href="../download/install.html">下载</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="文档">
+          <strong>文档</strong>
+          <a href="quick-start.html">快速上手</a>
+          <a href="user-guide.html">用户指南</a>
+          <a href="known-issues.html">已知问题</a>
+          <a href="../download/install.html">安装说明</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="法律与隐私">
+          <strong>法律与隐私</strong>
+          <a href="privacy.html">隐私说明</a>
+          <a href="third-party-notices.html">第三方许可</a>
+          <a href="license.html">使用许可</a>
+          <a href="changelog.html">版本记录</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">
+        <span>© 2026 跨索 spanseek</span>
+      </div>
+    </footer>
+  </body>
+</html>

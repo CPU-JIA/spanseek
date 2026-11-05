@@ -1,0 +1,56 @@
+name: Prepare Windows build
+description: Pinned tools and reusable pnpm, Rust and native-resource caches
+runs:
+  using: composite
+  steps:
+    - name: Node 24
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      with:
+        node-version: '24.19.0'
+    - name: Pinned package manager and Rust
+      shell: pwsh
+      run: |
+        npm install --global pnpm@10.25.0
+        if ($LASTEXITCODE -ne 0) { throw 'pnpm setup failed' }
+        rustup toolchain install 1.98.0 --profile minimal --component rustfmt --component clippy
+        if ($LASTEXITCODE -ne 0) { throw 'Rust setup failed' }
+        rustup override set 1.98.0
+        if ($LASTEXITCODE -ne 0) { throw 'Rust selection failed' }
+        New-Item -ItemType Directory -Path $env:TEMP -Force | Out-Null
+    - name: Locate pnpm store
+      id: pnpm
+      shell: pwsh
+      run: |
+        $storePath = pnpm store path --silent
+        if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve pnpm store' }
+        "path=$storePath" >> $env:GITHUB_OUTPUT
+    - name: pnpm package cache
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: ${{ steps.pnpm.outputs.path }}
+        key: windows-x64-pnpm-10.25.0-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: windows-x64-pnpm-10.25.0-
+    - name: Cargo dependencies and compiled crates
+      uses: Swatinem/rust-cache@e9d7b9f1e587218970671bac74e5511ed9506e6a # v2
+      with:
+        shared-key: windows-x64-rust-1.98-v1
+        workspaces: '. -> target'
+        cache-workspace-crates: 'true'
+        cache-bin: 'false'
+        save-if: ${{ github.event_name != 'pull_request' }}
+    - name: Verified native downloads
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: |
+          .local-archive/dependencies/pdfium-7881
+          .local-archive/dependencies/downloads
+          .local-archive/dependencies/tesseract-source-5.4.0.20240606
+          .local-archive/dependencies/tesseract
+          .local-archive/dependencies/tesseract-5.4.0.20240606
+          .local-archive/tooling/protoc-36.2
+        key: windows-x64-native-v1-${{ hashFiles('scripts/fetch-*.ps1', 'scripts/prepare-tesseract.ps1', 'third-party/tesseract/**') }}
+    - name: Locked frontend dependencies
+      shell: pwsh
+      run: |
+        pnpm install --frozen-lockfile
+        if ($LASTEXITCODE -ne 0) { throw 'Frontend dependency installation failed' }

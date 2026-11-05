@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17181B" />
+    <meta name="color-scheme" content="light dark" />
+    <title>第三方许可 · 跨索 spanseek</title>
+    <script>
+      try {
+        if (localStorage.getItem('spanseek-theme-v2') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
+    </script>
+    <link rel="icon" href="../download/favicon.ico?v=20261022" sizes="any" />
+    <link rel="stylesheet" href="../download/styles.css?v=20261022-3" />
+    <link rel="stylesheet" href="doc.css?v=20261022" />
+    <script src="../download/download.js" defer></script>
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+          <img
+            src="../download/assets/icon.svg?v=20261022"
+            width="30"
+            height="30"
+            alt=""
+            aria-hidden="true"
+          /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="../download/index.html#workspace">产品</a>
+          <a href="../download/brand.html">品牌</a>
+          <a href="../download/index.html#principles">原则</a>
+          <a href="../download/install.html">下载</a>
+          <a href="../download/index.html#docs">文档</a>
+        </nav>
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
+              ></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.4 14.3A8.5 8.5 0 0 1 9.7 3.6 8.5 8.5 0 1 0 20.4 14.3Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="doc-main">
+      <div class="doc-shell">
+        <nav class="doc-breadcrumb" aria-label="面包屑">
+          <a href="../download/index.html">跨索 spanseek</a>
+          <span aria-hidden="true">/</span>
+          <span>第三方许可</span>
+        </nav>
+        <article class="doc-article">
+          <h1 id="spanseek-第三方组件声明">spanseek 第三方组件声明</h1>
+          <p>
+            本文件由 <code>node scripts/build-notices.mjs</code> 从 <code>Cargo.lock</code>、前端
+            <code>package.json</code> + 已安装包清单、<code>third-party/</code>
+            随包资产生成；<strong>不要手改</strong>，改动依赖后重跑。 许可文本本身随各组件自带的
+            LICENSE/NOTICE 文件分发；本文件只做索引与计数，不替代许可原文。
+          </p>
+          <p>生成时间：2026-11-05T13:36:22.491Z</p>
+          <h2 id="随包第三方资产">随包第三方资产</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>组件</th>
+                <th>版本</th>
+                <th>许可</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Inter</td>
+                <td>4.x (third-party/inter)</td>
+                <td>OFL-1.1（third-party/inter/LICENSE.txt）</td>
+              </tr>
+              <tr>
+                <td>tempfile (vendored crate)</td>
+                <td>3.27.0</td>
+                <td>MIT OR Apache-2.0（third-party/tempfile/LICENSE-*）</td>
+              </tr>
+              <tr>
+                <td>calamine (vendored crate, locally patched)</td>
+                <td>0.37.0</td>
+                <td>MIT（third-party/calamine/LICENSE-MIT.md + PATCHES.md）</td>
+              </tr>
+              <tr>
+                <td>mobi (vendored crate, locally patched)</td>
+                <td>0.8.0</td>
+                <td>MIT（third-party/mobi/LICENSE + NOTICE.md）</td>
+              </tr>
+              <tr>
+                <td>huffcdic (adapted from kindling-mobi)</td>
+                <td>0.45.6</td>
+                <td>MIT（third-party/mobi/LICENSE-kindling）</td>
+              </tr>
+              <tr>
+                <td>docx-preview</td>
+                <td>0.4.1</td>
+                <td>Apache-2.0（third-party/docx-preview/LICENSE）</td>
+              </tr>
+              <tr>
+                <td>JSZip</td>
+                <td>3.10.2</td>
+                <td>MIT (dual-licensed; MIT chosen)（third-party/jszip/LICENSE.markdown）</td>
+              </tr>
+              <tr>
+                <td>KaTeX fonts</td>
+                <td>katex-fonts (third-party/rich-format)</td>
+                <td>OFL-1.1（third-party/rich-format/katex-fonts/font-notices.json）</td>
+              </tr>
+              <tr>
+                <td>PDFium (pdfium-binaries chromium/7881)</td>
+                <td>7881</td>
+                <td>MIT（.local-archive/dependencies/pdfium-7881/LICENSE）</td>
+              </tr>
+              <tr>
+                <td>Tesseract OCR runtime + chi_sim+eng</td>
+                <td>5.4.0.20240606</td>
+                <td>
+                  Apache-2.0; bundled native components listed in
+                  COMPONENTS.md（third-party/tesseract/LICENSE + COMPONENTS.md +
+                  runtime-manifest.json）
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h2 id="rust-依赖">Rust 依赖</h2>
+          <p>共 661 个（来自 <code>cargo metadata --locked</code>，不含本仓库自身 crate）。</p>
+          <ul>
+            <li>MIT OR Apache-2.0: 306</li>
+            <li>MIT: 142</li>
+            <li>Apache-2.0 OR MIT: 59</li>
+            <li>Unicode-3.0: 24</li>
+            <li>MIT/Apache-2.0: 23</li>
+            <li>Zlib OR Apache-2.0 OR MIT: 17</li>
+            <li>Unlicense OR MIT: 11</li>
+            <li>Apache-2.0: 9</li>
+            <li>BSD-3-Clause: 7</li>
+            <li>CC0-1.0: 6</li>
+            <li>MPL-2.0: 5</li>
+            <li>ISC: 5</li>
+            <li>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT: 5</li>
+            <li>MIT OR Apache-2.0 OR Zlib: 4</li>
+            <li>Zlib: 3</li>
+            <li>Apache-2.0/MIT: 3</li>
+            <li>Apache-2.0 OR ISC OR MIT: 3</li>
+            <li>MIT OR Zlib OR Apache-2.0: 2</li>
+            <li>BSD-3-Clause OR Apache-2.0: 2</li>
+            <li>BSD-3-Clause OR MIT OR Apache-2.0: 2</li>
+            <li>MIT OR Apache-2.0 OR LGPL-2.1-or-later: 2</li>
+            <li>Unlicense/MIT: 2</li>
+            <li>BSD-2-Clause OR Apache-2.0 OR MIT: 2</li>
+            <li>0BSD OR MIT OR Apache-2.0: 1</li>
+            <li>ISC AND (Apache-2.0 OR ISC): 1</li>
+            <li>
+              ISC AND (Apache-2.0 OR ISC) AND Apache-2.0 AND MIT AND BSD-3-Clause AND (Apache-2.0 OR
+              ISC OR MIT) AND (Apache-2.0 OR ISC OR MIT-0): 1
+            </li>
+            <li>BSD-3-Clause AND MIT: 1</li>
+            <li>BSD-3-Clause/MIT: 1</li>
+            <li>Apache-2.0 AND MIT: 1</li>
+            <li>CC0-1.0 OR MIT-0 OR Apache-2.0: 1</li>
+            <li>(Apache-2.0 OR MIT) AND BSD-3-Clause: 1</li>
+            <li>MIT OR Apache-2.0 OR BSD-1-Clause: 1</li>
+            <li>Apache-2.0 / MIT: 1</li>
+            <li>MIT AND BSD-3-Clause: 1</li>
+            <li>Apache-2.0 AND ISC: 1</li>
+            <li>0BSD OR CC0-1.0: 1</li>
+            <li>Apache-2.0 OR BSL-1.0: 1</li>
+            <li>Apache-2.0 WITH LLVM-exception: 1</li>
+            <li>(MIT OR Apache-2.0) AND Unicode-3.0: 1</li>
+            <li>CDLA-Permissive-2.0: 1</li>
+          </ul>
+          <h2 id="前端依赖">前端依赖</h2>
+          <p>
+            共 35 个（<code>apps/desktop</code> 与 <code>packages/contracts</code> 的直接依赖）。
+          </p>
+          <ul>
+            <li>MIT: 28</li>
+            <li>Apache-2.0: 3</li>
+            <li>Apache-2.0 OR MIT: 2</li>
+            <li>ISC: 2</li>
+          </ul>
+          <h2 id="富格式导出内置包third-partyrich-format">
+            富格式导出内置包（third-party/rich-format）
+          </h2>
+          <p>
+            共 66 个；许可原文逐包保存在 <code>third-party/rich-format/&lt;包&gt;/LICENSE*</code>。
+          </p>
+          <ul>
+            <li>see LICENSE: 41</li>
+            <li>MIT: 19</li>
+            <li>see LICENSE.txt: 4</li>
+            <li>see LICENSE.md: 2</li>
+          </ul>
+          <h2 id="系统组件不随安装包分发">系统组件（不随安装包分发）</h2>
+          <ul>
+            <li>Microsoft Edge WebView2 Runtime：由系统和安装器 bootstrap 提供，不随包复制。</li>
+          </ul>
+          <h2 id="未决">未决</h2>
+          <ul>
+            <li>无。</li>
+          </ul>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+            <img
+              src="../download/assets/icon.svg?v=20261022"
+              width="28"
+              height="28"
+              alt=""
+              aria-hidden="true"
+            /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+          </a>
+          <p>本地优先的个人知识库。<br />为长期保存而设计。</p>
+        </div>
+
+        <nav class="footer-group" aria-label="产品">
+          <strong>产品</strong>
+          <a href="../download/index.html#workspace">工作区</a>
+          <a href="../download/brand.html">品牌故事</a>
+          <a href="../download/index.html#principles">设计原则</a>
+          <a href="../download/install.html">下载</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="文档">
+          <strong>文档</strong>
+          <a href="quick-start.html">快速上手</a>
+          <a href="user-guide.html">用户指南</a>
+          <a href="known-issues.html">已知问题</a>
+          <a href="../download/install.html">安装说明</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="法律与隐私">
+          <strong>法律与隐私</strong>
+          <a href="privacy.html">隐私说明</a>
+          <a href="third-party-notices.html">第三方许可</a>
+          <a href="license.html">使用许可</a>
+          <a href="changelog.html">版本记录</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">
+        <span>© 2026 跨索 spanseek</span>
+      </div>
+    </footer>
+  </body>
+</html>

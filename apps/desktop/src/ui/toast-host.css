@@ -1,0 +1,87 @@
+/* Shell-level transient messages (see ui/toast-queue.ts).
+   The host is an overlay: it never joins PageFrame layout, and it sits above
+   the page footer so pagination and primary actions stay clickable. */
+.ui-toast-anchor {
+  display: contents;
+}
+.ui-toast-host {
+  position: fixed;
+  right: 16px;
+  bottom: var(--toast-bottom, 64px);
+  /* Above popups and tooltips, below the command palette (1200): an open
+     palette stays the topmost shell surface. */
+  z-index: 1150;
+  display: flex;
+  flex-direction: column;
+  gap: var(--toast-gap, 8px);
+  width: min(var(--toast-width, 360px), calc(100vw - 32px));
+  max-height: calc(100dvh - var(--toast-bottom, 64px) - 16px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* The gaps between toasts must not swallow clicks on the page behind them. */
+  pointer-events: none;
+}
+.ui-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 0 0 auto;
+  width: 100%;
+  padding: 9px 8px 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel, 8px);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: var(--shadow-menu);
+  pointer-events: auto;
+  animation: ui-toast-in 160ms ease-out;
+}
+.ui-toast-icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  height: 20px;
+  color: var(--muted);
+}
+.ui-toast.is-success .ui-toast-icon {
+  color: var(--nav-review, #2f7d4e);
+}
+.ui-toast.is-info .ui-toast-icon {
+  color: var(--accent);
+}
+.ui-toast-text {
+  flex: 1;
+  min-width: 0;
+  padding-top: 1px;
+  overflow-wrap: anywhere;
+}
+.ui-toast-close {
+  margin: -3px 0;
+  min-width: 28px;
+  height: 28px;
+}
+@keyframes ui-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* 200% zoom in a 720x540 window leaves roughly 360 CSS px: the stack spans the
+   width with equal 16px margins instead of a fixed 360px column. */
+@media (max-width: 720px) {
+  .ui-toast-host {
+    right: 16px;
+    width: calc(100vw - 32px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ui-toast {
+    animation: none;
+  }
+}

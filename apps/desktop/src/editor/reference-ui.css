@@ -1,0 +1,481 @@
+.reference-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  max-width: 100%;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--text);
+  background: var(--accent-soft);
+  font: inherit;
+  line-height: 1.5;
+  vertical-align: baseline;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.reference-chip > svg {
+  flex-shrink: 0;
+  align-self: center;
+}
+.reference-chip.is-unavailable {
+  color: var(--error);
+  background: var(--error-bg);
+}
+.reference-block-mark,
+.reference-state {
+  font-size: 0.75em;
+  opacity: 0.85;
+}
+.reference-picker,
+.reference-detail {
+  font-size: var(--ui-size, 14px);
+  line-height: 1.5;
+  width: min(600px, calc(100vw - 32px));
+  max-height: min(760px, calc(100vh - 48px));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-menu);
+  overflow: auto;
+}
+.reference-picker {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.reference-picker > header,
+.reference-picker > footer {
+  flex: 0 0 auto;
+}
+.reference-picker-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.reference-picker::backdrop,
+.reference-detail::backdrop {
+  background: var(--scrim);
+}
+.reference-picker header,
+.reference-detail header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.reference-picker h2,
+.reference-detail h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.reference-picker h3,
+.reference-detail h3 {
+  overflow-wrap: anywhere;
+  font-size: 18px;
+  margin: 16px 0 8px;
+}
+.reference-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin: 12px 0;
+}
+.reference-search > svg {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.reference-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+.reference-search:focus-within {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: none;
+}
+.reference-search input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.reference-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--canvas);
+}
+.reference-categories button {
+  display: inline-flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  min-height: 34px;
+}
+.reference-categories [aria-pressed='true'] {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 3px var(--line);
+}
+.reference-version,
+.reference-alias {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  margin: 14px 0;
+  font-size: 13px;
+}
+.reference-version .ui-select {
+  width: 100%;
+}
+.reference-alias input {
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--text);
+  line-height: 1.5;
+}
+.reference-embed {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 14px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface-subtle, var(--surface));
+  cursor: pointer;
+}
+.reference-embed input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--accent);
+  flex: 0 0 auto;
+}
+.reference-embed span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+.reference-embed strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+.reference-embed small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.reference-alias input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.reference-picker-hint {
+  margin: 12px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.reference-identity {
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.reference-annotation-preview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.reference-archive {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 32px;
+  margin: 12px 0;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.reference-target-list > .text-button {
+  flex-shrink: 0;
+}
+.reference-target-list {
+  max-height: 340px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 3px;
+  margin: 0 -3px;
+}
+.reference-target {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  text-align: left;
+  padding: 10px;
+  border-radius: 8px;
+}
+.reference-target > svg {
+  flex-shrink: 0;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.reference-target > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.reference-target strong {
+  font-size: 14px;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.reference-target small {
+  font-size: 12px;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.reference-target.is-selected {
+  background: var(--accent-soft);
+  box-shadow: inset 2px 0 var(--accent);
+}
+/* The shared pager keeps its own row inside the dialog instead of the page padding. */
+.reference-picker-pager {
+  margin: 12px 0 0;
+  padding: 8px 0;
+}
+.reference-picker footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.reference-selection-preview,
+.reference-detail blockquote {
+  margin: 16px 0 0;
+  padding: 8px 12px;
+  border-left: 2px solid var(--line);
+  color: var(--muted);
+  max-height: 140px;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.reference-panel {
+  min-width: 0;
+  max-width: 100%;
+  border-top: 1px solid var(--line);
+  margin-top: 36px;
+  padding-top: 12px;
+  font-size: 13px;
+}
+.reference-panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 0;
+  text-align: left;
+  color: var(--muted);
+  font-weight: 500;
+}
+.reference-panel-heading .is-collapsed {
+  transform: rotate(-90deg);
+}
+.reference-panel-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  flex-wrap: wrap;
+}
+.reference-panel-tabs button:not(.icon-button) {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.reference-panel-tabs [aria-pressed='true'] {
+  background: var(--accent-soft);
+}
+.reference-occurrences {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+  max-height: min(520px, 65vh);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  padding: 4px;
+  margin: 0;
+}
+.reference-occurrences article {
+  flex-shrink: 0;
+  min-width: 0;
+  max-width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--canvas);
+}
+/* A first load has no rows yet; the placeholders keep the panel from collapsing. */
+.reference-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.reference-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px;
+  margin: 0;
+}
+.reference-skeleton-row {
+  display: block;
+  flex-shrink: 0;
+  height: 73px;
+  border-radius: 8px;
+  background: var(--canvas);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reference-skeleton-row {
+    animation: reference-skeleton-pulse 1.4s ease-in-out infinite;
+  }
+}
+@keyframes reference-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+.reference-return {
+  margin: 0 12px 12px 0;
+}
+@media (max-width: 480px) {
+  .reference-picker,
+  .reference-detail {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    padding: 14px;
+  }
+  .reference-target-list {
+    max-height: 38dvh;
+  }
+
+  .reference-picker footer {
+    padding-bottom: 0;
+  }
+}
+.reference-source {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 28px;
+  max-width: 100%;
+  padding: 3px 0;
+  text-align: left;
+}
+.reference-source strong {
+  font-size: 13px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.reference-source > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.reference-occurrences p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+/* The property that carries the relation is a label, not the excerpt. */
+.reference-occurrences p.reference-field {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 6px 0 0;
+}
+.reference-truncated {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.reference-highlight {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 3px;
+  background: var(--accent-soft);
+}
+.reference-location-status {
+  color: var(--muted);
+  font-size: 13px;
+  padding: 8px 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reference-chip {
+    transition:
+      background-color 120ms,
+      color 120ms;
+  }
+}

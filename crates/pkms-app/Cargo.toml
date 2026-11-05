@@ -1,0 +1,101 @@
+[package]
+name = "pkms-app"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+autoexamples = false
+
+[[example]]
+name = "export_app_contracts"
+path = "examples/export_contracts.rs"
+
+[[example]]
+name = "v195_ui_fixture"
+path = "examples/v195_ui_fixture.rs"
+
+[[example]]
+name = "desktop_fixture"
+path = "examples/desktop_fixture.rs"
+
+[[example]]
+name = "remote_probe"
+path = "examples/remote_probe.rs"
+
+[[example]]
+name = "agent_probe"
+path = "examples/agent_probe.rs"
+
+[[example]]
+name = "chat_history_fixture"
+path = "examples/chat_history_fixture.rs"
+
+[[example]]
+name = "chat_recovery_fixture"
+path = "examples/chat_recovery_fixture.rs"
+
+[[example]]
+name = "knowledge_core_fixture"
+path = "examples/knowledge_core_fixture.rs"
+
+[[example]]
+name = "workspace_performance_fixture"
+path = "examples/workspace_performance_fixture.rs"
+
+[[example]]
+name = "graph_scale_fixture"
+path = "examples/graph_scale_fixture.rs"
+
+[[example]]
+name = "embedding_probe"
+path = "examples/embedding_probe.rs"
+
+[[example]]
+name = "answer_budget_probe"
+path = "examples/answer_budget_probe.rs"
+
+[[example]]
+name = "w4_protocol_final_probe"
+path = "examples/w4_protocol_final_probe.rs"
+
+[[example]]
+name = "embedding_transport_probe"
+path = "examples/embedding_transport_probe.rs"
+
+[[example]]
+name = "desktop_demo_library"
+path = "examples/desktop_demo_library.rs"
+
+[[example]]
+name = "pwa_desktop_profile"
+path = "examples/pwa_desktop_profile.rs"
+
+[dependencies]
+pkms-core = { path = "../pkms-core" }
+pkms-worker = { path = "../pkms-worker" }
+pkms-inference = { path = "../pkms-inference", features = ["remote"] }
+pkms-sync = { path = "../pkms-sync" }
+pkms-sync-client = { path = "../pkms-sync-client" }
+pkms-sync-engine = { path = "../pkms-sync-engine" }
+base64.workspace = true
+tempfile.workspace = true
+reqwest.workspace = true
+tokio.workspace = true
+chrono.workspace = true
+file-id.workspace = true
+rusqlite.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+ts-rs.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+axum.workspace = true
+pkms-sync-server = { path = "../pkms-sync-server" }
+# Tests build their own OOXML containers for the DOCX import path.
+zip = { workspace = true, features = ["deflate-flate2"] }
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61.2", features = ["Win32_Foundation", "Win32_Security_Credentials", "Win32_System_JobObjects", "Win32_System_Threading"] }

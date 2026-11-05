@@ -1,0 +1,760 @@
+.source-reader .source-sidebar > :is(label, .choice-field) > .ui-select,
+.source-reader .source-sidebar :is(label, .choice-field) > .ui-select {
+  width: 100%;
+  margin-top: 6px;
+  color: var(--text);
+}
+.source-reader .source-annotation {
+  padding: 14px 10px;
+  margin-inline: -6px;
+  border-radius: 7px;
+  scroll-margin-top: 12px;
+}
+.source-reader .source-annotation.is-focused {
+  background: color-mix(in srgb, var(--accent) 7%, var(--canvas));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, var(--line));
+}
+.source-reader .source-annotation:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.source-reader .source-annotation .source-tools {
+  flex-wrap: wrap;
+}
+.source-reader .source-sidebar .annotation-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  margin: 10px 0 6px;
+  padding: 0 5px 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--muted);
+}
+.source-reader .source-sidebar .annotation-search > svg {
+  flex: 0 0 auto;
+}
+.source-reader .source-sidebar .annotation-search input {
+  width: 100%;
+  min-width: 0;
+  min-height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.source-reader .source-sidebar .annotation-search button {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  padding: 0;
+  border-radius: 5px;
+}
+.source-reader .source-sidebar .annotation-search:focus-within {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: none;
+}
+.source-reader .source-sidebar .annotation-search-status {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.source-reader .source-sidebar > .source-tools:first-child {
+  position: sticky;
+  top: -16px;
+  z-index: 4;
+  margin: -16px -16px 12px;
+  padding: 16px 16px 8px;
+  background: var(--sidebar);
+  border-bottom: 1px solid var(--line);
+}
+.source-reader .source-sidebar > .source-tools:first-child h2 {
+  margin-bottom: 0;
+}
+.source-reader .source-sidebar .reference-panel {
+  max-width: 100%;
+  margin-top: 16px;
+}
+.source-reader .source-view-switch {
+  width: fit-content;
+  margin: 0 0 12px;
+}
+.source-reader .source-view-switch button {
+  width: auto;
+  min-width: 32px;
+  height: 26px;
+  min-height: 26px;
+  padding: 0 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.source-reader .source-view-switch button[aria-pressed='true'] {
+  color: var(--text);
+}
+.source-reader .source-pdf-mode-shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+.source-reader .source-pdf-view-switch {
+  flex: 0 0 auto;
+  margin: 8px 16px;
+}
+.source-reader .source-markdown-render {
+  max-width: 72ch;
+  margin: 0 auto;
+  padding-bottom: 64px;
+}
+.source-reader .source-markdown-render .read-document {
+  padding-top: 4px;
+}
+.source-reader .source-markdown-status {
+  color: var(--muted);
+}
+
+.source-reader .source-docx-render {
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: 64px;
+}
+.source-reader .source-docx-hint,
+.source-reader .source-docx-status {
+  margin: 0 0 10px;
+  padding-inline: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.source-reader .source-docx-hint {
+  color: var(--muted);
+}
+.source-reader .source-docx-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 8px 8px;
+}
+.source-reader .source-docx-pages .docx-wrapper {
+  min-width: max-content;
+  background: transparent;
+  padding: 0;
+}
+.source-reader .source-docx-pages .docx-wrapper > section.docx {
+  margin: 0 auto 24px;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--line) 70%, transparent),
+    0 10px 28px color-mix(in srgb, #000 12%, transparent);
+}
+.source-reader .source-docx-pages .docx-wrapper > section.docx:last-child {
+  margin-bottom: 0;
+}
+.source-reader .source-docx-pages a {
+  color: var(--accent);
+}
+
+/* DOCX Word-exact mode: the native Word export is shown by PdfReader. The
+   reader owns its scroll surface, so the outer prose scroller must yield the
+   remaining height instead of nesting a second scrollport. */
+.source-reader .source-prose-scroll:has(.source-docx-word) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.source-reader .source-docx-render:has(.source-docx-word) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding-bottom: 0;
+}
+.source-reader .source-docx-word {
+  display: flex;
+  flex: 1;
+  min-height: 420px;
+}
+.source-reader .source-docx-word .source-pdf {
+  flex: 1;
+  min-height: 0;
+}
+.source-reader .source-docx-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 8px 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+}
+.source-reader .source-docx-fallback button {
+  flex: 0 0 auto;
+}
+
+.source-table-extract {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle, #d9d9d9);
+  border-radius: 10px;
+  background: var(--surface-subtle, #fafafa);
+}
+.source-table-extract summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.source-table-block {
+  margin-top: 12px;
+  overflow-x: auto;
+}
+.source-table-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.source-extracted-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.source-extracted-table th,
+.source-extracted-table td {
+  border: 1px solid var(--border-subtle, #d9d9d9);
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+.source-extracted-table th {
+  background: var(--surface-raised, #f2f2f2);
+}
+/* At 200% on a 720x540 window the native viewport is only about 353x251
+   CSS pixels. Keep the reader title one line, move the create-note action
+   out of the layout flow, and compact non-essential source chrome so the
+   prose itself still gets a usable scrollport instead of being pushed below
+   the fold. */
+@media (max-height: 380px) {
+  .source-reader .source-reader-header {
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 6px 10px;
+  }
+  .source-reader .source-reader-heading {
+    flex: 1 1 48px;
+    min-width: 0;
+  }
+  .source-reader .source-reader-heading strong {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .source-reader .source-reader-heading small {
+    display: none;
+  }
+  .source-reader .source-reader-tools {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    gap: 4px;
+    margin-inline-start: 0;
+  }
+  .source-reader .source-reader-content {
+    position: relative;
+  }
+  .source-reader .source-note-import {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    z-index: 4;
+    width: auto;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  .source-reader .source-note-import > button {
+    width: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+  .source-reader .source-note-import-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .source-reader .source-note-import:has(> button[aria-expanded='true']) {
+    inset: 4px 8px;
+    padding: 10px 12px;
+    overflow: auto;
+    border: 1px solid var(--line);
+    background: var(--canvas);
+    box-shadow: var(--shadow-float);
+  }
+  .source-reader .source-cleaning-notice {
+    display: none;
+  }
+  .source-reader .source-docx-hint {
+    display: none;
+  }
+  .source-reader .source-docx-word {
+    min-height: 0;
+  }
+  .source-reader .source-view-switch {
+    margin-bottom: 2px;
+  }
+  .source-reader .source-find {
+    gap: 4px;
+    padding: 2px 8px;
+  }
+  .source-reader .source-find input {
+    min-height: 26px;
+    padding-block: 2px;
+  }
+  .source-reader .source-find button {
+    min-height: 26px;
+  }
+  .source-reader .source-find small {
+    display: none;
+  }
+}
+
+/* Reflowable-book chrome: cover, built-in contents and chapter navigation. */
+.source-reader .source-book-navigation {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  margin: 0 0 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 1px 0 color-mix(in srgb, #fff 55%, transparent) inset;
+}
+.source-reader .source-book-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 16px;
+}
+.source-reader .source-book-cover {
+  flex: 0 0 88px;
+  width: 88px;
+  aspect-ratio: 2 / 3;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--canvas) 72%, var(--surface));
+  box-shadow: 0 6px 18px color-mix(in srgb, #000 12%, transparent);
+}
+.source-reader .source-book-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.source-reader .source-book-cover-placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+.source-reader .source-book-cover-placeholder .text-button {
+  min-height: 32px;
+  padding-inline: 6px;
+  font-size: 11px;
+}
+.source-reader .source-book-identity {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 5px;
+  align-content: start;
+}
+.source-reader .source-book-kicker {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.source-reader .source-book-identity > strong {
+  overflow-wrap: anywhere;
+  font-size: 16px;
+  line-height: 1.32;
+}
+.source-reader .source-book-identity > small {
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 12px;
+}
+.source-reader .source-book-current {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.source-reader .source-book-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+.source-reader .source-book-controls button {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding-inline: 9px;
+  font-size: 12px;
+}
+.source-reader .source-book-count {
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  font-size: 10px;
+  line-height: 17px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.source-reader .source-book-toc {
+  max-height: min(280px, 34vh);
+  padding: 7px 8px 10px;
+  overflow: auto;
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--canvas) 38%, var(--surface));
+  overscroll-behavior: contain;
+}
+.source-reader .source-book-toc ol {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.source-reader .source-book-toc button {
+  display: flex;
+  width: 100%;
+  min-height: 32px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-block: 5px;
+  padding-inline-end: 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: start;
+}
+.source-reader .source-book-toc button:hover {
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+.source-reader .source-book-toc button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.source-reader .source-book-toc button[aria-current='location'] {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+.source-reader .source-book-toc button span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.source-reader .source-book-toc button small {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-height: 380px) {
+  .source-reader .source-book-navigation {
+    margin-bottom: 5px;
+    border-radius: 9px;
+  }
+  .source-reader .source-book-summary {
+    gap: 9px;
+    padding: 8px 10px;
+  }
+  .source-reader .source-book-cover {
+    flex-basis: 48px;
+    width: 48px;
+    border-radius: 5px;
+  }
+  .source-reader .source-book-current,
+  .source-reader .source-book-identity > small {
+    display: none;
+  }
+  .source-reader .source-book-identity {
+    gap: 2px;
+  }
+  .source-reader .source-book-identity > strong {
+    font-size: 13px;
+  }
+  .source-reader .source-book-controls {
+    gap: 4px;
+  }
+  .source-reader .source-book-controls button {
+    min-height: 32px;
+    padding-inline: 6px;
+    font-size: 11px;
+  }
+  .source-reader .source-book-toc {
+    max-height: min(120px, 30vh);
+    padding: 4px 6px 6px;
+  }
+}
+/* Once reading leaves the top of the document, keep a compact book bar
+   reachable without covering the prose with the full cover and contents. */
+.source-reader .source-book-navigation.is-compact .source-book-summary {
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+}
+.source-reader .source-book-navigation.is-compact .source-book-cover {
+  flex-basis: 32px;
+  width: 32px;
+  border-radius: 4px;
+  box-shadow: none;
+}
+.source-reader .source-book-navigation.is-compact .source-book-cover-placeholder {
+  padding: 2px;
+}
+.source-reader .source-book-navigation.is-compact .source-book-cover-placeholder svg {
+  width: 16px;
+  height: 16px;
+}
+.source-reader .source-book-navigation.is-compact .source-book-cover-placeholder span,
+.source-reader .source-book-navigation.is-compact .source-book-kicker,
+.source-reader .source-book-navigation.is-compact .source-book-identity > strong,
+.source-reader .source-book-navigation.is-compact .source-book-identity > small {
+  display: none;
+}
+.source-reader .source-book-navigation.is-compact .source-book-identity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.source-reader .source-book-navigation.is-compact .source-book-current {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.source-reader .source-book-navigation.is-compact .source-book-controls {
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  margin: 0;
+}
+.source-reader .source-book-navigation.is-compact .source-book-controls button {
+  min-height: 32px;
+  padding-inline: 7px;
+  font-size: 11px;
+}
+.source-reader .source-book-navigation.is-compact .source-book-toc {
+  max-height: min(180px, 24vh);
+}
+/* EPUB images are fetched only near the viewport and keep the book's reading
+   measure. The block itself remains the focus/anchor target. */
+.source-reader .source-prose-image {
+  max-width: min(100%, 920px);
+  margin: 18px auto;
+  padding: 0;
+  border-radius: 10px;
+  outline: none;
+}
+.source-reader .source-prose-image:focus-visible {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.source-reader .source-inline-image-host {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+.source-reader .source-inline-image-host img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--canvas) 65%, var(--surface));
+  box-shadow: 0 8px 24px color-mix(in srgb, #000 10%, transparent);
+}
+.source-reader .source-inline-image-status {
+  display: flex;
+  min-height: 128px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 18px;
+  border: 1px dashed color-mix(in srgb, var(--text) 24%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--canvas) 52%, var(--surface));
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.source-reader .source-inline-image-status .secondary-button {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 5px;
+}
+.source-reader .source-inline-image-caption {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+}
+@media (max-height: 540px), (max-width: 700px) {
+  .source-reader .source-prose-image {
+    margin-block: 12px;
+  }
+  .source-reader .source-inline-image-status {
+    min-height: 88px;
+    padding: 12px;
+  }
+}
+
+.source-reader .source-sidebar .annotation-search-scope {
+  display: flex;
+  gap: 3px;
+  margin: 10px 0 4px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--surface) 80%, var(--canvas));
+}
+.source-reader .source-sidebar .annotation-search-scope button {
+  flex: 1 1 0;
+  min-height: 28px;
+  padding: 3px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+}
+.source-reader .source-sidebar .annotation-search-scope button[aria-pressed='true'] {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px color-mix(in srgb, #000 10%, transparent);
+}
+.source-reader .source-sidebar .annotation-library-results {
+  display: grid;
+  gap: 8px;
+}
+.source-reader .source-sidebar .annotation-library-results > p {
+  margin: 4px 0;
+}
+.source-reader .source-sidebar .annotation-library-busy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+}
+.source-reader .source-sidebar .annotation-library-error {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, #c33 35%, var(--line));
+  border-radius: 7px;
+  background: color-mix(in srgb, #c33 6%, var(--surface));
+}
+.source-reader .source-sidebar .annotation-library-error p {
+  margin: 0;
+}
+.source-reader .source-sidebar .annotation-library-result {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.source-reader .source-sidebar .annotation-library-source {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.source-reader .source-sidebar .annotation-library-result blockquote {
+  margin: 0;
+  padding-left: 9px;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+  font-size: 12px;
+  line-height: 1.55;
+}
+.source-reader .source-sidebar .annotation-library-result p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.source-reader .source-sidebar .annotation-library-result-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.source-reader .source-sidebar .annotation-library-result-footer button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+}
+
+.source-reader .source-sidebar .annotation-list {
+  display: grid;
+  gap: 2px;
+}
+.source-reader .source-sidebar .annotation-list [role='listitem'] {
+  outline-offset: 2px;
+}

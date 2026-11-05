@@ -1,0 +1,24 @@
+.source-note-import {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: 60%;
+  overflow: auto;
+}
+.source-note-import > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 0;
+}
+.source-note-import label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.source-note-import input {
+  width: 100%;
+}
+.source-note-import .source-tools {
+  margin-top: 12px;
+}

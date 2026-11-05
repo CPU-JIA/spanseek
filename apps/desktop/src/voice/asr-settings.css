@@ -1,0 +1,39 @@
+.asr-settings {
+  max-width: 680px;
+}
+.asr-settings > .muted,
+.asr-settings form > .muted {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.asr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 13px;
+}
+.asr-field .ui-input {
+  width: 100%;
+}
+.asr-settings-state {
+  color: var(--muted);
+  font-size: 12px;
+}
+.asr-settings-error {
+  color: var(--error);
+  font-size: 13px;
+}
+.asr-settings-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+}
+.asr-settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}

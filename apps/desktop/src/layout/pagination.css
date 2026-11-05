@@ -1,0 +1,144 @@
+/* Real page numbers for long lists. Layout only: buttons keep .secondary-button
+   and the size picker keeps the shared .ui-select shape.
+
+   One component, two variants:
+   - `footer` is the page's last row. It sticks to the bottom of the pane so a
+     short list cannot float it up, and it owns the single top rule.
+   - `inline` continues a list, picker or filter popover, so it draws no rule. */
+.pagination {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 12px;
+  flex-shrink: 0;
+  min-height: var(--pane-footer-height);
+  padding: 0 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  /* The pager measures its own width: a narrow pane drops the step labels
+     instead of squeezing the controls. */
+  container: pagination / inline-size;
+}
+.pagination--footer {
+  margin-top: auto;
+}
+.pagination--inline {
+  border-top: 0;
+}
+/* The page-shell footer already draws the row rule, so a pager nested in it
+   must not add a second line. */
+.page-frame-footer:not(.is-inline) .pagination--footer {
+  height: 100%;
+  min-height: 0;
+  margin-block: 0;
+  border-top: 0;
+}
+.pagination-window {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.pagination .pagination-size {
+  display: inline-flex;
+  align-items: center;
+  /* The size picker is a control, not filler: never let the flex row
+     squeeze it below a usable width at 200% zoom in a 720x540 window. */
+  flex: 0 0 auto;
+  gap: 6px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+.pagination .pagination-size .ui-select,
+.pagination .pagination-jump .ui-input {
+  flex: 0 0 auto;
+  width: 64px;
+  min-width: 64px;
+  max-width: 64px;
+  justify-content: space-between;
+  height: 28px;
+  min-height: 28px;
+  padding: 3px 7px;
+}
+.pagination-index {
+  flex: 0 0 auto;
+  padding-inline: 4px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/* A step control is a 28px target that centres its icon in a grid box. */
+.pagination .secondary-button {
+  flex: 0 0 auto;
+  display: grid;
+  grid-auto-flow: column;
+  place-items: center;
+  gap: 4px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 3px 9px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.pagination-step-label {
+  display: inline;
+}
+/* A narrow pane hides the visible label and keeps the 28px target. Hiding with
+   `display: none` (never a zero font size, which shifted the icon about 2px) lets
+   the grid centre the icon; the button's aria-label keeps the accessible name. */
+@container pagination (max-width: 640px) {
+  .pagination-step-label {
+    display: none;
+  }
+  .pagination .secondary-button {
+    padding: 0;
+  }
+}
+@container pagination (max-width: 460px) {
+  .pagination-size-label,
+  .pagination-size-unit {
+    display: none;
+  }
+  .pagination-window,
+  .pagination-total {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .pagination .pagination-jump .ui-input {
+    width: 44px;
+    min-width: 44px;
+    max-width: 44px;
+  }
+}
+
+.pagination-jump {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.pagination-jump .ui-input {
+  appearance: textfield;
+}
+.pagination-jump .ui-input::-webkit-inner-spin-button,
+.pagination-jump .ui-input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+.pagination-jump button {
+  min-height: 28px;
+  padding: 3px 7px;
+}
+
+@container pagination (max-width: 300px) {
+  .pagination-size-label,
+  .pagination-size-unit {
+    display: none;
+  }
+}

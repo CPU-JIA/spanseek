@@ -1,0 +1,21 @@
+{
+  "name": "pkms-workspace",
+  "private": true,
+  "packageManager": "pnpm@10.25.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "contracts:generate": "node scripts/generate-contracts.mjs",
+    "typecheck": "pnpm -r typecheck",
+    "desktop": "pnpm --filter @pkms/desktop tauri dev",
+    "desktop:build": "pnpm --filter @pkms/desktop tauri build",
+    "build:rich-export": "node scripts/build-rich-export.mjs",
+    "format:desktop": "prettier --write \"apps/desktop/src/**/*.{ts,tsx,css}\" \"apps/desktop/tests/*.mjs\"",
+    "format:desktop:check": "prettier --check \"apps/desktop/src/**/*.{ts,tsx,css}\" \"apps/desktop/tests/*.mjs\""
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "prettier": "3.9.9"
+  }
+}

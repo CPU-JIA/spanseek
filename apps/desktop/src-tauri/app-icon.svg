@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <title>跨索 spanseek</title>
+  <desc>墨黑圆角方形底上的一条暖白 S 形求索路径，右上保留暖金落点。</desc>
+  <rect x="16" y="16" width="480" height="480" rx="116" fill="#17181B"/>
+  <rect x="17" y="17" width="478" height="478" rx="115" stroke="#F7F3E8" stroke-opacity=".10" stroke-width="2"/>
+  <path d="M378 150C378 112 347 88 302 88H238C194 88 162 111 162 150C162 188 190 210 234 214L278 218C322 222 350 244 350 282C350 320 318 344 274 344H210C166 344 136 366 136 402" stroke="#F7F3E8" stroke-width="54" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="378" cy="150" r="28" fill="#E3B45B"/>
+  <circle cx="378" cy="150" r="40" stroke="#E3B45B" stroke-opacity=".22" stroke-width="2"/>
+  <circle cx="136" cy="402" r="10" fill="#F7F3E8" fill-opacity=".9"/>
+</svg>

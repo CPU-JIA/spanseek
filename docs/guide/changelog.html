@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17181B" />
+    <meta name="color-scheme" content="light dark" />
+    <title>版本记录 · 跨索 spanseek</title>
+    <script>
+      try {
+        if (localStorage.getItem('spanseek-theme-v2') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
+    </script>
+    <link rel="icon" href="../download/favicon.ico?v=20261022" sizes="any" />
+    <link rel="stylesheet" href="../download/styles.css?v=20261022-3" />
+    <link rel="stylesheet" href="doc.css?v=20261022" />
+    <script src="../download/download.js" defer></script>
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+          <img
+            src="../download/assets/icon.svg?v=20261022"
+            width="30"
+            height="30"
+            alt=""
+            aria-hidden="true"
+          /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="../download/index.html#workspace">产品</a>
+          <a href="../download/brand.html">品牌</a>
+          <a href="../download/index.html#principles">原则</a>
+          <a href="../download/install.html">下载</a>
+          <a href="../download/index.html#docs">文档</a>
+        </nav>
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
+              ></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.4 14.3A8.5 8.5 0 0 1 9.7 3.6 8.5 8.5 0 1 0 20.4 14.3Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="doc-main">
+      <div class="doc-shell">
+        <nav class="doc-breadcrumb" aria-label="面包屑">
+          <a href="../download/index.html">跨索 spanseek</a>
+          <span aria-hidden="true">/</span>
+          <span>版本记录</span>
+        </nav>
+        <article class="doc-article">
+          <h1 id="跨索-spanseek-changelog">跨索 spanseek CHANGELOG</h1>
+          <p>
+            面向用户的版本记录。安装包、SHA-256 与系统要求见<a href="../download/index.html"
+              >下载页</a
+            >，当前边界见<a href="known-issues.html">已知问题</a>。
+          </p>
+          <h2 id="101--2026-11-05">1.0.1 — 2026-11-05</h2>
+          <ul>
+            <li>六个常驻入口与完整内容工作区；返回保留集合、筛选、分页和滚动，支持主动分屏。</li>
+            <li>
+              知识任务支持自定义要求、可选模板、固定来源、真实生成、编辑审阅、明确保存和历史追溯。
+            </li>
+            <li>标签字典与分配支持同步、冲突比较、权限检查、删除影响和待依赖恢复。</li>
+            <li>语音速记支持原音频、回放、转写修订、字幕与手机捕获；录音关闭和恢复保护完善。</li>
+            <li>新增 Office、EPUB/MOBI、CSV 等阅读支持和捆绑 OCR；实际格式限制见格式支持表。</li>
+            <li>完善保存视图、图谱/画布、研究/自动化、任务中心、错误重试与完整备份恢复。</li>
+            <li>官网更新真实界面和 50 秒有声演示；安装包仍未签名。</li>
+          </ul>
+          <h2 id="100--2026-10-22">1.0.0 — 2026-10-22</h2>
+          <p>首个 Windows 本地交付版本。Windows x64，单用户，本地优先。</p>
+          <h3 id="品牌与官网">品牌与官网</h3>
+          <ul>
+            <li>
+              品牌标识更新为墨黑底、暖白 S 路径与暖金落点，桌面、官网、favicon 与移动 PWA 同步。
+            </li>
+            <li>
+              官网新增 50
+              秒有声产品电影，包含中文旁白、背景音乐、轻音效与中文字幕；用户点击后有声播放。
+            </li>
+          </ul>
+          <h3 id="记录与阅读">记录与阅读</h3>
+          <ul>
+            <li>
+              新建、编辑与保存笔记，支持标题、段落、标题层级、列表、任务列表、引用、代码块、表格、图片、公式与
+              Mermaid 图表。
+            </li>
+            <li>导入 PDF、DOCX、Markdown 与 UTF-8 TXT；原件按内容寻址保存，不被编辑覆盖。</li>
+            <li>PDF 阅读器支持目录、页码、缩放、适宽、摘录与阅读位置保存。</li>
+            <li>DOCX 使用内置 Word 版式渲染；需要摘录时可切换到原文视图。</li>
+            <li>长文档支持标题折叠、折叠全部/展开全部与按笔记持久化。</li>
+          </ul>
+          <h3 id="组织与找回">组织与找回</h3>
+          <ul>
+            <li>笔记画廊、列表、集合、标签与属性编辑。</li>
+            <li>表格、看板、日历、时间线与画布视图。</li>
+            <li>
+              画布只保存布局与引用，不复制正文；支持拖拽、缩放、适应画布与 SVG/JSON 打印导出。
+            </li>
+            <li>双向链接、反链上下文与 wiki 嵌入。</li>
+            <li>
+              中文全文检索、关键词高亮、最近搜索与可选语义检索；语义未配置时明确显示关键词回退。
+            </li>
+            <li>命令面板、快捷键、撤销/重做、批量整理与侧栏拖拽。</li>
+          </ul>
+          <h3 id="ai-与自动化">AI 与自动化</h3>
+          <ul>
+            <li>自由对话、严格依证问答与提案审阅。</li>
+            <li>AI 只能提案；变更摘要默认折叠，只有明确应用后才会写入正文。</li>
+            <li>近 30 天用量与费用只显示真实数据；未配置参考单价时不伪造金额。</li>
+            <li>自动化变更集与研究任务；支持应用、跳过、拒绝、撤销与取消。</li>
+            <li>同步状态覆盖离线、连接中、冲突与恢复；高风险操作使用应用内原生确认框。</li>
+          </ul>
+          <h3 id="数据与可靠性">数据与可靠性</h3>
+          <ul>
+            <li>
+              完整备份包含笔记、修订、资料原件、摘录、标签、视图与提案；支持校验和恢复到新目录。
+            </li>
+            <li>保存冲突、读取失败、画布保存失败与同步离线均显示原因和可执行下一步。</li>
+            <li>设置页区分“已保存/未保存”，并提供恢复默认值。</li>
+            <li>
+              启动画面、欢迎页与“关于”使用统一品牌标记，显示真实版本、平台、知识库格式与 WebView2
+              版本。
+            </li>
+            <li>键盘焦点、可访问名称、Esc 返回焦点与对话框焦点陷阱覆盖主要界面。</li>
+            <li>100% / 125% / 200% 缩放、深色模式与英文界面完成一轮矩阵检查。</li>
+          </ul>
+          <h3 id="当前边界">当前边界</h3>
+          <ul>
+            <li>安装包未签名；Windows 可能显示“未知发布者”或 SmartScreen。</li>
+            <li>仅支持 Windows 10 / 11 x64；依赖 WebView2。</li>
+            <li>没有自动更新；升级前请创建完整备份。</li>
+            <li>PDF 扫描件不提供 OCR。</li>
+            <li>同步需要自行配置服务；移动端只提供配套捕获与续读。</li>
+            <li>详细边界与未覆盖环境见<a href="known-issues.html">已知问题</a>。</li>
+          </ul>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+            <img
+              src="../download/assets/icon.svg?v=20261022"
+              width="28"
+              height="28"
+              alt=""
+              aria-hidden="true"
+            /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+          </a>
+          <p>本地优先的个人知识库。<br />为长期保存而设计。</p>
+        </div>
+
+        <nav class="footer-group" aria-label="产品">
+          <strong>产品</strong>
+          <a href="../download/index.html#workspace">工作区</a>
+          <a href="../download/brand.html">品牌故事</a>
+          <a href="../download/index.html#principles">设计原则</a>
+          <a href="../download/install.html">下载</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="文档">
+          <strong>文档</strong>
+          <a href="quick-start.html">快速上手</a>
+          <a href="user-guide.html">用户指南</a>
+          <a href="known-issues.html">已知问题</a>
+          <a href="../download/install.html">安装说明</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="法律与隐私">
+          <strong>法律与隐私</strong>
+          <a href="privacy.html">隐私说明</a>
+          <a href="third-party-notices.html">第三方许可</a>
+          <a href="license.html">使用许可</a>
+          <a href="changelog.html">版本记录</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">
+        <span>© 2026 跨索 spanseek</span>
+      </div>
+    </footer>
+  </body>
+</html>

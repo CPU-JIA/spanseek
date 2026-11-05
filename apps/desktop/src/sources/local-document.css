@@ -1,0 +1,248 @@
+.local-document-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+}
+.local-document-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.local-document-title {
+  flex: 1;
+  min-width: 140px;
+  display: grid;
+  gap: 3px;
+}
+.local-document-title h1 {
+  font-size: 15px;
+  font-weight: 550;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.local-document-title > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.local-document-page > .source-pdf {
+  flex: 1;
+  min-height: 0;
+}
+.local-document-header > button:not(.icon-button),
+.local-library-dialog footer button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.local-document-empty {
+  min-height: 0;
+  overflow: auto;
+}
+.local-document-empty p {
+  max-width: 38rem;
+  line-height: 1.6;
+}
+.local-library-dialog {
+  width: min(480px, calc(100vw - 32px));
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-menu);
+}
+.local-library-dialog::backdrop {
+  background: #0005;
+}
+.local-library-dialog > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.local-library-dialog h2 {
+  font-size: 17px;
+  margin: 0;
+}
+.local-library-dialog p {
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 13px;
+}
+.local-library-filename {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+.local-library-recent {
+  display: grid;
+  gap: 4px;
+  max-height: 36vh;
+  overflow: auto;
+  margin: 14px 0;
+}
+.local-library-recent button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  text-align: start;
+  padding: 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+}
+.local-library-recent button:hover {
+  background: var(--hover);
+}
+.local-library-recent button > span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  font-size: 14px;
+}
+.local-library-recent small {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.local-library-dialog footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 600px) {
+  .local-document-header {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .local-document-header .primary-button {
+    font-size: 12px;
+  }
+}
+.document-drop-overlay {
+  position: fixed;
+  inset: 12px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius-panel);
+  color: var(--text);
+  pointer-events: none;
+}
+.document-drop-overlay > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.local-documents-resume {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  color: var(--muted);
+  font-size: 13px;
+  border-bottom: 1px solid var(--line);
+}
+.local-documents-resume button {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Keep the local document chrome to one row at 200% zoom. The save action
+   stays visible as a 32px icon control with an accessible name. */
+@media (max-height: 380px) {
+  .local-document-header {
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 6px 8px;
+  }
+  .local-document-title {
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 0;
+  }
+  .local-document-title h1 {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .local-document-title > span {
+    display: none;
+  }
+  .local-document-save {
+    width: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0;
+    justify-content: center;
+  }
+  .local-document-save-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+.local-document-empty {
+  min-height: 0;
+  overflow: auto;
+}
+@media (max-height: 380px) {
+  .local-document-empty {
+    justify-content: flex-start;
+    gap: 4px;
+    padding: 10px 14px;
+  }
+  .local-document-empty svg {
+    display: none;
+  }
+  .local-document-empty h2 {
+    display: none;
+  }
+  .local-document-empty p {
+    margin: 0 0 4px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+}
+@media (max-height: 380px) {
+  .local-library-dialog {
+    padding: 12px;
+  }
+  .local-library-dialog > p {
+    display: none;
+  }
+  .local-library-dialog > header {
+    margin-bottom: 8px;
+  }
+  .local-library-recent {
+    margin: 8px 0;
+    max-height: 32vh;
+  }
+  .local-library-dialog footer {
+    padding-top: 8px;
+  }
+}

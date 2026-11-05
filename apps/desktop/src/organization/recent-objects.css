@@ -1,0 +1,95 @@
+.recent-objects {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 8px 6px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+}
+
+.recent-objects-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.recent-objects-heading h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.recent-objects-heading small {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.recent-object-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recent-object {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) max-content max-content;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 26px;
+  padding: 3px 6px;
+  border-radius: var(--radius-control);
+  text-align: left;
+  color: var(--text);
+}
+
+.recent-object > svg {
+  color: var(--muted);
+}
+
+.recent-object-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.recent-object small {
+  font-size: 11px;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.recent-object-state {
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.recent-object.active {
+  background: var(--accent-soft);
+}
+
+.recent-object:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.recent-objects-error {
+  margin: 0;
+  font-size: 11px;
+  color: var(--error);
+}

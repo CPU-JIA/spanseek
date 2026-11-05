@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17181B" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="跨索（spanseek）是一个本地优先的个人知识库。把原件、摘录、笔记与 AI 结论放进同一个可追溯的工作区。"
+    />
+    <title>跨索 spanseek · 本地优先的个人知识库</title>
+    <script>
+      try {
+        if (localStorage.getItem('spanseek-theme-v2') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
+    </script>
+    <link rel="icon" href="favicon.ico?v=20261022" sizes="any" />
+    <link rel="stylesheet" href="styles.css?v=20261105" />
+    <script src="download.js?v=20261105" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="#top" aria-label="跨索 spanseek 首页">
+          <img src="assets/icon.svg?v=20261022" width="30" height="30" alt="" aria-hidden="true" />
+          <span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+        </a>
+
+        <nav class="site-nav" aria-label="主导航">
+          <a href="#workspace">产品</a>
+          <a href="#motion">产品演示</a>
+          <a href="#brand">品牌</a>
+          <a href="#principles">原则</a>
+          <a href="#download">下载</a>
+          <a href="#docs">文档</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="3.75"></circle>
+              <path
+                d="M12 2.5v2M12 19.5v2M4.7 4.7l1.4 1.4M17.9 17.9l1.4 1.4M2.5 12h2M19.5 12h2M4.7 19.3l1.4-1.4M17.9 6.1l1.4-1.4"
+              ></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.2 14.2A8.3 8.3 0 0 1 9.8 3.8a8.6 8.6 0 1 0 10.4 10.4Z"></path>
+            </svg>
+          </button>
+          <a class="button button--primary button--compact" href="#download">下载</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-atmosphere" aria-hidden="true"></div>
+        <div class="shell hero-copy">
+          <p class="hero-kicker">
+            <span class="hero-kicker__dot" aria-hidden="true"></span>
+            跨索 · 让每一次求索，都有迹可循
+          </p>
+          <h1 id="hero-title">
+            把读过的、写下的，<br />
+            <span>想清楚的，<em>放在一起。</em></span>
+          </h1>
+          <p class="hero-lede">
+            六个清晰入口，连接收集、阅读、写作、回顾与 AI 任务。
+            打开内容，把空间留给思考；核心读写与备份离线可用。
+          </p>
+          <div class="hero-actions">
+            <a
+              class="button button--primary button--large"
+              href="downloads/spanseek_1.0.1_x64-setup.exe"
+              download
+            >
+              下载 Windows 版
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M10 3.5v9.5M6.5 9.5 10 13l3.5-3.5M4 16.5h12"></path>
+              </svg>
+            </a>
+            <a class="button button--quiet button--large" href="#workspace">
+              看看它如何工作
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="shell-wide hero-visual">
+          <figure class="app-window app-window--hero">
+            <img
+              src="assets/editor.png?v=20261105"
+              data-dark-src="assets/editor-dark.png?v=20261105"
+              width="2880"
+              height="1800"
+              alt="跨索整页编辑器：让观察长成自己的理解，包含引用、关联笔记与下一步行动。"
+              fetchpriority="high"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="产品能力">
+        <div class="shell trust-line">
+          <span>原件不可变</span>
+          <span>中文全文检索</span>
+          <span>画布与双链</span>
+          <span>完整备份</span>
+          <span>本地优先</span>
+        </div>
+      </section>
+
+      <section class="section workspace" id="workspace" aria-labelledby="workspace-title">
+        <div class="shell">
+          <header class="section-heading section-heading--center">
+            <p class="eyebrow">围绕你的思路</p>
+            <h2 id="workspace-title"><span>入口清楚，</span><wbr /><span>内容就在眼前。</span></h2>
+            <p>收集、阅读、连接、回顾与表达，在同一个知识空间里自然接续。</p>
+          </header>
+          <div class="entry-grid" aria-label="六个常用入口">
+            <div class="entry-card">
+              <span aria-hidden="true">01</span>
+              <h3>知识索引</h3>
+              <p>在集合、标签和类型中找到内容。</p>
+            </div>
+            <div class="entry-card">
+              <span aria-hidden="true">02</span>
+              <h3>收件箱</h3>
+              <p>先收下想法，再按自己的节奏整理。</p>
+            </div>
+            <div class="entry-card">
+              <span aria-hidden="true">03</span>
+              <h3>资料库</h3>
+              <p>集中阅读原件与留存的材料。</p>
+            </div>
+            <div class="entry-card">
+              <span aria-hidden="true">04</span>
+              <h3>知识图谱</h3>
+              <p>沿真实引用，看见笔记间的联系。</p>
+            </div>
+            <div class="entry-card">
+              <span aria-hidden="true">05</span>
+              <h3>回顾</h3>
+              <p>把值得继续想的问题带回今天。</p>
+            </div>
+            <div class="entry-card">
+              <span aria-hidden="true">06</span>
+              <h3>AI 助手</h3>
+              <p>自由对话、依证问答与知识任务。</p>
+            </div>
+          </div>
+          <div class="feature-stack">
+            <article class="feature-row" id="knowledge">
+              <figure class="feature-media">
+                <div class="preview-switcher" role="tablist" aria-label="知识索引产品画面">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="browse-notes-tab"
+                    aria-controls="browse-panel"
+                    aria-selected="true"
+                    tabindex="0"
+                    data-preview="browse-image"
+                    data-light="assets/notes.png?v=20261105"
+                    data-dark="assets/notes-dark.png?v=20261105"
+                    data-alt="跨索知识索引：按城市与步行、阅读与写作等分类浏览笔记和资料，六个常用入口始终可见。"
+                  >
+                    知识索引</button
+                  ><button
+                    type="button"
+                    role="tab"
+                    id="browse-inbox-tab"
+                    aria-controls="browse-panel"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-preview="browse-image"
+                    data-light="assets/inbox.png?v=20261105"
+                    data-dark="assets/inbox-dark.png?v=20261105"
+                    data-alt="跨索收件箱：待整理的阅读问题和城市观察集中在同一个列表。"
+                  >
+                    收件箱</button
+                  ><button
+                    type="button"
+                    role="tab"
+                    id="browse-sources-tab"
+                    aria-controls="browse-panel"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-preview="browse-image"
+                    data-light="assets/sources.png?v=20261105"
+                    data-dark="assets/sources-dark.png?v=20261105"
+                    data-alt="跨索资料库：PDF、Markdown 和文本原件按分类集中浏览。"
+                  >
+                    资料库
+                  </button>
+                </div>
+                <div
+                  class="app-window app-window--feature"
+                  role="tabpanel"
+                  id="browse-panel"
+                  aria-labelledby="browse-notes-tab"
+                >
+                  <img
+                    id="browse-image"
+                    src="assets/notes.png?v=20261105"
+                    data-dark-src="assets/notes-dark.png?v=20261105"
+                    width="2400"
+                    height="1500"
+                    alt="跨索知识索引：按城市与步行、阅读与写作等分类浏览笔记和资料，六个常用入口始终可见。"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </figure>
+              <div class="feature-copy">
+                <p class="feature-index"><span>01</span> 收集与整理</p>
+                <h3>先收下，再慢慢整理。</h3>
+                <p class="feature-lede">
+                  知识索引、收件箱和资料库各有位置。选择一个集合，就能直接浏览其中的条目；打开内容后，返回仍接着刚才的位置。
+                </p>
+                <ul class="feature-points">
+                  <li>常用六个入口始终可见，分类与工具按需要展开</li>
+                  <li>按集合、标签、类型或关键词缩小范围</li>
+                  <li>笔记、原件与摘录保留各自身份，整理不用复制正文</li>
+                </ul>
+              </div>
+            </article>
+            <article class="feature-row feature-row--reverse" id="reading">
+              <figure class="feature-media">
+                <div class="preview-switcher" role="tablist" aria-label="阅读原件产品画面">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="read-reader-tab"
+                    aria-controls="read-panel"
+                    aria-selected="true"
+                    tabindex="0"
+                    data-preview="read-image"
+                    data-light="assets/reader.png?v=20261105"
+                    data-dark="assets/reader-dark.png?v=20261105"
+                    data-alt="跨索 PDF 阅读页：在完整工作区阅读街角观察手记，保留页码、原页和缩放控制。"
+                  >
+                    阅读原件</button
+                  ><button
+                    type="button"
+                    role="tab"
+                    id="read-editor-tab"
+                    aria-controls="read-panel"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-preview="read-image"
+                    data-light="assets/editor.png?v=20261105"
+                    data-dark="assets/editor-dark.png?v=20261105"
+                    data-alt="跨索整页笔记：关于城市观察的思考，包含标题、引用、段落和关联笔记。"
+                  >
+                    书写笔记
+                  </button>
+                </div>
+                <div
+                  class="app-window app-window--feature"
+                  role="tabpanel"
+                  id="read-panel"
+                  aria-labelledby="read-reader-tab"
+                >
+                  <img
+                    id="read-image"
+                    src="assets/reader.png?v=20261105"
+                    data-dark-src="assets/reader-dark.png?v=20261105"
+                    width="2400"
+                    height="1500"
+                    alt="跨索 PDF 阅读页：在完整工作区阅读街角观察手记，保留页码、原页和缩放控制。"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </figure>
+              <div class="feature-copy">
+                <p class="feature-index"><span>02</span> 阅读与写作</p>
+                <h3>点开内容，把空间留给思考。</h3>
+                <p class="feature-lede">
+                  资料与笔记在完整工作区中展开。阅读时回到原文，写作时连接已有想法，必要的标签、属性与来源信息随时可查。
+                </p>
+                <ul class="feature-points">
+                  <li>
+                    直接导入 PDF、Word、Excel、PowerPoint、EPUB/MOBI、CSV、Markdown 与 UTF-8 TXT
+                  </li>
+                  <li>PDF 原页与文字视图、目录、页码和缩放保持在阅读现场</li>
+                  <li>富文本笔记支持引用与双链，打开内容后也能返回原列表</li>
+                </ul>
+              </div>
+            </article>
+            <article class="feature-row" id="connections">
+              <figure class="feature-media">
+                <div class="preview-switcher" role="tablist" aria-label="知识图谱产品画面">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="connect-graph-tab"
+                    aria-controls="connect-panel"
+                    aria-selected="true"
+                    tabindex="0"
+                    data-preview="connect-image"
+                    data-light="assets/graph.png?v=20261105"
+                    data-dark="assets/graph-dark.png?v=20261105"
+                    data-alt="跨索知识图谱：城市观察、阅读与写作笔记依据真实引用连接。"
+                  >
+                    知识图谱</button
+                  ><button
+                    type="button"
+                    role="tab"
+                    id="connect-canvas-tab"
+                    aria-controls="connect-panel"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-preview="connect-image"
+                    data-light="assets/canvas.png?v=20261105"
+                    data-dark="assets/canvas-dark.png?v=20261105"
+                    data-alt="跨索画布：六张已有笔记围绕从观察到理解的主题自由排布。"
+                  >
+                    自由画布
+                  </button>
+                </div>
+                <div
+                  class="app-window app-window--feature"
+                  role="tabpanel"
+                  id="connect-panel"
+                  aria-labelledby="connect-graph-tab"
+                >
+                  <img
+                    id="connect-image"
+                    src="assets/graph.png?v=20261105"
+                    data-dark-src="assets/graph-dark.png?v=20261105"
+                    width="2400"
+                    height="1500"
+                    alt="跨索知识图谱：城市观察、阅读与写作笔记依据真实引用连接。"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </figure>
+              <div class="feature-copy">
+                <p class="feature-index"><span>03</span> 关系与画布</p>
+                <h3>让笔记在联系中变得清楚。</h3>
+                <p class="feature-lede">
+                  真实引用形成知识图谱；需要自由组织时，把已有笔记放进画布。位置可以重新安排，正文仍保留一份。
+                </p>
+                <ul class="feature-points">
+                  <li>沿引用与关系打开真实内容，再回到图中的位置</li>
+                  <li>图谱支持查找、缩放、平移与关系依据查看</li>
+                  <li>画布保存布局；列表、表格、看板和日历用于不同的整理任务</li>
+                </ul>
+              </div>
+            </article>
+            <article class="feature-row feature-row--reverse" id="review">
+              <figure class="feature-media">
+                <div class="preview-switcher" role="tablist" aria-label="回顾队列产品画面">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="recall-review-tab"
+                    aria-controls="recall-panel"
+                    aria-selected="true"
+                    tabindex="0"
+                    data-preview="recall-image"
+                    data-light="assets/review.png?v=20261105"
+                    data-dark="assets/review-dark.png?v=20261105"
+                    data-alt="跨索回顾页：街角观察、记录方法与每周阅读笔记形成待回顾队列。"
+                  >
+                    回顾队列
+                  </button>
+                </div>
+                <div
+                  class="app-window app-window--feature"
+                  role="tabpanel"
+                  id="recall-panel"
+                  aria-labelledby="recall-review-tab"
+                >
+                  <img
+                    id="recall-image"
+                    src="assets/review.png?v=20261105"
+                    data-dark-src="assets/review-dark.png?v=20261105"
+                    width="2400"
+                    height="1500"
+                    alt="跨索回顾页：街角观察、记录方法与每周阅读笔记形成待回顾队列。"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </figure>
+              <div class="feature-copy">
+                <p class="feature-index"><span>04</span> 安排回顾</p>
+                <h3>重要的想法，值得再看一次。</h3>
+                <p class="feature-lede">
+                  把想继续阅读的内容加入回顾。今天、稍后与已完成各自清楚；打开笔记和来源之后，还能回到原来的队列。
+                </p>
+                <ul class="feature-points">
+                  <li>从笔记或资料直接加入回顾</li>
+                  <li>按主题浏览，安排稍后阅读或标记完成</li>
+                  <li>回顾历史保留所用版本，重新阅读时有迹可循</li>
+                </ul>
+              </div>
+            </article>
+            <article class="feature-row" id="tasks">
+              <figure class="feature-media">
+                <div class="preview-switcher" role="tablist" aria-label="知识任务产品画面">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="work-tasks-tab"
+                    aria-controls="work-panel"
+                    aria-selected="true"
+                    tabindex="0"
+                    data-preview="work-image"
+                    data-light="assets/tasks.png?v=20261105"
+                    data-dark="assets/tasks-dark.png?v=20261105"
+                    data-alt="跨索知识任务准备页：编辑任务名称和目标，添加已有资料片段，并按需配置模型。"
+                  >
+                    知识任务</button
+                  ><button
+                    type="button"
+                    role="tab"
+                    id="work-templates-tab"
+                    aria-controls="work-panel"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-preview="work-image"
+                    data-light="assets/templates.png?v=20261105"
+                    data-dark="assets/templates-dark.png?v=20261105"
+                    data-alt="跨索任务模板编辑器：修改模板名称、说明与具体要求，让模板适合自己的工作方式。"
+                  >
+                    可编辑模板
+                  </button>
+                </div>
+                <div
+                  class="app-window app-window--feature"
+                  role="tabpanel"
+                  id="work-panel"
+                  aria-labelledby="work-tasks-tab"
+                >
+                  <img
+                    id="work-image"
+                    src="assets/tasks.png?v=20261105"
+                    data-dark-src="assets/tasks-dark.png?v=20261105"
+                    width="2400"
+                    height="1500"
+                    alt="跨索知识任务准备页：编辑任务名称和目标，添加已有资料片段，并按需配置模型。"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </figure>
+              <div class="feature-copy">
+                <p class="feature-index"><span>05</span> 知识任务与模板</p>
+                <h3>从你的材料，开始你的任务。</h3>
+                <p class="feature-lede">
+                  选好材料，写下眼前想完成的事。可以从可编辑的模板起步，也可以直接提出自己的要求；模板帮助开始，任务由你定义。
+                </p>
+                <ul class="feature-points">
+                  <li>自由对话、依证问答和知识任务放在同一个 AI 助手中</li>
+                  <li>任务模板可新增、编辑、改名、复制或删除</li>
+                  <li>AI 生成需自行配置可用模型，结果应由你核对来源与审阅</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section motion-section" id="motion" aria-labelledby="motion-title">
+        <div class="shell">
+          <header class="section-heading section-heading--center">
+            <p class="eyebrow">产品电影</p>
+            <h2 id="motion-title">让材料，接上下一步思考。</h2>
+            <p>
+              50 秒有声演示：六个常用入口、整页阅读与写作、知识关系和回顾，
+              以及由你定义的知识任务与可编辑模板。
+            </p>
+          </header>
+          <figure class="motion-stage">
+            <div class="motion-frame" data-motion-frame>
+              <video
+                class="motion-video"
+                data-motion-video
+                playsinline
+                preload="none"
+                controls
+                poster="assets/brand-mg-poster.jpg?v=20261105"
+                aria-label="跨索产品电影：六入口、整页内容、知识图谱、回顾、知识任务与可编辑模板。"
+              >
+                <source src="assets/brand-mg.mp4?v=20261105" type="video/mp4" />
+                <source src="assets/brand-mg.webm?v=20261105-vp8" type="video/webm" />
+                <track
+                  kind="captions"
+                  src="assets/brand-mg.zh.vtt?v=20261105"
+                  srclang="zh-CN"
+                  label="中文"
+                  default
+                />
+                你的浏览器不支持视频播放。<a href="assets/brand-mg.mp4?v=20261105">下载视频</a>。
+              </video>
+              <button
+                class="motion-launch"
+                type="button"
+                data-motion-launch
+                aria-label="播放 50 秒跨索产品演示，建议开启声音"
+              >
+                <span class="motion-launch-icon" aria-hidden="true">▶</span>
+                <span
+                  ><strong data-motion-label>观看产品演示</strong><small>建议开启声音</small></span
+                >
+              </button>
+            </div>
+          </figure>
+          <div class="motion-controls" aria-label="产品演示播放控制">
+            <button type="button" data-motion-toggle>播放演示</button>
+            <button type="button" data-motion-mute aria-pressed="false">声音：开</button>
+            <button type="button" data-motion-cc aria-pressed="true">字幕：开</button>
+            <a href="assets/brand-mg.mp4?v=20261105" download>下载影片</a>
+          </div>
+          <p class="motion-feedback" data-motion-feedback role="status"></p>
+        </div>
+      </section>
+      <section class="section brand-story" id="brand" aria-labelledby="brand-title">
+        <div class="shell brand-story-grid">
+          <div class="brand-story-copy">
+            <p class="eyebrow">品牌故事</p>
+            <h2 id="brand-title">为什么叫跨索。</h2>
+            <p class="brand-story-lede">
+              “跨”是让材料、摘录与想法跨越时间、文件和工具的边界；
+              “索”是在需要的时候，找到它们的来路、上下文与仍然成立的答案。
+            </p>
+            <p>
+              跨索不把收集当成终点。它保存原件，也让摘录、笔记、链接和 AI
+              提案沿着可追溯的关系生长。我们不替你决定答案，只让每一次求索都有迹可循。
+            </p>
+            <a class="inline-link" href="brand.html">
+              阅读完整的品牌故事
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="brand-story-lockup" aria-label="跨索 spanseek">
+            <div class="brand-story-mark">
+              <img
+                src="assets/icon.svg?v=20261022"
+                width="64"
+                height="64"
+                alt=""
+                aria-hidden="true"
+              />
+              <div>
+                <strong>跨索</strong>
+                <span>spanseek</span>
+              </div>
+            </div>
+            <p>让每一次求索，<br />都有迹可循。</p>
+            <div class="brand-story-characters" aria-hidden="true">
+              <span>跨<small>span</small></span>
+              <i></i>
+              <span>索<small>seek</small></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section section--muted principles"
+        id="principles"
+        aria-labelledby="principles-title"
+      >
+        <div class="shell">
+          <header class="section-heading section-heading--split">
+            <div>
+              <p class="eyebrow">为什么是跨索</p>
+              <h2 id="principles-title">不是又一个笔记软件。</h2>
+            </div>
+            <p>它首先保证：你写下的东西，几年后仍然找得回、说得清、带得走。</p>
+          </header>
+
+          <div class="principle-grid">
+            <article class="principle-card">
+              <span class="principle-icon principle-icon--blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="m5 7.5 7-4.5 7 4.5v9L12 21l-7-4.5z"></path>
+                  <path d="M5 7.5 12 12l7-4.5M12 12v9"></path>
+                </svg>
+              </span>
+              <h3>原件不可变</h3>
+              <p>导入的资料按原件保存，修改只发生在笔记与修订中。任何时候都能回到最初的材料。</p>
+            </article>
+
+            <article class="principle-card">
+              <span class="principle-icon principle-icon--rose" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.5 1.5"></path>
+                  <path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7L13 18"></path>
+                </svg>
+              </span>
+              <h3>结论可追溯</h3>
+              <p>为关键判断保留出处、上下文与版本。引用、修订与恢复，让后来仍有路可循。</p>
+            </article>
+
+            <article class="principle-card">
+              <span class="principle-icon principle-icon--violet" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3.5 13.7 9l5.3 1.7-5.3 1.7-1.7 5.3-1.7-5.3L5 10.7 10.3 9z"></path>
+                  <path d="m19 3 .5 1.5L21 5l-1.5.5L19 7l-.5-1.5L17 5l1.5-.5z"></path>
+                </svg>
+              </span>
+              <h3>AI 结果，由你确认</h3>
+              <p>
+                任务从你选定的材料与要求开始。生成结果需要核对来源、编辑审阅，并由你明确保存或应用。
+              </p>
+            </article>
+
+            <article class="principle-card">
+              <span class="principle-icon principle-icon--amber" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3.5" y="5" width="17" height="12.5" rx="2"></rect>
+                  <path d="M8 21h8M12 17.5V21"></path>
+                </svg>
+              </span>
+              <h3>默认留在本机</h3>
+              <p>
+                不配置外部服务时，记录、阅读、检索和备份都在本机完成。外部模型与同步按需配置，发送范围由相应功能说明。
+              </p>
+            </article>
+
+            <article class="principle-card">
+              <span class="principle-icon principle-icon--green" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20 7v5h-5"></path>
+                  <path d="M19 12a7.5 7.5 0 1 0-2.2 5.3"></path>
+                  <path d="M12 8v4.5l3 1.8"></path>
+                </svg>
+              </span>
+              <h3>完整备份</h3>
+              <p>笔记、资料、摘录、标签、视图与提案可以一起带走，并能恢复到新目录。</p>
+            </article>
+
+            <article class="principle-card">
+              <span class="principle-icon principle-icon--slate" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+                  <path d="M8.5 10V7a4 4 0 0 1 7.5-1.8"></path>
+                  <path d="M12 14v2"></path>
+                </svg>
+              </span>
+              <h3>不锁定</h3>
+              <p>支持 Markdown 与 Obsidian 兼容导出。数据属于你，工具只是暂时的入口。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section steps" aria-labelledby="steps-title">
+        <div class="shell">
+          <header class="section-heading section-heading--center section-heading--compact">
+            <p class="eyebrow">开始使用</p>
+            <h2 id="steps-title">三步，开始积累。</h2>
+            <p>不需要先搭建一套复杂系统。从一篇真实的笔记开始，结构会随着使用自然生长。</p>
+          </header>
+
+          <ol class="step-grid">
+            <li class="step-card">
+              <span class="step-number">01</span>
+              <h3>建一个知识库</h3>
+              <p>选择本地目录。笔记、资料、修订和备份都围绕这个目录组织。</p>
+            </li>
+            <li class="step-card">
+              <span class="step-number">02</span>
+              <h3>写下第一篇笔记</h3>
+              <p>
+                直接编辑，或导入 PDF、Word、Excel、PowerPoint、EPUB/MOBI、CSV、Markdown 与 UTF-8
+                TXT，再把摘录连回原文。
+              </p>
+            </li>
+            <li class="step-card">
+              <span class="step-number">03</span>
+              <h3>备份，然后按需连接</h3>
+              <p>先做一次完整备份。AI、同步和外部服务都按需配置，不开启也能完整使用核心能力。</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section download-section" id="download" aria-labelledby="download-title">
+        <div class="shell">
+          <div class="download-card">
+            <div class="download-card__mark" aria-hidden="true">
+              <img src="assets/icon.svg?v=20261022" width="46" height="46" alt="" />
+            </div>
+            <p class="eyebrow">开始使用</p>
+            <h2 id="download-title">从今天的第一篇笔记开始。</h2>
+            <p>Windows 10 / 11 64 位。安装后创建你自己的知识库， 数据保存在你选择的目录。</p>
+            <div class="download-actions">
+              <a
+                class="button button--primary button--large"
+                href="downloads/spanseek_1.0.1_x64-setup.exe"
+                download
+              >
+                下载 Windows 版
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M10 3.5v9.5M6.5 9.5 10 13l3.5-3.5M4 16.5h12"></path>
+                </svg>
+              </a>
+              <a class="button button--quiet button--large" href="install.html">
+                查看安装说明
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5"></path>
+                </svg>
+              </a>
+            </div>
+            <p class="download-fineprint">版本 1.0.1 · 安装包未签名，安装前请核对来源与校验值</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section docs" id="docs" aria-labelledby="docs-title">
+        <div class="shell">
+          <header class="section-heading section-heading--split section-heading--docs">
+            <div>
+              <p class="eyebrow">文档</p>
+              <h2 id="docs-title">需要时，查得到。</h2>
+            </div>
+            <p>从安装到备份，从编辑到检索。每条路径都尽量短，不需要先读完整本手册。</p>
+          </header>
+
+          <div class="doc-grid">
+            <a class="doc-card" href="../guide/quick-start.html">
+              <span class="doc-icon doc-icon--blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 4.5h11.5A2.5 2.5 0 0 1 19 7v12H7.5A2.5 2.5 0 0 1 5 16.5z"></path>
+                  <path d="M8 8h7M8 12h7M8 16h4"></path>
+                </svg>
+              </span>
+              <span class="doc-label">10 分钟路径</span>
+              <h3>快速上手</h3>
+              <p>安装、建库、第一篇笔记、导入、备份与按需配置。</p>
+              <span class="doc-link">开始阅读 <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="doc-card" href="../guide/user-guide.html">
+              <span class="doc-icon doc-icon--green" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"></path>
+                  <path d="M4 5.5v15M8 7h8M8 11h8"></path>
+                </svg>
+              </span>
+              <span class="doc-label">完整说明</span>
+              <h3>用户指南</h3>
+              <p>工作台、编辑、资料、组织、检索、AI、备份与常见问题。</p>
+              <span class="doc-link">打开指南 <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="doc-card" href="../guide/known-issues.html">
+              <span class="doc-icon doc-icon--amber" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3 21 20H3z"></path>
+                  <path d="M12 9v5M12 17.2v.1"></path>
+                </svg>
+              </span>
+              <span class="doc-label">边界清单</span>
+              <h3>已知问题</h3>
+              <p>未签名、WebView2、DOCX 与 PDF、AI 与外部环境的现有边界。</p>
+              <span class="doc-link">查看边界 <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="doc-card" href="../guide/changelog.html">
+              <span class="doc-icon doc-icon--violet" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M6 3h9l3 3v15H6z"></path>
+                  <path d="M9 10h6M9 14h6M9 18h4"></path>
+                </svg>
+              </span>
+              <span class="doc-label">版本记录</span>
+              <h3>CHANGELOG</h3>
+              <p>1.0.1 的用户可见变化、修复与已知边界。</p>
+              <span class="doc-link">查看记录 <span aria-hidden="true">→</span></span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="#top" aria-label="返回顶部">
+            <img
+              src="assets/icon.svg?v=20261022"
+              width="28"
+              height="28"
+              alt=""
+              aria-hidden="true"
+            />
+            <span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+          </a>
+          <p>本地优先的个人知识库。<br />为长期保存而设计。</p>
+        </div>
+
+        <nav class="footer-group" aria-label="产品">
+          <strong>产品</strong>
+          <a href="#workspace">工作区</a>
+          <a href="#motion">产品演示</a>
+          <a href="brand.html">品牌故事</a>
+          <a href="#principles">设计原则</a>
+          <a href="#download">下载</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="文档">
+          <strong>文档</strong>
+          <a href="../guide/quick-start.html">快速上手</a>
+          <a href="../guide/user-guide.html">用户指南</a>
+          <a href="../guide/known-issues.html">已知问题</a>
+          <a href="install.html">安装说明</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="法律与隐私">
+          <strong>法律与隐私</strong>
+          <a href="../guide/privacy.html">隐私说明</a>
+          <a href="../guide/third-party-notices.html">第三方许可</a>
+          <a href="../guide/license.html">使用许可</a>
+          <a href="../guide/changelog.html">版本记录</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">
+        <span>© 2026 跨索 spanseek</span>
+      </div>
+    </footer>
+  </body>
+</html>

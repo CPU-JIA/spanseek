@@ -1,0 +1,75 @@
+/* Shared by the settings dialog and the search page; both render the same rows.
+   A row holds exactly two children - the copy block and the control - so the hint
+   can never be placed inside the narrow column that sizes the control. */
+.retrieval-params {
+  display: block;
+}
+.retrieval-param {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.retrieval-param-copy {
+  display: grid;
+  flex: 1 1 auto;
+  gap: 4px;
+  min-width: 0;
+}
+.retrieval-param-copy > strong {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.retrieval-param-copy > small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.retrieval-param-number {
+  flex: 0 0 auto;
+  width: 96px;
+  min-height: 32px;
+  padding: 5px 9px;
+  border: 1px solid var(--field-border, var(--line));
+  border-radius: var(--radius-control, 6px);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+}
+.retrieval-param-checkbox {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  margin: 3px 0 0;
+  accent-color: var(--accent);
+}
+.retrieval-param-switch {
+  align-items: flex-start;
+}
+
+/* Library-level switches on the models page; the checkbox stays aligned with its
+   explanation so the two rows read as one block. */
+.retrieval-consent-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 10px;
+  margin: 12px 0;
+}
+.retrieval-consent-row > span {
+  display: grid;
+  gap: 4px;
+  font-weight: 500;
+}
+.retrieval-consent-row small {
+  color: var(--muted);
+  font-weight: 400;
+  line-height: 1.6;
+}
+.retrieval-params .retrieval-threshold-toggle small {
+  font-weight: 400;
+}

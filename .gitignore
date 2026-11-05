@@ -1,0 +1,85 @@
+/target/
+/node_modules/
+**/node_modules/
+**/dist/
+apps/desktop/src-tauri/gen/
+# Only desktop icon formats are packaged in V1.
+apps/desktop/src-tauri/icons/*
+!apps/desktop/src-tauri/icons/32x32.png
+!apps/desktop/src-tauri/icons/128x128.png
+!apps/desktop/src-tauri/icons/128x128@2x.png
+!apps/desktop/src-tauri/icons/icon.ico
+.env
+.env.*
+!.env.example
+/local-workspaces/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.partial
+
+# Local source material, credentials, diagnostic output and tool caches
+/.local-archive/
+/.playwright-mcp/
+/.workbuddy/
+/1.md
+/*.pdf
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Local application data and model artifacts
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.db
+*.db-wal
+*.db-shm
+*.gguf
+*.onnx
+*.safetensors
+
+# Per-user IDE settings
+/.idea/
+/.vscode/
+
+# Vendored crate build output (third-party/tempfile is a path dependency)
+/third-party/tempfile/target/
+/docs/download/downloads/
+/.pytest_cache/
+
+# Local development records and research are not part of the source distribution.
+/AGENTS.md
+/research/
+/.cargo/config.toml
+*.private.*
+*.pkmsbackup
+*.pfx
+*.p12
+
+# Only maintained product and contributor documentation is uploaded.
+/docs/*
+!/docs/README.md
+!/docs/quick-start.md
+!/docs/user-guide.md
+!/docs/privacy.md
+!/docs/known-issues.md
+!/docs/format-support-matrix.md
+!/docs/external-api.md
+!/docs/external-capabilities.md
+!/docs/development.md
+!/docs/releasing.md
+!/docs/download/
+!/docs/guide/
+
+# Historical local experiments and acceptance orchestration.
+/scripts/w4-quality/
+/scripts/sync-experiment/
+/scripts/build-blueprint.py
+/scripts/verify-*-v196.*
+/scripts/verify-source-worker.py
+/scripts/scan-sensitive.ps1

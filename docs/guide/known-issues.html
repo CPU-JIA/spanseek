@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17181B" />
+    <meta name="color-scheme" content="light dark" />
+    <title>已知问题 · 跨索 spanseek</title>
+    <script>
+      try {
+        if (localStorage.getItem('spanseek-theme-v2') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
+    </script>
+    <link rel="icon" href="../download/favicon.ico?v=20261022" sizes="any" />
+    <link rel="stylesheet" href="../download/styles.css?v=20261022-3" />
+    <link rel="stylesheet" href="doc.css?v=20261022" />
+    <script src="../download/download.js" defer></script>
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+          <img
+            src="../download/assets/icon.svg?v=20261022"
+            width="30"
+            height="30"
+            alt=""
+            aria-hidden="true"
+          /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="../download/index.html#workspace">产品</a>
+          <a href="../download/brand.html">品牌</a>
+          <a href="../download/index.html#principles">原则</a>
+          <a href="../download/install.html">下载</a>
+          <a href="../download/index.html#docs">文档</a>
+        </nav>
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
+              ></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.4 14.3A8.5 8.5 0 0 1 9.7 3.6 8.5 8.5 0 1 0 20.4 14.3Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="doc-main">
+      <div class="doc-shell">
+        <nav class="doc-breadcrumb" aria-label="面包屑">
+          <a href="../download/index.html">跨索 spanseek</a>
+          <span aria-hidden="true">/</span>
+          <span>已知问题</span>
+        </nav>
+        <article class="doc-article">
+          <h1 id="跨索-spanseek-101-已知问题">跨索 spanseek 1.0.1 已知问题</h1>
+          <p>
+            更新：2026-11-05。适用于
+            <strong>spanseek 1.0.1（Windows x64）</strong
+            >，包含新的导航与整页工作流、统一知识任务、标签同步和语音速记。
+          </p>
+          <p>
+            本文列出当前版本已知的边界与未覆盖环境。它们是使用前应当知道的事实，不代表其他功能不可用。
+          </p>
+          <h2 id="1-安装与系统">1. 安装与系统</h2>
+          <ul>
+            <li>
+              <strong>安装包未签名</strong>。Windows 可能显示“未知发布者”或 SmartScreen
+              提示。请先核对下载页上的 SHA-256；只在确认来源后运行，不要关闭 Defender
+              或其他安全软件。
+            </li>
+            <li>
+              <strong>仅支持 Windows 10 / 11 x64</strong>。没有 macOS、Linux 或 ARM64 桌面版。
+            </li>
+            <li>
+              <strong>依赖 WebView2</strong>。Windows 11 通常已内置；Windows 10 可能需要安装
+              Microsoft Edge WebView2 Runtime。缺少 WebView2 时，安装器可能需要联网获取。
+            </li>
+            <li>
+              <strong>没有自动更新</strong
+              >。升级需要手动运行新安装包；升级前先创建完整备份，并保留可用的旧安装包。
+            </li>
+            <li>
+              <strong
+                >标准非管理员账户、干净机、禁网首启、旧版 WebView2 与多显示器/异 DPI 环境</strong
+              >尚未逐一覆盖；如遇问题，请提供诊断导出与显示器布局、缩放比例。
+            </li>
+          </ul>
+          <h2 id="2-阅读与格式">2. 阅读与格式</h2>
+          <ul>
+            <li>
+              <strong>DOCX 使用内置 Word 版式渲染</strong>。复杂分页、字体替换、嵌入对象与 Microsoft
+              Word 可能有差异；需要摘录时切换到“原文（可摘录）”。它不是 Word 编辑器。
+            </li>
+            <li>
+              <strong>PDF 扫描件已捆绑 OCR，但识别质量受扫描清晰度影响</strong>。1.0.1 安装包内置
+              Tesseract
+              5.4.0（chi_sim+eng）；低清扫描、手写、表格和复杂版面仍可能识别不完整，需人工核对。
+            </li>
+            <li>
+              <strong>加密或损坏的文件</strong>会明确失败；请先用原软件确认文件可打开，再重新导入。
+            </li>
+            <li>
+              <strong>单份资料有大小上限</strong
+              >。超过限制时会提示；不要把超大文件拆成多个副本冒充完整原件。
+            </li>
+            <li><strong>网页保存的是公开正文快照</strong>，不保证登录页面、动态页面或整站归档。</li>
+          </ul>
+          <h2 id="3-ai-与外部服务">3. AI 与外部服务</h2>
+          <ul>
+            <li>
+              <strong>不配置模型时，AI 功能不可用</strong>。记录、阅读、关键词检索和备份不受影响。
+            </li>
+            <li>
+              <strong>语义检索需要向量服务</strong
+              >。未配置时只显示关键词结果，并明确提示语义检索未就绪。
+            </li>
+            <li>
+              <strong>不同供应商的输出质量与费用不同</strong
+              >。应用只展示真实返回的用量与费用；没有配置参考单价时不伪造金额。
+            </li>
+            <li>
+              <strong>AI 只能提案</strong
+              >。生成内容需要你核对并明确应用后才会写入正文；不要把提案当成已保存的结论。
+            </li>
+            <li>发送给外部服务的文本取决于你配置的渠道与操作；默认不会把正文或资料发往第三方。</li>
+          </ul>
+          <h2 id="4-同步与移动端">4. 同步与移动端</h2>
+          <ul>
+            <li>
+              <strong>同步是可选功能，默认关闭</strong
+              >。需要你自行填写同步服务地址并完成配对；不是开箱即用的云服务。
+            </li>
+            <li><strong>移动端提供配套的捕获、录音与续读</strong>，不包含完整桌面能力。</li>
+            <li>冲突处理需要你选择保留本机、采用远端或另存为新笔记；应用不会静默覆盖任何一方。</li>
+            <li>
+              跨设备功能的测试覆盖有限；不同手机、移动网络切换、长期离线与设备撤销的组合仍可能有差异。缺少实体的同步材料会保留为“待依赖”，不会显示为已完成。
+            </li>
+          </ul>
+          <h2 id="5-数据与恢复">5. 数据与恢复</h2>
+          <ul>
+            <li>
+              <strong>数据库快照不等于完整备份</strong
+              >。需要保留资料原件、摘录、历史图片与配置时，请使用“完整备份”。
+            </li>
+            <li><strong>恢复目标必须是新目录</strong>。不要把恢复目标选成正在使用的知识库目录。</li>
+            <li>
+              <strong>未提交草稿、界面偏好与凭据不随完整备份迁移</strong>；恢复后需要重新配置凭据。
+            </li>
+            <li>
+              <strong>WebView2 在长文档卸载后可能不会立即归还全部内存</strong
+              >。这是已知的运行时行为；关闭并重新打开应用可以释放。
+            </li>
+            <li>卸载程序不会删除你创建的知识库目录；需要彻底清除时请自行确认目录位置。</li>
+          </ul>
+          <h2 id="6-可访问性与输入">6. 可访问性与输入</h2>
+          <ul>
+            <li>
+              键盘导航、焦点环、对话框焦点陷阱与可访问名称已覆盖主要界面；2026-10-26 已完成 NVDA
+              2026.1.1 Speech Viewer <strong>46/46</strong> 与 Narrator 10.0.26100.8972 焦点/名称
+              <strong>46/46</strong> 的实机遍历。Narrator
+              逐句语音转写未做，长期真实辅助技术使用仍可能有差异。
+            </li>
+            <li>
+              中文输入法、200%
+              缩放、深色模式与英文界面已做矩阵检查；不同输入法与系统版本仍可能有差异。
+            </li>
+            <li>如遇焦点丢失、文字被遮挡或控件无法用键盘到达，请记录页面、缩放比例与操作步骤。</li>
+          </ul>
+          <h2 id="7-反馈时请附上">7. 反馈时请附上</h2>
+          <ol type="1">
+            <li>跨索 spanseek 版本（设置 → 关于）。</li>
+            <li>Windows 版本、WebView2 版本与缩放比例。</li>
+            <li>复现步骤、期望结果与实际结果。</li>
+            <li>如涉及数据问题，请使用“统计与诊断”导出脱敏诊断，不要发送完整知识库或凭据。</li>
+          </ol>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+            <img
+              src="../download/assets/icon.svg?v=20261022"
+              width="28"
+              height="28"
+              alt=""
+              aria-hidden="true"
+            /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+          </a>
+          <p>本地优先的个人知识库。<br />为长期保存而设计。</p>
+        </div>
+
+        <nav class="footer-group" aria-label="产品">
+          <strong>产品</strong>
+          <a href="../download/index.html#workspace">工作区</a>
+          <a href="../download/brand.html">品牌故事</a>
+          <a href="../download/index.html#principles">设计原则</a>
+          <a href="../download/install.html">下载</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="文档">
+          <strong>文档</strong>
+          <a href="quick-start.html">快速上手</a>
+          <a href="user-guide.html">用户指南</a>
+          <a href="known-issues.html">已知问题</a>
+          <a href="../download/install.html">安装说明</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="法律与隐私">
+          <strong>法律与隐私</strong>
+          <a href="privacy.html">隐私说明</a>
+          <a href="third-party-notices.html">第三方许可</a>
+          <a href="license.html">使用许可</a>
+          <a href="changelog.html">版本记录</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">
+        <span>© 2026 跨索 spanseek</span>
+      </div>
+    </footer>
+  </body>
+</html>

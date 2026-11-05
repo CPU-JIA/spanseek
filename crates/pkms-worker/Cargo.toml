@@ -1,0 +1,31 @@
+[package]
+name = "pkms-worker"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+pkms-core = { path = "../pkms-core" }
+base64.workspace = true
+calamine.workspace = true
+undoc.workspace = true
+chrono.workspace = true
+image.workspace = true
+# Reading DOCX needs the deflate reader; production archives stay Stored.
+zip = { workspace = true, features = ["deflate-flate2"] }
+quick-xml = { version = "0.42", default-features = false }
+scraper.workspace = true
+encoding_rs.workspace = true
+pdfium-render.workspace = true
+mobi = "0.8.0"
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+# Tests build their own containers, including deflated entries.
+zip = { workspace = true, features = ["deflate-flate2"] }

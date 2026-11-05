@@ -1,0 +1,308 @@
+.tag-sync-issues {
+  container: tag-sync-issues / inline-size;
+  min-width: 0;
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.tag-sync-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tag-sync-heading > div {
+  min-width: 0;
+}
+.tag-sync-heading h3 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+}
+.tag-sync-heading h3 > span {
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: var(--radius-control);
+  background: var(--canvas);
+  text-align: center;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.tag-sync-heading p,
+.tag-sync-muted,
+.tag-sync-empty {
+  margin: 6px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.tag-sync-connection {
+  margin: 12px 0;
+  border-left: 3px solid var(--accent);
+  padding: 8px 12px;
+  background: var(--canvas);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.tag-sync-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 12px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  padding: 9px 12px;
+  color: var(--text);
+  background: var(--canvas);
+}
+.tag-sync-feedback > svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+.tag-sync-feedback p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.tag-sync-feedback > div {
+  min-width: 0;
+}
+.tag-sync-feedback button {
+  margin-top: 8px;
+}
+.tag-sync-feedback.is-error {
+  color: var(--error);
+  border-color: var(--error);
+}
+.tag-sync-list {
+  max-height: min(440px, 60vh);
+  margin-top: 10px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.tag-sync-list ul,
+.tag-sync-labels {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tag-sync-list li > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 62px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 10px 8px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+.tag-sync-list li > button:hover {
+  background: var(--hover);
+}
+.tag-sync-list li > button > svg {
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+.tag-sync-list li > button > span {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+}
+.tag-sync-list strong {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  font-weight: 600;
+}
+.tag-sync-list small {
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 12px;
+}
+.tag-sync-pager > .pagination {
+  width: 100%;
+  padding-inline: 0;
+}
+.tag-sync-detail {
+  margin-top: 10px;
+}
+.tag-sync-back {
+  min-height: 28px;
+  margin-bottom: 10px;
+}
+.tag-sync-detail > header > p {
+  margin: 0 0 3px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.tag-sync-detail > header > h4 {
+  margin: 0 0 10px;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+}
+.tag-sync-reason {
+  margin-bottom: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.tag-sync-reason > strong {
+  color: var(--text);
+}
+.tag-sync-reason > p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+.tag-sync-detail-body {
+  max-height: min(560px, 65vh);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.tag-sync-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.tag-sync-comparison > section {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  padding: 12px;
+  background: var(--canvas);
+}
+.tag-sync-comparison h4 {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+.tag-sync-definition-name {
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+.tag-sync-description {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.tag-sync-deleted {
+  margin: 6px 0;
+  color: var(--error);
+  font-size: 12px;
+}
+.tag-sync-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tag-sync-labels > li {
+  max-width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  padding: 3px 7px;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  background: var(--surface);
+  font-size: 12px;
+}
+.tag-sync-labels > li.is-deleted {
+  border-style: dashed;
+  color: var(--error);
+}
+.tag-sync-labels > li.is-unknown {
+  border-style: dashed;
+  color: var(--muted);
+}
+.tag-sync-delete-impact {
+  margin: 12px 0;
+  border-left: 3px solid var(--error);
+  padding: 8px 12px;
+  background: var(--canvas);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.tag-sync-delete-impact p {
+  margin: 6px 0;
+  color: var(--muted);
+}
+.tag-sync-view-dependencies {
+  margin: 8px 0;
+  padding-left: 18px;
+}
+.tag-sync-view-dependencies button {
+  min-height: 28px;
+  white-space: normal;
+  text-align: left;
+}
+.tag-sync-technical {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.tag-sync-technical summary {
+  min-height: 24px;
+  cursor: pointer;
+  line-height: 24px;
+}
+.tag-sync-technical dl {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0;
+}
+.tag-sync-technical dl > div {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) minmax(0, 3fr);
+  gap: 8px;
+}
+.tag-sync-technical dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.tag-sync-technical ul {
+  padding-left: 16px;
+}
+.tag-sync-technical code {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 10px;
+}
+.tag-sync-help-actions,
+.tag-sync-decisions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.tag-sync-decisions {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.tag-sync-issues button:disabled {
+  cursor: not-allowed;
+}
+@container tag-sync-issues (max-width: 560px) {
+  .tag-sync-comparison {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tag-sync-pager .pagination-window,
+  .tag-sync-pager .pagination-size-label,
+  .tag-sync-pager .pagination-size-unit {
+    display: none;
+  }
+  .tag-sync-technical dl > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}

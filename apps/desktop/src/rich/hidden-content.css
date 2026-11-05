@@ -1,0 +1,53 @@
+.rich-hidden-content {
+  display: inline;
+  max-width: 100%;
+  padding: 1px 4px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--hover);
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: start;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  box-decoration-break: clone;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+.rich-hidden-content.is-block {
+  display: block;
+  width: 100%;
+  margin: 0.8em 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.rich-hidden-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  vertical-align: -1px;
+}
+.rich-hidden-content.is-block .rich-hidden-state {
+  display: flex;
+  margin-bottom: 5px;
+}
+.rich-hidden-content[data-revealed='false'] .rich-hidden-value {
+  filter: blur(4px);
+  user-select: none;
+}
+.rich-hidden-content[data-revealed='true'] .rich-hidden-value {
+  user-select: text;
+}
+.rich-hidden-content:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.rich-hidden-content:hover {
+  background: color-mix(in srgb, var(--accent) 6%, var(--hover));
+}

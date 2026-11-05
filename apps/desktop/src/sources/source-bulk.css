@@ -1,0 +1,97 @@
+.source-bulk-panel {
+  margin: 0 20px 10px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--canvas);
+  max-height: min(300px, 42%);
+  overflow: auto;
+  flex-shrink: 0;
+  font-size: 13px;
+}
+.source-bulk-panel > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  list-style: none;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 12px;
+}
+.source-bulk-panel > summary::-webkit-details-marker {
+  display: none;
+}
+.source-bulk-panel > summary strong {
+  font-weight: 550;
+}
+.source-bulk-panel > summary span {
+  color: var(--muted);
+}
+.source-bulk-panel > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.source-bulk-panel[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+.source-bulk-body {
+  padding: 12px;
+}
+.source-bulk-body > .source-tools,
+.source-bulk-body form {
+  margin-bottom: 10px;
+}
+.source-bulk-body button {
+  padding: 5px 9px;
+  font-size: 12px;
+}
+.source-bulk-body .source-collection-picker {
+  flex: 1 1 200px;
+  max-width: 360px;
+}
+.source-bulk-body > p {
+  margin-bottom: 0;
+}
+.source-bulk-panel p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+.source-bulk-panel [role='alert'] {
+  color: var(--error);
+}
+.source-bulk-panel label:not(.source-field-label) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.source-bulk-results {
+  padding: 0;
+  list-style: none;
+  max-height: 180px;
+  overflow: auto;
+}
+.source-bulk-results li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.source-bulk-results strong {
+  flex: 1;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.source-bulk-results small {
+  flex-basis: 100%;
+  overflow-wrap: anywhere;
+}
+@container sources-page (max-width: 680px) {
+  .source-bulk-panel {
+    margin-inline: 16px;
+  }
+}

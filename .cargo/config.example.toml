@@ -1,0 +1,5 @@
+# Optional local settings. Copy to .cargo/config.toml, which is ignored by Git.
+[build]
+jobs = 2
+# Set target-dir only for your own machine; CI uses CARGO_TARGET_DIR.
+# target-dir = "D:/build-cache/spanseek"

@@ -1,0 +1,120 @@
+.page-frame {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--surface);
+}
+.page-frame-header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 64px;
+  padding: var(--space-3) var(--page-gutter);
+}
+.page-frame-heading {
+  min-width: 0;
+}
+.page-frame-heading h1 {
+  margin: 0;
+  color: var(--text);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+}
+.page-frame-heading p {
+  max-width: 72ch;
+  margin: var(--space-1) 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+.page-frame-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+.page-frame-actions > * {
+  min-height: 32px;
+}
+.page-frame-toolbar {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: var(--space-2) var(--page-gutter);
+  border-bottom: 1px solid var(--line);
+}
+.page-frame-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+.page-frame-footer {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--pager-gap, 12px);
+  height: var(--footer-height);
+  min-height: var(--footer-height);
+  max-height: var(--footer-height);
+  margin-top: auto;
+  padding: 0 var(--page-gutter);
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+.page-frame-footer > .pagination {
+  flex: 1 1 auto;
+  width: 100%;
+  padding-inline: 0;
+}
+.page-footer-target {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+.page-footer-target > .pagination {
+  flex: 1;
+  width: 100%;
+  padding-inline: 0;
+}
+.page-frame-footer.is-inline {
+  border-top: 0;
+  background: transparent;
+}
+@media (max-width: 720px) {
+  .page-frame-header {
+    min-height: 56px;
+    padding-inline: var(--space-3);
+  }
+  .page-frame-toolbar,
+  .page-frame-footer {
+    padding-inline: var(--space-3);
+  }
+}
+@media (max-width: 960px) {
+  .page-frame-header {
+    flex-wrap: wrap;
+  }
+  .page-frame-heading {
+    flex: 1 1 100%;
+  }
+  .page-frame-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

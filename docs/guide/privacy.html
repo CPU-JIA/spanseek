@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17181B" />
+    <meta name="color-scheme" content="light dark" />
+    <title>隐私说明 · 跨索 spanseek</title>
+    <script>
+      try {
+        if (localStorage.getItem('spanseek-theme-v2') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
+    </script>
+    <link rel="icon" href="../download/favicon.ico?v=20261022" sizes="any" />
+    <link rel="stylesheet" href="../download/styles.css?v=20261022-3" />
+    <link rel="stylesheet" href="doc.css?v=20261022" />
+    <script src="../download/download.js" defer></script>
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+          <img
+            src="../download/assets/icon.svg?v=20261022"
+            width="30"
+            height="30"
+            alt=""
+            aria-hidden="true"
+          /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="../download/index.html#workspace">产品</a>
+          <a href="../download/brand.html">品牌</a>
+          <a href="../download/index.html#principles">原则</a>
+          <a href="../download/install.html">下载</a>
+          <a href="../download/index.html#docs">文档</a>
+        </nav>
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
+              ></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.4 14.3A8.5 8.5 0 0 1 9.7 3.6 8.5 8.5 0 1 0 20.4 14.3Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="doc-main">
+      <div class="doc-shell">
+        <nav class="doc-breadcrumb" aria-label="面包屑">
+          <a href="../download/index.html">跨索 spanseek</a>
+          <span aria-hidden="true">/</span>
+          <span>隐私说明</span>
+        </nav>
+        <article class="doc-article">
+          <h1 id="跨索隐私说明">跨索隐私说明</h1>
+          <p>更新：2026-10-26。适用于跨索 spanseek 1.0.1。</p>
+          <h2 id="默认留在本机">默认留在本机</h2>
+          <p>
+            跨索 spanseek
+            是本地优先的桌面应用。你创建或打开的知识库保存在自己选择的目录中；笔记、资料原件、摘录、标签、视图与备份默认只存在于本机。
+          </p>
+          <p>应用不要求注册账号，不包含广告 SDK，也不默认上传使用统计。</p>
+          <h2 id="会联网的情况">会联网的情况</h2>
+          <p>只有在以下情况，应用才会发起网络请求：</p>
+          <ol type="1">
+            <li>
+              <strong>你显式配置并使用了 AI / 向量服务</strong
+              >。相关文本会发送到你选择的供应商；发送范围取决于你执行的操作与配置的渠道。
+            </li>
+            <li><strong>你配置并开启了同步</strong>。数据会连接到你填写的同步服务地址。</li>
+            <li><strong>你主动打开网页链接</strong>。应用会把链接交给系统默认浏览器。</li>
+            <li>
+              <strong>安装或更新 WebView2</strong>（如系统缺少运行时）。这一步由安装器或系统完成。
+            </li>
+          </ol>
+          <p>不配置上述服务时，记录、阅读、关键词检索和完整备份都可以离线完成。</p>
+          <h2 id="凭据">凭据</h2>
+          <p>
+            AI 渠道与同步相关的密钥保存在 Windows
+            凭据库中，不写入普通配置文件，也不随完整备份迁移。恢复备份后需要重新配置凭据。
+          </p>
+          <h2 id="诊断">诊断</h2>
+          <p>
+            “统计与诊断”导出的诊断包用于排查问题，包含运行环境、版本、知识库统计与脱敏错误信息；不会包含正文、密钥或完整知识库。诊断导出需要你主动触发，不会自动发送。
+          </p>
+          <h2 id="同步">同步</h2>
+          <p>
+            同步是你自行部署或选择的服务。数据在传输与服务器上的安全取决于你的网络与服务配置；请使用可信网络和受控服务器。应用不会把同步数据发送给
+            spanseek 项目以外的默认云端。
+          </p>
+          <h2 id="数据带走与删除">数据带走与删除</h2>
+          <ul>
+            <li>你可以随时使用完整备份把知识库带到新目录或新设备。</li>
+            <li>你可以导出 Markdown / Obsidian 兼容目录。</li>
+            <li>卸载程序不会删除你创建的知识库目录；需要删除时请自行确认目录位置。</li>
+            <li>删除知识库目录是不可逆操作；删除前请先创建完整备份。</li>
+          </ul>
+          <h2 id="变更">变更</h2>
+          <p>如果未来版本改变数据流或默认网络行为，会在版本说明中明确写出，并更新本页。</p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="../download/index.html" aria-label="跨索 spanseek 首页">
+            <img
+              src="../download/assets/icon.svg?v=20261022"
+              width="28"
+              height="28"
+              alt=""
+              aria-hidden="true"
+            /><span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+          </a>
+          <p>本地优先的个人知识库。<br />为长期保存而设计。</p>
+        </div>
+
+        <nav class="footer-group" aria-label="产品">
+          <strong>产品</strong>
+          <a href="../download/index.html#workspace">工作区</a>
+          <a href="../download/brand.html">品牌故事</a>
+          <a href="../download/index.html#principles">设计原则</a>
+          <a href="../download/install.html">下载</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="文档">
+          <strong>文档</strong>
+          <a href="quick-start.html">快速上手</a>
+          <a href="user-guide.html">用户指南</a>
+          <a href="known-issues.html">已知问题</a>
+          <a href="../download/install.html">安装说明</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="法律与隐私">
+          <strong>法律与隐私</strong>
+          <a href="privacy.html">隐私说明</a>
+          <a href="third-party-notices.html">第三方许可</a>
+          <a href="license.html">使用许可</a>
+          <a href="changelog.html">版本记录</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">
+        <span>© 2026 跨索 spanseek</span>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+[extend]
+useDefault = true
+
+# Exact code identifiers verified as false positives; no files are exempted.
+[[allowlists]]
+description = "Tokenizer algorithm identifier in the index backup test"
+condition = "AND"
+paths = ['''(^|/)crates/pkms-core/tests/index_backup_cache\.rs$''']
+regexTarget = "match"
+regexes = ['''tokenizer:\s*"utf8-byte-upper-bound-v1"''']
+
+[[allowlists]]
+description = "Boolean expression reporting whether the demo database contains a key"
+condition = "AND"
+paths = ['''(^|/)crates/pkms-sync/examples/keys_demo\.rs$''']
+regexTarget = "match"
+regexes = ['''plaintext_key_in_db":\s*contains_key1\s*''']

@@ -1,0 +1,46 @@
+[package]
+name = "pkms-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+autoexamples = false
+
+[[example]]
+name = "export_core_contracts"
+path = "examples/export_contracts.rs"
+
+[[example]]
+name = "rich_format_export"
+path = "examples/rich_format_export.rs"
+
+[dependencies]
+chrono.workspace = true
+base64.workspace = true
+fs2.workspace = true
+image.workspace = true
+jieba-rs.workspace = true
+pinyin.workspace = true
+fast2s.workspace = true
+pulldown-cmark.workspace = true
+tar.workspace = true
+rusqlite.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+serde_yaml_ng = "0.10"
+sha2.workspace = true
+tempfile.workspace = true
+thiserror.workspace = true
+ts-rs.workspace = true
+unicode-normalization.workspace = true
+url = "2.5"
+uuid.workspace = true
+zip.workspace = true
+hayagriva = { version = "0.10.1", default-features = false, features = ["archive"] }
+citationberg = "0.7"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+rustix = { version = "1", features = ["fs"] }
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61", features = ["Win32_Storage_FileSystem"] }

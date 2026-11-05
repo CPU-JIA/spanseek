@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17181B" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="下载并安装跨索 spanseek 1.0.1：系统要求、安装包校验、首次启动与数据隐私说明。"
+    />
+    <title>安装跨索 spanseek 1.0.1</title>
+    <script>
+      try {
+        if (localStorage.getItem('spanseek-theme-v2') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
+    </script>
+    <link rel="icon" href="favicon.ico?v=20261022" sizes="any" />
+    <link rel="stylesheet" href="styles.css?v=20261105" />
+    <link rel="stylesheet" href="install.css?v=20261022" />
+    <script src="download.js?v=20261105" defer></script>
+  </head>
+  <body class="install-page">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="index.html" aria-label="跨索 spanseek 首页">
+          <img src="assets/icon.svg?v=20261022" width="30" height="30" alt="" aria-hidden="true" />
+          <span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+        </a>
+
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html#workspace">产品</a>
+          <a href="brand.html">品牌</a>
+          <a href="index.html#principles">原则</a>
+          <a href="install.html" aria-current="location">下载</a>
+          <a href="index.html#docs">文档</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="3.75"></circle>
+              <path
+                d="M12 2.5v2M12 19.5v2M4.7 4.7l1.4 1.4M17.9 17.9l1.4 1.4M2.5 12h2M19.5 12h2M4.7 19.3l1.4-1.4M17.9 6.1l1.4-1.4"
+              ></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.2 14.2A8.3 8.3 0 0 1 9.8 3.8a8.6 8.6 0 1 0 10.4 10.4Z"></path>
+            </svg>
+          </button>
+          <a
+            class="button button--primary button--compact"
+            href="downloads/spanseek_1.0.1_x64-setup.exe"
+            download
+          >
+            下载
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="install-main">
+      <section class="install-hero" aria-labelledby="install-title">
+        <div class="install-atmosphere" aria-hidden="true"></div>
+        <div class="shell install-hero__inner">
+          <a class="back-link" href="index.html">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M16 10H4M8.5 5.5 4 10l4.5 4.5"></path>
+            </svg>
+            返回首页
+          </a>
+          <p class="eyebrow">Windows 安装</p>
+          <h1 id="install-title">安装跨索 <span>1.0.1</span></h1>
+          <p class="install-lede">
+            跨索 spanseek 适用于 Windows 10 1809 或更高版本、Windows 11，以及 64 位 Windows 环境。
+            安装程序不会替你创建知识库；首次启动时，你可以选择数据保存的位置。
+          </p>
+          <div class="install-actions">
+            <a
+              class="button button--primary button--large"
+              href="downloads/spanseek_1.0.1_x64-setup.exe"
+              download
+            >
+              下载安装包
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M10 3.5v9.5M6.5 9.5 10 13l3.5-3.5M4 16.5h12"></path>
+              </svg>
+            </a>
+            <a class="button button--quiet button--large" href="../guide/quick-start.html">
+              安装后快速上手
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5"></path>
+              </svg>
+            </a>
+          </div>
+          <dl class="install-summary" aria-label="版本摘要">
+            <div>
+              <dt>版本</dt>
+              <dd>1.0.1</dd>
+            </div>
+            <div>
+              <dt>平台</dt>
+              <dd>Windows x64</dd>
+            </div>
+            <div>
+              <dt>大小</dt>
+              <dd data-installer-size>101.72 MiB</dd>
+            </div>
+            <div>
+              <dt>发布日期</dt>
+              <dd data-installer-date>2026-11-05</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <div class="shell install-layout">
+        <article class="install-article">
+          <section id="download">
+            <h2>下载与版本</h2>
+            <p>
+              请从本页下载安装包。文件名应为
+              <code>spanseek_1.0.1_x64-setup.exe</code>。安装程序会按当前用户安装，
+              不需要管理员权限，也不会自动创建开机启动项。
+            </p>
+            <div class="install-callout install-callout--warning">
+              <strong>安装包当前未签名</strong>
+              <p>
+                Windows 可能显示“未知发布者”或 SmartScreen 提示。请先核对下方
+                SHA-256；如果校验值不一致，不要运行安装包。
+              </p>
+            </div>
+          </section>
+
+          <section id="verify">
+            <h2>核对安装包</h2>
+            <p>在 PowerShell 7 中运行下面的命令，将输出与页面上的 SHA-256 逐位比较：</p>
+            <pre><code>Get-FileHash -Algorithm SHA256 `
+  -LiteralPath "$env:USERPROFILE\Downloads\spanseek_1.0.1_x64-setup.exe"</code></pre>
+            <div class="hash-panel">
+              <span class="hash-panel__label">SHA-256</span>
+              <code id="installer-sha"
+                >37DAD768CA4A0026A016465838405B3B35D0E651037E8D28A46EE6D7F9691725</code
+              >
+              <button class="copy-button" type="button" data-copy="installer-sha">复制</button>
+              <span class="copy-status" data-copy-status="installer-sha" role="status"></span>
+            </div>
+          </section>
+
+          <section id="requirements">
+            <h2>安装前确认</h2>
+            <ul class="requirements-grid">
+              <li>
+                <strong>系统</strong>
+                <span>Windows 10 1809 或更高版本，或 Windows 11，64 位</span>
+              </li>
+              <li>
+                <strong>运行环境</strong>
+                <span>Microsoft Edge WebView2 Runtime（Windows 11 通常已内置）</span>
+              </li>
+              <li>
+                <strong>硬件</strong>
+                <span>4 GB 内存；程序约需 200 MB，知识库空间另计</span>
+              </li>
+              <li>
+                <strong>网络</strong>
+                <span>记录、阅读、检索与备份无需联网；外部服务按需配置</span>
+              </li>
+            </ul>
+          </section>
+
+          <section id="first-run">
+            <h2>首次启动</h2>
+            <ol class="first-run-list">
+              <li>
+                <div>
+                  <strong>创建或打开知识库</strong>
+                  <p>选择一个你长期可访问的本地目录。程序不会把知识库藏在安装目录里。</p>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong>从六个入口开始</strong>
+                  <p>
+                    知识索引、收件箱、资料库、知识图谱、回顾与 AI 助手都在侧栏。
+                    先写一篇笔记，或导入一份材料；点开内容后，在完整工作区继续阅读和写作。
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong>做一次完整备份</strong>
+                  <p>
+                    先确认备份与恢复路径可用。AI
+                    助手中的知识任务可自行填写目标或使用可编辑模板；生成模型、同步和其他外部服务按需配置。
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong>更新时保留知识库</strong>
+                  <p>升级或卸载程序不会主动删除知识库目录；重要数据仍应保留独立备份。</p>
+                </div>
+              </li>
+            </ol>
+          </section>
+
+          <section id="privacy">
+            <h2>数据与隐私</h2>
+            <p>
+              默认不会把正文、资料或检索内容发往第三方。只有在你显式配置语义检索或生成服务后，
+              相关文本才会发送到你选择的服务。密钥保存在 Windows 凭据库；同步为可选功能，默认关闭。
+            </p>
+            <p class="install-links">
+              <a href="../guide/privacy.html">阅读隐私说明</a>
+              <span aria-hidden="true">·</span>
+              <a href="../guide/known-issues.html">查看已知问题</a>
+              <span aria-hidden="true">·</span>
+              <a href="../guide/quick-start.html">打开快速上手</a>
+            </p>
+          </section>
+
+          <div class="install-article-footer">
+            <a
+              class="button button--primary"
+              href="downloads/spanseek_1.0.1_x64-setup.exe"
+              download
+            >
+              下载 Windows 版
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M10 3.5v9.5M6.5 9.5 10 13l3.5-3.5M4 16.5h12"></path>
+              </svg>
+            </a>
+            <p>版本 1.0.1 · Windows 10 / 11 · 64 位</p>
+          </div>
+        </article>
+
+        <aside class="install-aside" aria-label="安装页导航">
+          <nav class="page-toc" data-spy aria-label="本页内容">
+            <strong>本页内容</strong>
+            <a href="#download">下载与版本</a>
+            <a href="#verify">核对安装包</a>
+            <a href="#requirements">安装前确认</a>
+            <a href="#first-run">首次启动</a>
+            <a href="#privacy">数据与隐私</a>
+          </nav>
+
+          <div class="aside-note">
+            <span class="aside-note__label">需要帮助？</span>
+            <p>从安装到备份，快速上手给出了一条可以直接走完的路径。</p>
+            <a href="../guide/quick-start.html">
+              打开快速上手
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div class="footer-brand">
+          <a class="brand" href="index.html" aria-label="跨索 spanseek 首页">
+            <img
+              src="assets/icon.svg?v=20261022"
+              width="28"
+              height="28"
+              alt=""
+              aria-hidden="true"
+            />
+            <span class="brand-name"><strong>跨索</strong><small>spanseek</small></span>
+          </a>
+          <p>本地优先的个人知识库。<br />为长期保存而设计。</p>
+        </div>
+
+        <nav class="footer-group" aria-label="产品">
+          <strong>产品</strong>
+          <a href="index.html#workspace">工作区</a>
+          <a href="brand.html">品牌故事</a>
+          <a href="index.html#principles">设计原则</a>
+          <a href="install.html">下载</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="文档">
+          <strong>文档</strong>
+          <a href="../guide/quick-start.html">快速上手</a>
+          <a href="../guide/user-guide.html">用户指南</a>
+          <a href="../guide/known-issues.html">已知问题</a>
+          <a href="install.html">安装说明</a>
+        </nav>
+
+        <nav class="footer-group" aria-label="法律与隐私">
+          <strong>法律与隐私</strong>
+          <a href="../guide/privacy.html">隐私说明</a>
+          <a href="../guide/third-party-notices.html">第三方许可</a>
+          <a href="../guide/license.html">使用许可</a>
+          <a href="../guide/changelog.html">版本记录</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">
+        <span>© 2026 跨索 spanseek</span>
+      </div>
+    </footer>
+  </body>
+</html>

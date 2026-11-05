@@ -1,0 +1,99 @@
+.product-nav-knowledge {
+  --nav-tone: var(--nav-knowledge);
+}
+.product-nav-inbox {
+  --nav-tone: var(--nav-inbox);
+}
+.product-nav-sources {
+  --nav-tone: var(--nav-sources);
+}
+.product-nav-graph {
+  --nav-tone: var(--nav-graph);
+}
+.product-nav-review {
+  --nav-tone: var(--nav-review);
+}
+.product-nav-answers {
+  --nav-tone: var(--nav-ai);
+}
+.product-navigation .nav-primary {
+  gap: 3px;
+}
+.product-navigation .nav-item {
+  width: 100%;
+  min-height: 36px;
+  font-size: 13px;
+}
+.product-navigation .nav-item > span {
+  color: var(--nav-tone);
+  font-weight: 550;
+}
+.product-navigation .nav-item.active > span {
+  font-weight: 650;
+}
+.product-nav-heading {
+  position: relative;
+}
+.product-nav-heading:has(.product-nav-toggle) > .nav-item {
+  padding-right: 34px;
+}
+.product-nav-toggle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: var(--radius-control);
+  color: var(--muted);
+}
+.product-nav-toggle[aria-expanded='false'] svg {
+  transform: rotate(-90deg);
+}
+.product-nav-children {
+  display: grid;
+  gap: 2px;
+  margin: 3px 6px 6px 19px;
+  padding-left: 9px;
+  border-left: 1px solid var(--line);
+}
+.product-nav-children button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--muted);
+  text-align: start;
+  font-size: 12px;
+}
+.product-nav-children button:hover,
+.product-nav-children button.is-current {
+  background: var(--hover);
+  color: var(--text);
+}
+.product-navigation button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.workspace-quick-actions {
+  display: flex;
+  gap: 4px;
+  padding: 0 10px 8px;
+}
+.workspace-quick-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 30px;
+  flex: 1;
+  padding: 4px 6px;
+  font-size: 12px;
+}

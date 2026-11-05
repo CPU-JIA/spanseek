@@ -1,0 +1,699 @@
+.editor-toolbar.rich-format-toolbar {
+  min-width: 0;
+  gap: 2px 8px;
+  justify-content: center;
+  padding: 3px;
+}
+
+.rich-format-group {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 1px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.rich-format-group > * {
+  flex: 0 0 auto;
+}
+
+.rich-format-toolbar .rich-insert-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 34px;
+  padding: 4px 7px;
+  border-radius: var(--radius-control);
+  font-size: 12px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.rich-format-toolbar button:focus-visible,
+.rich-node-edit:focus-visible,
+.rich-callout-toggle:focus-visible,
+.rich-add-content:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.rich-format-toolbar button[aria-expanded='true'] {
+  background: var(--hover);
+}
+
+.rich-color-swatch {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+.note-prose :is(h1, h2, h3, h4, h5, h6) {
+  position: relative;
+}
+
+.heading-fold-toggle {
+  position: absolute;
+  top: 0.12em;
+  left: -24px;
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  opacity: 0.38;
+  cursor: pointer;
+  transition:
+    opacity 120ms ease,
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.heading-fold-toggle:hover,
+.heading-fold-toggle:focus-visible {
+  background: var(--hover);
+  color: var(--text);
+  opacity: 1;
+}
+
+.heading-fold-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.heading-fold-summary {
+  display: inline-flex;
+  height: 20px;
+  align-items: center;
+  margin-left: 8px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.heading-fold-hidden {
+  display: none !important;
+}
+
+@container note-document (max-width: 680px) {
+  .note-prose :is(h1, h2, h3, h4, h5, h6) {
+    padding-left: 28px;
+  }
+
+  .heading-fold-toggle {
+    top: 0.08em;
+    left: 0;
+  }
+}
+.note-prose :is(h4, h5, h6) {
+  margin: 1em 0 0.5em;
+  line-height: 1.45;
+  font-weight: 650;
+}
+
+.note-prose h4 {
+  font-size: 1.12em;
+}
+
+.note-prose h5 {
+  font-size: 1em;
+}
+
+.note-prose h6 {
+  font-size: 0.92em;
+  color: var(--muted);
+}
+
+.note-prose mark {
+  padding: 0 0.05em;
+  border-radius: 2px;
+  box-decoration-break: clone;
+}
+
+.note-prose :is(sup, sub) {
+  font-size: 0.75em;
+  line-height: 0;
+}
+
+.note-prose
+  [data-task-marker]:not([data-task-marker=' ']):not([data-task-marker='x']):not(
+    [data-task-marker='X']
+  )::before {
+  content: attr(data-task-marker);
+  order: 1;
+  color: var(--muted);
+  font-family: 'Cascadia Code', Consolas, monospace;
+}
+
+.note-prose [data-task-marker] > div {
+  order: 2;
+}
+
+.rich-editor-source,
+.rich-editor-callout,
+.rich-editor-footnote,
+.rich-editor-code {
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.rich-editor-inline {
+  display: inline;
+  padding-right: 2px;
+  box-decoration-break: clone;
+}
+
+.rich-editor-block {
+  margin: 0.8em 0;
+  padding: 0 30px 0 0;
+}
+
+.rich-editor-source.ProseMirror-selectednode {
+  border-radius: 4px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.rich-node-edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  padding: 3px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  vertical-align: middle;
+}
+
+.rich-node-edit:hover {
+  color: var(--text);
+  background: var(--hover);
+}
+
+.rich-editor-inline > .ui-tooltip-anchor {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+/* Inline references are dense, but their edit affordance still needs a
+   full 24px hit area for pointer and touch use. */
+.rich-editor-inline .rich-node-edit {
+  width: 24px;
+  height: 24px;
+}
+
+.rich-editor-block > .ui-tooltip-anchor {
+  position: absolute;
+  top: 4px;
+  right: 0;
+}
+
+.rich-editor-comment {
+  color: var(--muted);
+  background: var(--hover);
+  border-radius: 4px;
+  font-size: 0.86em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.rich-editor-block .rich-editor-comment {
+  border: 1px dashed var(--line);
+  padding: 10px 12px;
+}
+
+.note-prose .rich-editor-comment pre {
+  margin: 4px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.rich-node-caption {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.rich-editor-footnote-ref {
+  color: var(--accent);
+}
+
+.rich-editor-footnote-ref.is-unresolved {
+  color: var(--muted);
+  text-decoration: underline dotted;
+}
+
+.rich-editor-callout {
+  margin: 0.8em 0;
+  border: 1px solid color-mix(in srgb, var(--callout-color) 22%, var(--line));
+  border-left: 3px solid var(--callout-color);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--callout-color) 6%, var(--surface));
+}
+
+.rich-callout-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  color: var(--callout-color);
+}
+
+.rich-callout-heading > svg {
+  flex: 0 0 auto;
+}
+
+.rich-editor-callout-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.96em;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.rich-callout-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  margin: -4px;
+  color: inherit;
+  border-radius: 4px;
+}
+
+.rich-editor-callout-body {
+  min-height: 1.5em;
+  padding: 0 13px 10px;
+}
+
+.rich-editor-callout-body > :first-child {
+  margin-top: 0;
+}
+
+.rich-editor-callout-body > :last-child {
+  margin-bottom: 0;
+}
+
+.rich-add-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  margin: 0 10px 8px;
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.rich-continue-after {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: calc(100% - 16px);
+  min-height: 27px;
+  margin: 0 8px 6px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 4px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 12px;
+  text-align: start;
+}
+.rich-continue-after kbd {
+  margin-left: auto;
+  font: inherit;
+  opacity: 0.7;
+}
+.rich-continue-after:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+.rich-continue-after:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.note-prose a[href] {
+  overflow-wrap: anywhere;
+}
+.ordinary-link-popover {
+  position: fixed;
+  z-index: 250;
+  width: min(320px, calc(100vw - 16px));
+  max-height: calc(100dvh - 16px);
+  overflow: auto;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+  font-size: 12px;
+}
+.ordinary-link-address {
+  display: block;
+  max-height: 64px;
+  margin: 0 4px 5px;
+  color: var(--muted);
+  overflow: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.ordinary-link-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.ordinary-link-actions .icon-button {
+  width: 30px;
+  height: 30px;
+}
+.ordinary-link-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+  padding: 6px;
+  border-radius: 4px;
+  font: inherit;
+}
+.ordinary-link-open:hover {
+  background: var(--hover);
+}
+.ordinary-link-popover button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.ordinary-link-notice {
+  display: block;
+  margin: 5px 4px 0;
+  overflow-wrap: anywhere;
+}
+.ordinary-link-dialog {
+  width: min(470px, calc(100vw - 24px));
+}
+
+.rich-editor-footnote {
+  margin: 1em 0;
+  padding: 8px 12px;
+  border-left: 2px solid var(--line);
+  background: var(--hover);
+  border-radius: 0 6px 6px 0;
+}
+
+.rich-footnote-heading,
+.rich-code-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 28px;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.rich-footnote-heading > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.rich-editor-footnote > [data-node-view-content] > :last-child {
+  margin-bottom: 0;
+}
+
+.rich-editor-code {
+  margin: 1em 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--sidebar);
+}
+
+.rich-code-heading {
+  padding: 5px 10px;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.rich-code-heading :is(label, .choice-field) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rich-code-heading :is(label, .choice-field) > span {
+  flex: 0 0 auto;
+}
+
+.rich-code-heading input {
+  width: 100px;
+  min-width: 40px;
+  max-width: 100%;
+  padding: 3px 5px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+}
+
+.rich-code-heading input:is(:hover, :focus) {
+  border-color: var(--line);
+  background: var(--surface);
+}
+
+.note-prose .rich-editor-code > pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0 0 6px 6px;
+}
+
+.rich-code-preview {
+  padding: 8px 10px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 0 0 6px 6px;
+}
+
+.rich-code-preview > summary {
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.rich-edit-dialog {
+  width: min(580px, calc(100vw - 24px));
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+  overflow: hidden;
+}
+
+.rich-edit-dialog::backdrop {
+  background: var(--scrim);
+}
+
+.rich-edit-dialog form {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 26px);
+  min-width: 0;
+}
+
+.rich-edit-dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex: 0 0 auto;
+  padding: 12px 16px 8px;
+}
+
+.rich-edit-dialog h2 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.rich-edit-fields {
+  display: grid;
+  gap: 12px;
+  min-height: 0;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 8px 16px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.rich-edit-fields :is(label, .choice-field) {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.rich-edit-fields :is(input:not([type='checkbox']), textarea, select) {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.rich-edit-fields textarea {
+  min-height: 72px;
+  max-height: 40dvh;
+  resize: vertical;
+  font:
+    13px/1.65 'Cascadia Code',
+    Consolas,
+    monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.rich-edit-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.rich-edit-row > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.rich-edit-row input[type='color'] {
+  flex: 0 0 38px;
+  height: 36px;
+  padding: 3px;
+}
+
+.rich-edit-help {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.rich-edit-preview {
+  min-width: 0;
+  max-height: 240px;
+  overflow: auto;
+}
+
+.rich-edit-dialog .inline-error {
+  flex: 0 0 auto;
+  margin: 4px 16px;
+  max-height: 80px;
+  overflow: auto;
+}
+
+.rich-edit-dialog .button-row {
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  padding: 10px 16px 14px;
+  margin: 0;
+}
+
+@media (max-height: 400px) {
+  .editor-toolbar.rich-format-toolbar {
+    position: static;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  .rich-format-toolbar .rich-format-group {
+    flex: 0 0 auto;
+    max-width: none;
+    overflow: visible;
+  }
+
+  .rich-edit-dialog header {
+    padding: 6px 10px;
+  }
+
+  .rich-edit-fields {
+    padding: 4px 10px;
+    gap: 8px;
+  }
+
+  .rich-edit-dialog .button-row {
+    padding: 6px 10px;
+  }
+}
+
+.note-image-caption {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.note-image-caption-input {
+  width: min(360px, 100%);
+}
+
+.rich-edit-block-info {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface-subtle, var(--surface));
+}
+.rich-edit-block-info > div {
+  display: grid;
+  grid-template-columns: minmax(74px, auto) minmax(0, 1fr);
+  gap: 10px;
+}
+.rich-edit-block-info dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+.rich-edit-block-info dd {
+  margin: 0;
+  color: var(--text);
+  font:
+    12px/1.5 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  overflow-wrap: anywhere;
+}
