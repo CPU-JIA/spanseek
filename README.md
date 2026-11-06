@@ -80,3 +80,7 @@ pnpm desktop:build
 - [使用许可](LICENSE)：免费使用，保留所有权利；第三方组件按其各自许可分发。
 
 跨索 spanseek 目前不提供自动更新、代码签名或托管云服务。升级前请创建完整备份。
+
+## 联系与支持
+
+使用问题与反馈：[support@spanseek.com](mailto:support@spanseek.com)。
