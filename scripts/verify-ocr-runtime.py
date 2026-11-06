@@ -10,6 +10,17 @@ import uuid
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 
+def capture(command, output, label, **kwargs):
+    completed = subprocess.run(command, capture_output=True, timeout=90, **kwargs)
+    record = {'stage': label, 'returncode': completed.returncode,
+              'stdout': completed.stdout.decode('utf-8', errors='replace'),
+              'stderr': completed.stderr.decode('utf-8', errors='replace')}
+    (output / (label + '.json')).write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    if completed.returncode:
+        raise RuntimeError(json.dumps(record))
+    return completed
+
+
 def require_text(text):
     compact = ''.join(text.split())
     for expected in ('SpanseekOCR2026', '跨索知识管理', '离线识别中文资料'):
@@ -20,23 +31,31 @@ def require_text(text):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runtime', type=pathlib.Path, required=True)
-    parser.add_argument('--worker', type=pathlib.Path, required=True)
-    parser.add_argument('--pdfium', type=pathlib.Path, required=True)
+    parser.add_argument('--worker', type=pathlib.Path)
+    parser.add_argument('--pdfium', type=pathlib.Path)
+    parser.add_argument('--engine-only', action='store_true')
     parser.add_argument('--output', type=pathlib.Path, required=True)
     args = parser.parse_args()
+    if not args.engine_only and (args.worker is None or args.pdfium is None):
+        parser.error('--worker and --pdfium are required for the full PDF test')
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    runtime = output / '引擎 中文路径'
+    runtime = output / '引擎 中文路径 📘'
     shutil.copytree(args.runtime.resolve(), runtime)
     fixture = ROOT / 'crates/pkms-worker/tests/fixtures/ocr'
-    image = output / '中英文扫描 图片.png'
+    image = output / '中英文扫描 图片 📘.png'
     shutil.copyfile(fixture / 'bilingual.png', image)
     engine = runtime / 'tesseract.exe'
     command = [str(engine), str(image), 'stdout', '-l', 'chi_sim+eng',
                '--tessdata-dir', str(runtime / 'tessdata'), '--psm', '3']
-    direct = subprocess.run(command, capture_output=True, timeout=60, check=True)
+    direct = capture(command, output, 'unicode-png')
     text = direct.stdout.decode('utf-8')
     require_text(text)
+    if args.engine_only:
+        record = {'scope': 'engine-only', 'png_text': text, 'unicode_paths': True, 'passed': True}
+        (output / 'verification.json').write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        print(json.dumps(record))
+        return
     work = output / '扫描 PDF 输出'
     work.mkdir()
     pdf = output / '无文本层 中英文.pdf'
@@ -49,8 +68,7 @@ def main():
         'ocr': {'executable': str(engine), 'tessdata_dir': str(runtime / 'tessdata'),
                 'languages': 'chi_sim+eng', 'dpi': 300},
     }
-    response = subprocess.run([str(args.worker.resolve())], input=json.dumps(request).encode(),
-                              capture_output=True, timeout=90, check=True)
+    response = capture([str(args.worker.resolve())], output, 'pdf-worker', input=json.dumps(request).encode())
     result = json.loads(response.stdout)
     if result['result']['status'] != 'success':
         raise AssertionError(f'PDF worker failed: {result}')
@@ -66,7 +84,7 @@ def main():
               'png_text': text, 'pdf_text': pdf_text, 'worker_result': result['result'],
               'unicode_paths': True, 'passed': True}
     (output / 'verification.json').write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps(record, ensure_ascii=False))
+    print(json.dumps(record))
 
 
 if __name__ == '__main__':

@@ -27,6 +27,11 @@ per-file SHA-256. Recipe source archive hashes are in the included portfiles.
 The PE gate rejects non-system DLL imports. MinGW/GCC, JBIG-KIT and libiconv
 from the previous prebuilt runtime are not included in this build.
 
+The executable carries a UTF-8 process-code-page manifest, verified by the PE
+gate and retained under `licenses/tesseract/utf8.manifest`. This prevents ANSI
+code pages from replacing non-ASCII path characters on Windows 10 1903 and later.
+Reference: https://learn.microsoft.com/windows/apps/design/globalizing/use-utf8-code-page
+
 Language data comes from `tesseract-ocr/tessdata_fast` commit
 `87416418657359cb625c412a48b6e1d6d41c29bd` under Apache-2.0.
 See `runtime-manifest.json` for exact file hashes.

@@ -55,6 +55,10 @@ jobs:
           ./scripts/fetch-protoc.ps1
           python scripts/fetch-onnxruntime.py --repair-cargo-cache
           if ($LASTEXITCODE -ne 0) { throw 'Native download verification failed' }
+      - name: Verify Unicode OCR before compiling workers
+        run: |
+          python scripts/verify-ocr-runtime.py --engine-only --runtime .local-archive/dependencies/tesseract-5.5.4 --output .local-archive/test-runs/ci/ocr-engine
+          if ($LASTEXITCODE -ne 0) { throw 'OCR engine Unicode path check failed' }
       - name: Preserve verified native resources before later checks
         if: github.event_name != 'pull_request' && steps.setup.outputs.native-cache-hit != 'true'
         uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4

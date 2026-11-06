@@ -14,6 +14,7 @@ $target = [IO.Path]::GetFullPath($Destination)
 $fingerprintFiles = @(
     'scripts/build-tesseract.ps1', 'scripts/check-ocr-pe.py',
     'third-party/tesseract/build/vcpkg.json',
+    'third-party/tesseract/build/utf8.manifest',
     'third-party/tesseract/build/triplets/x64-windows-static-release.cmake'
 )
 $fingerprint = ($fingerprintFiles | ForEach-Object {
@@ -61,18 +62,35 @@ $installed = Join-Path $build 'installed'
     "--x-buildtrees-root=$build/buildtrees" "--x-packages-root=$build/packages"
 if ($LASTEXITCODE -ne 0) { throw 'Pinned OCR source build failed' }
 $prefix = Join-Path $installed $triplet
-$exe = Join-Path $prefix 'tools/tesseract/tesseract.exe'
+$sourceExe = Join-Path $prefix 'tools/tesseract/tesseract.exe'
+New-Item -ItemType Directory -Path $target -Force | Out-Null
+$exe = Join-Path $target 'tesseract.exe'
+Copy-Item -LiteralPath $sourceExe -Destination $exe -Force
+# Narrow argv/fopen in Tesseract and Leptonica otherwise depend on the machine's
+# ANSI code page. Merge a process-local UTF-8 manifest, preserving UAC settings.
+$sdk = @(
+    (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows Kits\Installed Roots' -ErrorAction SilentlyContinue).KitsRoot10,
+    (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows Kits\Installed Roots' -ErrorAction SilentlyContinue).KitsRoot10
+) | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | Select-Object -First 1
+if (-not $sdk) { throw 'Windows SDK is required to embed the OCR UTF-8 manifest' }
+$mt = Get-ChildItem -LiteralPath (Join-Path $sdk 'bin') -Filter mt.exe -File -Recurse |
+    Where-Object { $_.Directory.Name -eq 'x64' } | Sort-Object FullName -Descending | Select-Object -First 1
+if (-not $mt) { throw 'Windows SDK x64 manifest tool is missing' }
+& $mt.FullName -nologo "-inputresource:$exe;#1" -manifest (Join-Path $recipe 'utf8.manifest') "-outputresource:$exe;#1"
+if ($LASTEXITCODE -ne 0) { throw 'OCR UTF-8 manifest merge failed' }
 $pe = & python (Join-Path $PSScriptRoot 'check-ocr-pe.py') $exe
 if ($LASTEXITCODE -ne 0) { throw 'OCR PE dependency verification failed' }
 $engine = (& $exe --version 2>&1) -join "`n"
 if ($LASTEXITCODE -ne 0 -or $engine -notmatch "(?m)^tesseract $([regex]::Escape($version))$") {
     throw 'Unexpected OCR engine version'
 }
-New-Item -ItemType Directory -Path $target -Force | Out-Null
-Copy-Item -LiteralPath $exe -Destination (Join-Path $target 'tesseract.exe') -Force
 $components = @()
 $expectedFiles = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
 [void]$expectedFiles.Add('tesseract.exe')
+$manifestCopy = Join-Path $target 'licenses/tesseract/utf8.manifest'
+New-Item -ItemType Directory -Path (Split-Path -Parent $manifestCopy) -Force | Out-Null
+Copy-Item -LiteralPath (Join-Path $recipe 'utf8.manifest') -Destination $manifestCopy -Force
+[void]$expectedFiles.Add('licenses/tesseract/utf8.manifest')
 foreach ($block in ((Get-Content -LiteralPath (Join-Path $installed 'vcpkg/status') -Raw) -split '\r?\n\r?\n')) {
     $fields = @{}
     foreach ($line in ($block -split '\r?\n')) {
