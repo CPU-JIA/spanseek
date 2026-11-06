@@ -32,8 +32,9 @@
 
 ## 下载
 
-当前版本：**1.0.2**（Windows 10 / 11 x64）。本仓库维护完整产品源码、用户文档与官网。GitHub Actions 为 main 构建安装包，推送匹配的版本 tag 后生成 Release 草稿；草稿经检查公开后可从仓库 Releases 下载。
+当前版本：**1.0.2**（Windows 10 / 11 x64），已公开发布。安装包由 GitHub Actions 构建，并完成隔离安装、关键功能与卸载验证。
 
+- [下载 1.0.2 安装包](https://github.com/CPU-JIA/spanseek/releases/download/v1.0.2/spanseek_1.0.2_x64-setup.exe) · [发行说明与全部校验值](https://github.com/CPU-JIA/spanseek/releases/tag/v1.0.2)
 - [下载页](docs/download/index.html)：安装包、SHA-256、系统要求与校验方法。
 - [快速上手](docs/quick-start.md)：十分钟完成安装、建库、第一篇笔记、导入与备份。
 - [已知问题](docs/known-issues.md)：未签名、WebView2、DOCX/PDF、AI 与未覆盖环境。

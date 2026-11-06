@@ -1,6 +1,8 @@
 # 构建、缓存与版本发布
 
-本轮待发布版本为 **`1.0.2`**，使用新 tag `v1.0.2`。已有 `v1.0.1` 保持冻结；后续按 `1.x` 管理，不回退已安装版本号。
+**[`1.0.2`](https://github.com/CPU-JIA/spanseek/releases/tag/v1.0.2) 已于 2026-11-06 公开发布**，tag `v1.0.2` 固定到 `07b9f03df5a9f0beb974be43ffbd5a1f08a7c61b`。`v1.0.1` 继续保持冻结；后续按 `1.x` 管理，不回退已安装版本号。
+
+本次 Windows 构建 [42196265439](https://github.com/CPU-JIA/spanseek/actions/runs/42196265439) 通过全部工程检查，tag 工作流 [42212880582](https://github.com/CPU-JIA/spanseek/actions/runs/42212880582) 复用同一提交的制品。实际安装包已完成隔离安装、13 项核心界面检查、中英文扫描 PDF 与 Unicode 路径 OCR、正常退出和隔离卸载；14 个公开附件均已匿名下载并核对 SHA-256。隔离卸载使用 `/S /UPDATE` 保留共用 AppID 状态，不将其写成普通交互卸载验收。安装包仍为 `NotSigned`；网站已从该制品生成并验证，域名网站未在本次发布中部署。
 
 ## Actions 行为
 
