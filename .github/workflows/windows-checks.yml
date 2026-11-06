@@ -51,6 +51,8 @@ jobs:
         run: |
           ./scripts/prepare-desktop-resources.ps1
           if ($LASTEXITCODE -ne 0) { throw 'Native resource preparation failed' }
+          $resourceChanges = git status --porcelain -- crates/pkms-core/resources/rich-export.zip crates/pkms-core/resources/rich-export.manifest.json
+          if ($LASTEXITCODE -ne 0 -or $resourceChanges) { throw 'Regenerate and commit the offline rich-export resources before release.' }
           $protocPath = Join-Path $env:GITHUB_WORKSPACE '.local-archive/tooling/protoc-36.2/bin/protoc.exe'
           "PROTOC=$protocPath" >> $env:GITHUB_ENV
       - name: Preserve verified native resources before later checks

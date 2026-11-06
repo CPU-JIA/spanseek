@@ -38,7 +38,7 @@
     {
       "path": "apps/desktop/package.json",
       "bytes": 1549,
-      "sha256": "b1072f2c49f85cfc322f52ea06d86b2033a02e27efabd882ef0b3c261f9464ee"
+      "sha256": "8bda310061daff6132d28adaed9b45c7973230d8aa4a3780c524210b5df2c4a6"
     },
     {
       "path": "apps/desktop/src/export-renderer/entry.ts",
@@ -5682,7 +5682,7 @@
   "archive": {
     "path": "crates/pkms-core/resources/rich-export.zip",
     "bytes": 7235119,
-    "sha256": "f8c025742b3a5e2769349e663f0b07be1d88df3935b7055014c8b0bb42f4dfa8"
+    "sha256": "7637df1bc78ba254ea74a9597cd6eaba6c7dcacb8b8c7b83ad1774dfc751838d"
   },
-  "packagedManifestSha256": "5cc47bf63545366aa4996b2e29abcd1d3f07d00e9500b32147d9f5fc279f88d2"
+  "packagedManifestSha256": "59ce6473726c7b61cf7782168ad0fef627e0736a4d49f38ee63da8a7e10d8bb1"
 }
