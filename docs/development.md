@@ -51,6 +51,8 @@ pwsh -NoProfile -File scripts/prepare-tesseract.ps1
 
 源码、版本或哈希不符会失败。默认下载位置为 `.local-archive/dependencies/`、`.local-archive/tooling/` 与 `.local-archive/native-ocr/`。原生二进制缓存按 vcpkg ABI 复用；准备脚本校验 PE 依赖、版本和语言包。
 
+ONNX Runtime 使用 `ORT_CACHE_DIR` 指定的构建缓存；本地未设置时沿用 `ort` 的系统默认缓存。准备脚本会补回缺失的固定版本原生库，并重置指向错误目录的 `ort-sys` 编译记录；不删除其他 crate 的编译缓存。CI 将它固定到项目的 `.local-archive/dependencies/ort`。
+
 `python scripts/build-license-bundle.py` 从锁定依赖收集完整许可文本，校验补充文本和对应源码哈希。生成的 `.local-archive/license-bundle/` 随安装包分发，同时作为 Release 附件提供。缺失材料会阻止构建；仅 SPDX 名称不算许可原文。更换依赖时须同步受影响的 `third-party/license-supplements/`、原生声明和 `copyleft-sources.json`。
 
 ## 检查与构建

@@ -26,6 +26,7 @@ jobs:
       CARGO_PROFILE_DEV_DEBUG: '0'
       CARGO_PROFILE_TEST_DEBUG: '0'
       CARGO_TARGET_DIR: ${{ github.workspace }}/target
+      ORT_CACHE_DIR: ${{ github.workspace }}/.local-archive/dependencies/ort
       TEMP: ${{ github.workspace }}/.local-archive/test-runs/ci
       TMP: ${{ github.workspace }}/.local-archive/test-runs/ci
     steps:
@@ -47,14 +48,13 @@ jobs:
         uses: ./.github/actions/windows-setup
       - name: Rust formatting
         run: cargo fmt --all -- --check
-      - name: Prepare and verify native resources
+      - name: Prepare and verify native downloads
         run: |
-          ./scripts/prepare-desktop-resources.ps1
-          if ($LASTEXITCODE -ne 0) { throw 'Native resource preparation failed' }
-          $resourceChanges = git status --porcelain -- crates/pkms-core/resources/rich-export.zip crates/pkms-core/resources/rich-export.manifest.json
-          if ($LASTEXITCODE -ne 0 -or $resourceChanges) { throw 'Regenerate and commit the offline rich-export resources before release.' }
-          $protocPath = Join-Path $env:GITHUB_WORKSPACE '.local-archive/tooling/protoc-36.2/bin/protoc.exe'
-          "PROTOC=$protocPath" >> $env:GITHUB_ENV
+          ./scripts/fetch-pdfium.ps1
+          ./scripts/prepare-tesseract.ps1
+          ./scripts/fetch-protoc.ps1
+          python scripts/fetch-onnxruntime.py --repair-cargo-cache
+          if ($LASTEXITCODE -ne 0) { throw 'Native download verification failed' }
       - name: Preserve verified native resources before later checks
         if: github.event_name != 'pull_request' && steps.setup.outputs.native-cache-hit != 'true'
         uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
@@ -67,9 +67,18 @@ jobs:
             .local-archive/dependencies/tesseract
             .local-archive/dependencies/tesseract-5.5.4
             .local-archive/dependencies/license-sources
+            .local-archive/dependencies/ort
             .local-archive/native-ocr/binary-cache
             .local-archive/native-ocr/downloads
             .local-archive/tooling/protoc-36.2
+      - name: Prepare native workers and license resources
+        run: |
+          ./scripts/prepare-desktop-resources.ps1
+          if ($LASTEXITCODE -ne 0) { throw 'Native resource preparation failed' }
+          $resourceChanges = git status --porcelain -- crates/pkms-core/resources/rich-export.zip crates/pkms-core/resources/rich-export.manifest.json
+          if ($LASTEXITCODE -ne 0 -or $resourceChanges) { throw 'Regenerate and commit the offline rich-export resources before release.' }
+          $protocPath = Join-Path $env:GITHUB_WORKSPACE '.local-archive/tooling/protoc-36.2/bin/protoc.exe'
+          "PROTOC=$protocPath" >> $env:GITHUB_ENV
       - name: Real bilingual OCR and scanned PDF with Unicode paths
         run: |
           python scripts/verify-ocr-runtime.py --runtime .local-archive/dependencies/tesseract-5.5.4 --worker target/debug/pkms-worker.exe --pdfium .local-archive/dependencies/pdfium-7881/bin/pdfium.dll --output .local-archive/test-runs/ci/ocr

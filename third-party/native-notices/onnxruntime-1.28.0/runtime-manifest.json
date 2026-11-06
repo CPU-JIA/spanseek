@@ -1,0 +1,11 @@
+{
+  "version": "1.28.0",
+  "ort_sys": "2.0.0-rc.13",
+  "target": "x86_64-pc-windows-msvc",
+  "url": "https://cdn.pyke.io/0/pyke:ort-rs/ms@1.28.0/x86_64-pc-windows-msvc+directml.tar.lzma2",
+  "sha256": "f7c654b3729cb9e5ad2a36a0c38e5b48e63bf4eed22968931aed33a0ad0b527d",
+  "files": [
+    { "name": "onnxruntime.lib", "bytes": 341152186, "sha256": "c3f5bb800fd19c05d3bd13614654f0c37ea3db1fbfba4d10963fa678cdb6cdd0" },
+    { "name": "DirectML.dll", "bytes": 18527776, "sha256": "9c9e6d822561c6c41b90e6994b3e8857cf1d66dbfb1e0c4c799c7c89b4e92da1" }
+  ]
+}

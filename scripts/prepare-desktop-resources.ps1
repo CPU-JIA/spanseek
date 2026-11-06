@@ -19,6 +19,8 @@ try {
     & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'fetch-protoc.ps1')
     if ($LASTEXITCODE -ne 0) { throw 'Protocol compiler preparation failed' }
     $env:PROTOC = Join-Path $root '.local-archive/tooling/protoc-36.2/bin/protoc.exe'
+    & python (Join-Path $PSScriptRoot 'fetch-onnxruntime.py') --repair-cargo-cache
+    if ($LASTEXITCODE -ne 0) { throw 'ONNX native dependency preparation failed' }
     if ($Release) { & cargo build -p pkms-inference --features runtime --bin pkms-inference --release --locked }
     else { & cargo build -p pkms-inference --features runtime --bin pkms-inference --locked }
     if ($LASTEXITCODE -ne 0) { throw 'Inference worker build failed' }

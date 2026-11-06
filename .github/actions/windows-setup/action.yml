@@ -58,10 +58,11 @@ runs:
           .local-archive/dependencies/tesseract
           .local-archive/dependencies/tesseract-5.5.4
           .local-archive/dependencies/license-sources
+          .local-archive/dependencies/ort
           .local-archive/native-ocr/binary-cache
           .local-archive/native-ocr/downloads
           .local-archive/tooling/protoc-36.2
-        key: windows-x64-native-v2-${{ hashFiles('scripts/fetch-*.ps1', 'scripts/build-tesseract.ps1', 'scripts/check-ocr-pe.py', 'scripts/prepare-tesseract.ps1', 'third-party/tesseract/**', 'third-party/copyleft-sources.json') }}
+        key: windows-x64-native-v3-${{ hashFiles('scripts/fetch-*.ps1', 'scripts/fetch-*.py', 'scripts/build-tesseract.ps1', 'scripts/check-ocr-pe.py', 'scripts/prepare-tesseract.ps1', 'third-party/tesseract/**', 'third-party/native-notices/**', 'third-party/copyleft-sources.json') }}
     - name: Locked frontend dependencies
       shell: pwsh
       run: |

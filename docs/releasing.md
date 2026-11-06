@@ -23,11 +23,13 @@
 | -------- | ---------------------------------------------------------------------- | ---------------------------------------------------- |
 | pnpm     | 系统/架构、pnpm 版本、`pnpm-lock.yaml`；锁变化可恢复同版本旧 store     | 包 store；安装仍执行 `--frozen-lockfile`             |
 | Rust     | 固定 shared key，加 Rust 工具链、Cargo 清单/锁文件和编译环境的自动哈希 | Cargo registry/git 和 `target` 中依赖/工作区构建结果 |
-| 原生资源 | 系统/架构、下载/构建脚本、vcpkg baseline/triplet、来源清单哈希 | PDFium、OCR/语言包、vcpkg 下载及 ABI 二进制缓存、protoc、对应源码归档 |
+| 原生资源 | 系统/架构、下载/构建脚本、vcpkg baseline/triplet、来源清单哈希 | PDFium、OCR/语言包、ONNX Runtime 静态库、vcpkg 下载及 ABI 二进制缓存、protoc、对应源码归档 |
 
 main 构建也生成 release 产物，使后续 tag 可以复用默认分支的编译缓存；PR 不保存 Rust 缓存。GitHub 缓存受分支作用域、容量和回收策略限制，命中率不作保证。每次都运行必要检查和资源校验，缓存命中不代表构建或测试已经成功。
 
 pnpm 在依赖安装完成后保存缓存，原生资源在校验完成后保存；受信任分支的 Rust 编译缓存也会在后续检查失败时保留，避免失败后重新编译全部依赖。测试失败仍会阻止安装包和 Release 草稿交付。
+
+CI 的 `ORT_CACHE_DIR` 固定到 `.local-archive/dependencies/ort`，与 Cargo 编译缓存一起恢复。`fetch-onnxruntime.py` 在编译前验证压缩包及两个原生文件的 SHA-256，缺失时从固定来源恢复；若 Cargo 的 `ort-sys` 链接记录指向其他目录，只清理并重建该 crate。已验证的原生下载在 worker 编译前保存，后续编译失败不会使下载缓存丢失。
 
 不缓存知识库、AppData、凭据、模型权重或整个 `.local-archive`。安装包作为 Artifact/Release 附件交付，不提交到 Git。
 
