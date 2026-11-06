@@ -126,7 +126,19 @@ jobs:
           $headers = @{ Authorization = "Bearer $env:GH_TOKEN"; Accept = 'application/vnd.github+json' }
           $existing = $null
           try { $existing = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:GH_REPO/releases/tags/$env:RELEASE_TAG" -Headers $headers }
-          catch { if ([int]$_.Exception.Response.StatusCode -ne 404) { throw } }
+          catch {
+            if ([int]$_.Exception.Response.StatusCode -ne 404) { throw }
+            # The tag endpoint does not expose unpublished drafts. Authenticated
+            # release listings include them, so a rerun must search that list.
+            $page = 1
+            do {
+              $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:GH_REPO/releases?per_page=100&page=$page" -Headers $headers
+              $matching = @($batch | Where-Object tag_name -CEQ $env:RELEASE_TAG)
+              if ($matching.Count -gt 1) { throw 'Multiple releases match the requested tag' }
+              if ($matching.Count -eq 1) { $existing = $matching[0]; break }
+              $page++
+            } while ($batch.Count -eq 100)
+          }
           $files = @(Get-ChildItem -LiteralPath release -File | ForEach-Object { $_.FullName })
           if ($existing) {
             if (-not $existing.draft) { throw 'An already published release will not be overwritten' }
