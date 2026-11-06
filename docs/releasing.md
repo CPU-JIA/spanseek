@@ -4,7 +4,7 @@
 
 ## Actions 行为
 
-工作流：[windows-checks.yml](../.github/workflows/windows-checks.yml)；公共环境准备：[windows-setup](../.github/actions/windows-setup/action.yml)。
+构建工作流：[windows-checks.yml](../.github/workflows/windows-checks.yml)；tag 草稿工作流：[release-draft.yml](../.github/workflows/release-draft.yml)；公共环境准备：[windows-setup](../.github/actions/windows-setup/action.yml)。
 
 | 触发                   | 执行内容                                                                        | 结果位置                         |
 | ---------------------- | ------------------------------------------------------------------------------- | -------------------------------- |
@@ -57,7 +57,7 @@ git tag -a v1.0.2 -m "spanseek 1.0.2"
 git push origin v1.0.2
 ```
 
-后续每个新版本使用新 tag；不要强推或移动已发布 tag。tag 不重复编译相同源码：它只接受本仓库、同一 workflow、main 分支、完全相同提交 SHA 的成功构建，拒绝 PR、失败运行、过期或重复附件。下载后再校验版本、commit、全部文件哈希、安装包大小/签名状态与源码清单。找不到合格构建时失败，须先完成同提交 main 构建再重跑 tag。tag 的草稿发布记录独立保留，不用不同提交的旧成功结果代签。
+后续每个新版本使用新 tag；不要强推或移动已发布 tag。tag 使用独立工作流，避免跳过的构建任务污染 main 的必需检查状态。tag 不重复编译相同源码：它只接受本仓库、同一 workflow、main 分支、完全相同提交 SHA 的成功构建，拒绝 PR、失败运行、过期或重复附件。下载后再校验版本、commit、全部文件哈希、安装包大小/签名状态与源码清单。找不到合格构建时失败，须先完成同提交 main 构建再重跑 tag。tag 的草稿发布记录独立保留，不用不同提交的旧成功结果代签。
 
 ## 制品与公开前检查
 
