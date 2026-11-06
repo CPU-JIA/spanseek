@@ -68,6 +68,17 @@
               >下载页</a
             >，当前边界见<a href="known-issues.html">已知问题</a>。
           </p>
+          <h2 id="102--2026-11-06">1.0.2 — 2026-11-06</h2>
+          <ul>
+            <li>
+              OCR 更新为固定源码构建的 Tesseract 5.5.4，内置中文和英文语言包；通过中文路径、PNG
+              和无文本层扫描 PDF 识别验证。
+            </li>
+            <li>安装包新增完整第三方许可文本、组件清单和适用组件源码；校正 PDFium 的许可说明。</li>
+            <li>GitHub Actions 校验 OCR 运行库和许可材料，复用原生构建、Rust 与前端依赖缓存。</li>
+            <li>项目支持邮箱：<a href="mailto:support@spanseek.com">support@spanseek.com</a>。</li>
+            <li>安装包仍未签名（NotSigned）；安装前请核对发布来源和 SHA-256。</li>
+          </ul>
           <h2 id="101--2026-11-05">1.0.1 — 2026-11-05</h2>
           <ul>
             <li>六个常驻入口与完整内容工作区；返回保留集合、筛选、分页和滚动，支持主动分屏。</li>

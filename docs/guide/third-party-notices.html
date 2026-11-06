@@ -64,155 +64,103 @@
         <article class="doc-article">
           <h1 id="spanseek-第三方组件声明">spanseek 第三方组件声明</h1>
           <p>
-            本文件由 <code>node scripts/build-notices.mjs</code> 从 <code>Cargo.lock</code>、前端
-            <code>package.json</code> + 已安装包清单、<code>third-party/</code>
-            随包资产生成；<strong>不要手改</strong>，改动依赖后重跑。 许可文本本身随各组件自带的
-            LICENSE/NOTICE 文件分发；本文件只做索引与计数，不替代许可原文。
+            由 <code>scripts/build-notices.mjs</code> 根据完整许可材料生成；修改依赖后先运行
+            <code>python scripts/build-license-bundle.py</code>。
           </p>
-          <p>生成时间：2026-11-05T13:36:22.491Z</p>
-          <h2 id="随包第三方资产">随包第三方资产</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>组件</th>
-                <th>版本</th>
-                <th>许可</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Inter</td>
-                <td>4.x (third-party/inter)</td>
-                <td>OFL-1.1（third-party/inter/LICENSE.txt）</td>
-              </tr>
-              <tr>
-                <td>tempfile (vendored crate)</td>
-                <td>3.27.0</td>
-                <td>MIT OR Apache-2.0（third-party/tempfile/LICENSE-*）</td>
-              </tr>
-              <tr>
-                <td>calamine (vendored crate, locally patched)</td>
-                <td>0.37.0</td>
-                <td>MIT（third-party/calamine/LICENSE-MIT.md + PATCHES.md）</td>
-              </tr>
-              <tr>
-                <td>mobi (vendored crate, locally patched)</td>
-                <td>0.8.0</td>
-                <td>MIT（third-party/mobi/LICENSE + NOTICE.md）</td>
-              </tr>
-              <tr>
-                <td>huffcdic (adapted from kindling-mobi)</td>
-                <td>0.45.6</td>
-                <td>MIT（third-party/mobi/LICENSE-kindling）</td>
-              </tr>
-              <tr>
-                <td>docx-preview</td>
-                <td>0.4.1</td>
-                <td>Apache-2.0（third-party/docx-preview/LICENSE）</td>
-              </tr>
-              <tr>
-                <td>JSZip</td>
-                <td>3.10.2</td>
-                <td>MIT (dual-licensed; MIT chosen)（third-party/jszip/LICENSE.markdown）</td>
-              </tr>
-              <tr>
-                <td>KaTeX fonts</td>
-                <td>katex-fonts (third-party/rich-format)</td>
-                <td>OFL-1.1（third-party/rich-format/katex-fonts/font-notices.json）</td>
-              </tr>
-              <tr>
-                <td>PDFium (pdfium-binaries chromium/7881)</td>
-                <td>7881</td>
-                <td>MIT（.local-archive/dependencies/pdfium-7881/LICENSE）</td>
-              </tr>
-              <tr>
-                <td>Tesseract OCR runtime + chi_sim+eng</td>
-                <td>5.4.0.20240606</td>
-                <td>
-                  Apache-2.0; bundled native components listed in
-                  COMPONENTS.md（third-party/tesseract/LICENSE + COMPONENTS.md +
-                  runtime-manifest.json）
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <h2 id="rust-依赖">Rust 依赖</h2>
-          <p>共 661 个（来自 <code>cargo metadata --locked</code>，不含本仓库自身 crate）。</p>
+          <p>安装目录 <code>licenses/dependencies/</code> 和 Release 附件均提供：</p>
           <ul>
-            <li>MIT OR Apache-2.0: 306</li>
-            <li>MIT: 142</li>
-            <li>Apache-2.0 OR MIT: 59</li>
-            <li>Unicode-3.0: 24</li>
-            <li>MIT/Apache-2.0: 23</li>
-            <li>Zlib OR Apache-2.0 OR MIT: 17</li>
-            <li>Unlicense OR MIT: 11</li>
-            <li>Apache-2.0: 9</li>
-            <li>BSD-3-Clause: 7</li>
-            <li>CC0-1.0: 6</li>
-            <li>MPL-2.0: 5</li>
-            <li>ISC: 5</li>
-            <li>Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT: 5</li>
-            <li>MIT OR Apache-2.0 OR Zlib: 4</li>
-            <li>Zlib: 3</li>
-            <li>Apache-2.0/MIT: 3</li>
-            <li>Apache-2.0 OR ISC OR MIT: 3</li>
-            <li>MIT OR Zlib OR Apache-2.0: 2</li>
-            <li>BSD-3-Clause OR Apache-2.0: 2</li>
-            <li>BSD-3-Clause OR MIT OR Apache-2.0: 2</li>
-            <li>MIT OR Apache-2.0 OR LGPL-2.1-or-later: 2</li>
-            <li>Unlicense/MIT: 2</li>
-            <li>BSD-2-Clause OR Apache-2.0 OR MIT: 2</li>
+            <li><code>THIRD-PARTY-LICENSES.txt</code>：上游许可、版权与 NOTICE 全文。</li>
+            <li>
+              <code>THIRD-PARTY-COMPONENTS.json</code>：版本、许可文件 SHA-256、补充材料的来源。
+            </li>
+            <li>
+              <code>THIRD-PARTY-SOURCES.zip</code>：MPL Rust 组件、Eigen、ELK/elkjs
+              的源码与构建说明。
+            </li>
+            <li><code>THIRD-PARTY-SOURCE-INFO.txt</code>：适用许可与源码说明。</li>
+          </ul>
+          <p>
+            本索引覆盖已解析 Rust
+            依赖和已安装前端依赖，包括开发/构建工具；不表示每个包都进入安装包。第三方组件继续适用各自许可，不受
+            spanseek 专有许可限制。
+          </p>
+          <h2 id="原生组件与资产">原生组件与资产</h2>
+          <ul>
+            <li>
+              Tesseract 5.5.4：Apache-2.0；固定 vcpkg 源码构建，静态 MSVC
+              CRT/库。完整依赖版权、源码哈希与端口补丁位于
+              <code>tesseract/licenses/</code>，实际文件哈希见
+              <code>tesseract/build-receipt.json</code>。
+            </li>
+            <li>chi_sim / eng：tessdata_fast 固定提交，Apache-2.0。</li>
+            <li>
+              PDFium chromium/7881：BSD-3-Clause；预编译包装项目为 MIT。本体及依赖许可证全文位于
+              <code>pdfium/licenses/</code>，包装许可为 <code>pdfium/LICENSE</code>。
+            </li>
+            <li>
+              ONNX Runtime 1.28.0：MIT；完整第三方声明纳入许可文本，Eigen 对应源码附在源码包中。
+            </li>
+            <li>Inter / KaTeX 字体：OFL-1.1；随包保留原始字体许可。</li>
+            <li>本仓库修改过的 tempfile、calamine、mobi 保留原许可与补丁说明，源码随仓库公开。</li>
+            <li>DOMPurify 按 Apache-2.0 选项使用；JSZip 按 MIT 选项使用。</li>
+            <li>WebView2 由系统或安装器 bootstrap 提供，不在本包复制其运行库。</li>
+          </ul>
+          <h2 id="依赖许可声明统计">依赖许可声明统计</h2>
+          <p>Rust：735；npm：421。</p>
+          <ul>
+            <li>(Apache-2.0 OR MIT) AND BSD-3-Clause: 1</li>
+            <li>(MIT AND Zlib): 1</li>
+            <li>(MIT OR Apache-2.0) AND Apache-2.0: 1</li>
+            <li>(MIT OR Apache-2.0) AND Unicode-3.0: 1</li>
+            <li>(MIT OR GPL-3.0-or-later): 1</li>
+            <li>(MPL-2.0 OR Apache-2.0): 1</li>
+            <li>0BSD OR CC0-1.0: 1</li>
             <li>0BSD OR MIT OR Apache-2.0: 1</li>
+            <li>Apache-2.0: 101</li>
+            <li>Apache-2.0 / MIT: 1</li>
+            <li>Apache-2.0 AND ISC: 1</li>
+            <li>Apache-2.0 AND MIT: 2</li>
+            <li>Apache-2.0 OR BSL-1.0: 1</li>
+            <li>Apache-2.0 OR ISC OR MIT: 3</li>
+            <li>Apache-2.0 OR MIT: 53</li>
+            <li>Apache-2.0 OR MIT OR Zlib: 2</li>
+            <li>Apache-2.0/MIT: 3</li>
+            <li>BSD-2-Clause: 4</li>
+            <li>BSD-2-Clause OR Apache-2.0 OR MIT: 2</li>
+            <li>BSD-3-Clause: 18</li>
+            <li>BSD-3-Clause AND MIT: 1</li>
+            <li>BSD-3-Clause OR Apache-2.0: 2</li>
+            <li>BSD-3-Clause/MIT: 1</li>
+            <li>BSL-1.0: 1</li>
+            <li>CC0-1.0: 7</li>
+            <li>CC0-1.0 OR Apache-2.0 OR Apache-2.0 WITH LLVM-exception: 1</li>
+            <li>CC0-1.0 OR MIT-0 OR Apache-2.0: 2</li>
+            <li>CDLA-Permissive-2.0: 1</li>
+            <li>EPL-2.0: 1</li>
+            <li>ISC: 50</li>
             <li>ISC AND (Apache-2.0 OR ISC): 1</li>
             <li>
               ISC AND (Apache-2.0 OR ISC) AND Apache-2.0 AND MIT AND BSD-3-Clause AND (Apache-2.0 OR
               ISC OR MIT) AND (Apache-2.0 OR ISC OR MIT-0): 1
             </li>
-            <li>BSD-3-Clause AND MIT: 1</li>
-            <li>BSD-3-Clause/MIT: 1</li>
-            <li>Apache-2.0 AND MIT: 1</li>
-            <li>CC0-1.0 OR MIT-0 OR Apache-2.0: 1</li>
-            <li>(Apache-2.0 OR MIT) AND BSD-3-Clause: 1</li>
-            <li>MIT OR Apache-2.0 OR BSD-1-Clause: 1</li>
-            <li>Apache-2.0 / MIT: 1</li>
-            <li>MIT AND BSD-3-Clause: 1</li>
-            <li>Apache-2.0 AND ISC: 1</li>
-            <li>0BSD OR CC0-1.0: 1</li>
-            <li>Apache-2.0 OR BSL-1.0: 1</li>
-            <li>Apache-2.0 WITH LLVM-exception: 1</li>
-            <li>(MIT OR Apache-2.0) AND Unicode-3.0: 1</li>
-            <li>CDLA-Permissive-2.0: 1</li>
+            <li>MIT: 495</li>
+            <li>MIT AND BSD-3-Clause: 2</li>
+            <li>MIT OR Apache-2.0: 295</li>
+            <li>MIT OR Apache-2.0 OR Zlib: 4</li>
+            <li>MIT OR Zlib OR Apache-2.0: 2</li>
+            <li>MIT/Apache-2.0: 32</li>
+            <li>MPL-2.0: 7</li>
+            <li>Unicode-3.0: 26</li>
+            <li>Unlicense: 1</li>
+            <li>Unlicense OR MIT: 11</li>
+            <li>Unlicense/MIT: 6</li>
+            <li>Zlib: 4</li>
+            <li>Zlib OR Apache-2.0 OR MIT: 3</li>
           </ul>
-          <h2 id="前端依赖">前端依赖</h2>
+          <h2 id="材料完整性检查">材料完整性检查</h2>
           <p>
-            共 35 个（<code>apps/desktop</code> 与 <code>packages/contracts</code> 的直接依赖）。
+            缺失许可文本：0。构建检查校验补充文本哈希、原生来源、对应源码归档哈希和未审阅的新许可；本清单不是法律意见。
           </p>
-          <ul>
-            <li>MIT: 28</li>
-            <li>Apache-2.0: 3</li>
-            <li>Apache-2.0 OR MIT: 2</li>
-            <li>ISC: 2</li>
-          </ul>
-          <h2 id="富格式导出内置包third-partyrich-format">
-            富格式导出内置包（third-party/rich-format）
-          </h2>
-          <p>
-            共 66 个；许可原文逐包保存在 <code>third-party/rich-format/&lt;包&gt;/LICENSE*</code>。
-          </p>
-          <ul>
-            <li>see LICENSE: 41</li>
-            <li>MIT: 19</li>
-            <li>see LICENSE.txt: 4</li>
-            <li>see LICENSE.md: 2</li>
-          </ul>
-          <h2 id="系统组件不随安装包分发">系统组件（不随安装包分发）</h2>
-          <ul>
-            <li>Microsoft Edge WebView2 Runtime：由系统和安装器 bootstrap 提供，不随包复制。</li>
-          </ul>
-          <h2 id="未决">未决</h2>
-          <ul>
-            <li>无。</li>
-          </ul>
         </article>
       </div>
     </main>

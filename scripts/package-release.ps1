@@ -19,6 +19,9 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Release inventory failed' }
     Copy-Item -LiteralPath $installerSource -Destination (Join-Path $releaseOutput $installerName) -Force
     Copy-Item -LiteralPath (Join-Path $releaseRoot 'THIRD-PARTY-NOTICES.md') -Destination $releaseOutput -Force
+    foreach ($name in @('THIRD-PARTY-COMPONENTS.json', 'THIRD-PARTY-LICENSES.txt', 'THIRD-PARTY-SOURCE-INFO.txt', 'THIRD-PARTY-SOURCES.zip')) {
+        Copy-Item -LiteralPath (Join-Path $releaseRoot ".local-archive/license-bundle/$name") -Destination $releaseOutput -Force
+    }
     Copy-Item -LiteralPath (Join-Path $releaseRoot 'LICENSE') -Destination $releaseOutput -Force
     Copy-Item -LiteralPath (Join-Path $releaseRoot 'CHANGELOG.md') -Destination (Join-Path $releaseOutput 'RELEASE-NOTES.md') -Force
     $signature = (Get-AuthenticodeSignature -LiteralPath $installerSource).Status.ToString()
@@ -39,5 +42,6 @@ try {
         '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name
     }
     $sumLines | Set-Content -LiteralPath (Join-Path $releaseOutput 'SHA256SUMS.txt') -Encoding utf8NoBOM
+    & (Join-Path $PSScriptRoot 'verify-release-artifacts.ps1') -Directory $releaseOutput -ExpectedCommit $revision -ExpectedVersion $releaseVersion
     Write-Output "Release artifacts prepared: $installerName ($signature)"
 } finally { Pop-Location }

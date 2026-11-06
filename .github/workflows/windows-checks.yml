@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   windows:
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
     runs-on: windows-2025
     timeout-minutes: 180
     defaults:
@@ -62,10 +63,17 @@ jobs:
           path: |
             .local-archive/dependencies/pdfium-7881
             .local-archive/dependencies/downloads
-            .local-archive/dependencies/tesseract-source-5.4.0.20240606
+            .local-archive/dependencies/tesseract-source-5.5.4
             .local-archive/dependencies/tesseract
-            .local-archive/dependencies/tesseract-5.4.0.20240606
+            .local-archive/dependencies/tesseract-5.5.4
+            .local-archive/dependencies/license-sources
+            .local-archive/native-ocr/binary-cache
+            .local-archive/native-ocr/downloads
             .local-archive/tooling/protoc-36.2
+      - name: Real bilingual OCR and scanned PDF with Unicode paths
+        run: |
+          python scripts/verify-ocr-runtime.py --runtime .local-archive/dependencies/tesseract-5.5.4 --worker target/debug/pkms-worker.exe --pdfium .local-archive/dependencies/pdfium-7881/bin/pdfium.dll --output .local-archive/test-runs/ci/ocr
+          if ($LASTEXITCODE -ne 0) { throw 'Bundled OCR integration failed' }
       - name: Rust workspace tests
         run: cargo test --workspace --locked
       - name: Rust Clippy
@@ -100,21 +108,63 @@ jobs:
           retention-days: 14
 
   release-draft:
-    needs: windows
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: windows-2025
     timeout-minutes: 15
     permissions:
       contents: write
+      actions: read
     defaults:
       run:
         shell: pwsh
     steps:
+      - name: Checkout the immutable version tag
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Find a successful main build for this exact commit
+        id: checked
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          node scripts/check-version.mjs --tag $env:RELEASE_TAG
+          if ($LASTEXITCODE -ne 0) { throw 'Release version mismatch' }
+          $sha = (git rev-parse HEAD).Trim()
+          if ($LASTEXITCODE -ne 0 -or $sha -notmatch '^[0-9a-f]{40}$') { throw 'Cannot resolve tag commit' }
+          $headers = @{ Authorization = "Bearer $env:GH_TOKEN"; Accept = 'application/vnd.github+json' }
+          $build = $null
+          $page = 1
+          do {
+            $batch = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:GH_REPO/actions/workflows/windows-checks.yml/runs?branch=main&status=success&per_page=100&page=$page" -Headers $headers
+            $build = $batch.workflow_runs | Where-Object {
+              $_.head_sha -ceq $sha -and $_.head_branch -ceq 'main' -and
+              $_.head_repository.full_name -ceq $env:GH_REPO -and
+              $_.event -in @('push', 'workflow_dispatch') -and $_.conclusion -eq 'success'
+            } | Select-Object -First 1
+            if ($build) { break }
+            $page++
+          } while ($batch.workflow_runs.Count -eq 100)
+          if (-not $build) { throw 'This tag has no successful main build at the exact same commit. Complete or rerun that main build first.' }
+          $artifacts = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:GH_REPO/actions/runs/$($build.id)/artifacts?per_page=100" -Headers $headers
+          $matching = @($artifacts.artifacts | Where-Object { $_.name -ceq "spanseek-windows-x64-$sha" -and -not $_.expired })
+          if ($matching.Count -ne 1) { throw 'The checked build must have one retained release artifact' }
+          "run-id=$($build.id)" >> $env:GITHUB_OUTPUT
+          "sha=$sha" >> $env:GITHUB_OUTPUT
+          Write-Output "Using successful main build $($build.id) for $sha"
       - name: Download the checked build
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: spanseek-windows-x64-${{ github.sha }}
+          name: spanseek-windows-x64-${{ steps.checked.outputs.sha }}
           path: release
+          run-id: ${{ steps.checked.outputs.run-id }}
+          github-token: ${{ github.token }}
+      - name: Verify every release file against the tagged source
+        env:
+          EXPECTED_SHA: ${{ steps.checked.outputs.sha }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: ./scripts/verify-release-artifacts.ps1 -Directory release -ExpectedCommit $env:EXPECTED_SHA -ExpectedVersion ($env:RELEASE_TAG.Substring(1))
       - name: Create or update draft only
         env:
           GH_TOKEN: ${{ github.token }}

@@ -54,11 +54,14 @@ runs:
         path: |
           .local-archive/dependencies/pdfium-7881
           .local-archive/dependencies/downloads
-          .local-archive/dependencies/tesseract-source-5.4.0.20240606
+          .local-archive/dependencies/tesseract-source-5.5.4
           .local-archive/dependencies/tesseract
-          .local-archive/dependencies/tesseract-5.4.0.20240606
+          .local-archive/dependencies/tesseract-5.5.4
+          .local-archive/dependencies/license-sources
+          .local-archive/native-ocr/binary-cache
+          .local-archive/native-ocr/downloads
           .local-archive/tooling/protoc-36.2
-        key: windows-x64-native-v1-${{ hashFiles('scripts/fetch-*.ps1', 'scripts/prepare-tesseract.ps1', 'third-party/tesseract/**') }}
+        key: windows-x64-native-v2-${{ hashFiles('scripts/fetch-*.ps1', 'scripts/build-tesseract.ps1', 'scripts/check-ocr-pe.py', 'scripts/prepare-tesseract.ps1', 'third-party/tesseract/**', 'third-party/copyleft-sources.json') }}
     - name: Locked frontend dependencies
       shell: pwsh
       run: |

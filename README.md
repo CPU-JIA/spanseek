@@ -32,7 +32,7 @@
 
 ## 下载
 
-当前版本：**1.0.1**（Windows 10 / 11 x64）。本仓库维护完整产品源码、用户文档与官网。GitHub Actions 为 main 构建安装包，推送匹配的版本 tag 后生成 Release 草稿；草稿经检查公开后可从仓库 Releases 下载。
+当前版本：**1.0.2**（Windows 10 / 11 x64）。本仓库维护完整产品源码、用户文档与官网。GitHub Actions 为 main 构建安装包，推送匹配的版本 tag 后生成 Release 草稿；草稿经检查公开后可从仓库 Releases 下载。
 
 - [下载页](docs/download/index.html)：安装包、SHA-256、系统要求与校验方法。
 - [快速上手](docs/quick-start.md)：十分钟完成安装、建库、第一篇笔记、导入与备份。

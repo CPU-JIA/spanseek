@@ -22,6 +22,8 @@ try {
     if ($Release) { & cargo build -p pkms-inference --features runtime --bin pkms-inference --release --locked }
     else { & cargo build -p pkms-inference --features runtime --bin pkms-inference --locked }
     if ($LASTEXITCODE -ne 0) { throw 'Inference worker build failed' }
+    & python (Join-Path $PSScriptRoot 'build-license-bundle.py')
+    if ($LASTEXITCODE -ne 0) { throw 'Complete third-party license/source bundle failed' }
     & (Join-Path $PSScriptRoot 'sync-native-binaries.ps1') -Profile $profile -Names @('pkms-worker','pkms-inference')
     $triple = ((& rustc -vV) | Select-String '^host: ').ToString().Substring(6)
     if ($triple -ne 'x86_64-pc-windows-msvc') { throw 'Only Windows x64 resources have been validated' }

@@ -1,15 +1,15 @@
 # 跨索快速上手
 
-适用：**跨索 spanseek 1.0.1（Windows x64）**。目标是十分钟内完成第一次有用记录，不替代[用户指南](user-guide.md)、[已知问题](known-issues.md)或[安装说明](download/install.html)。
+适用：**跨索 spanseek 1.0.2（Windows x64）**。目标是十分钟内完成第一次有用记录，不替代[用户指南](user-guide.md)、[已知问题](known-issues.md)或[安装说明](download/install.html)。
 
 ## 1. 核对并安装
 
-1. 从[安装说明](download/install.html)取得 `spanseek_1.0.1_x64-setup.exe`。
+1. 从[安装说明](download/install.html)取得 `spanseek_1.0.2_x64-setup.exe`。
 2. 在 PowerShell 中核对 SHA-256：
 
    ```powershell
    Get-FileHash -Algorithm SHA256 `
-     -LiteralPath "$env:USERPROFILE\Downloads\spanseek_1.0.1_x64-setup.exe"
+     -LiteralPath "$env:USERPROFILE\Downloads\spanseek_1.0.2_x64-setup.exe"
    ```
 
 3. 与下载页显示的哈希逐位比较；不一致就不要运行。

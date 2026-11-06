@@ -11,18 +11,7 @@ if (-not (Test-Path -LiteralPath $manifestPath)) { throw "Tesseract manifest mis
 $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
 if (-not $SourceRoot) {
     $SourceRoot = Join-Path $root ".local-archive/dependencies/tesseract-source-$($manifest.version)"
-    $installedOcr = Join-Path $env:ProgramFiles 'Tesseract-OCR/tesseract.exe'
-    $useInstalledOcr = $false
-    if (Test-Path -LiteralPath $installedOcr) {
-        $enginePin = $manifest.runtime | Where-Object { $_.path -eq 'tesseract.exe' }
-        if ((Get-FileHash -LiteralPath $installedOcr -Algorithm SHA256).Hash -eq $enginePin.sha256) {
-            $SourceRoot = Split-Path -Parent $installedOcr
-            $useInstalledOcr = $true
-        }
-    }
-    if (-not $useInstalledOcr) {
-        & (Join-Path $PSScriptRoot 'fetch-tesseract.ps1') -Destination $SourceRoot
-    }
+    & (Join-Path $PSScriptRoot 'fetch-tesseract.ps1') -Destination $SourceRoot
 }
 if (-not $Destination) { $Destination = Join-Path $root ".local-archive/dependencies/tesseract-$($manifest.version)" }
 $target = [IO.Path]::GetFullPath($Destination)
@@ -33,7 +22,12 @@ $languageRoot = if ($LanguageSource) {
     Join-Path $root '.local-archive/dependencies/tesseract/tessdata'
 }
 if (-not (Test-Path -LiteralPath (Join-Path $source 'tesseract.exe'))) {
-    throw "Tesseract 5.4.0 source tree missing: $source. Install the pinned UB Mannheim package or pass -SourceRoot."
+    throw "Verified Tesseract source build missing: $source. Run scripts/build-tesseract.ps1."
+}
+$receiptPath = Join-Path $source 'build-receipt.json'
+$receipt = Get-Content -LiteralPath $receiptPath -Raw | ConvertFrom-Json
+if ($receipt.version -ne $manifest.version -or $receipt.baseline -ne $manifest.build.baseline) {
+    throw 'OCR build receipt does not match the pinned source version'
 }
 if (-not $LanguageSource) {
     $missingLanguages = @($manifest.tessdata.files | Where-Object {
@@ -62,9 +56,10 @@ function Copy-PinnedFile([string]$from, [string]$relative, [long]$bytes, [string
     $null = $expected.Add($relative)
     $copied.Add([ordered]@{ path = $relative; bytes = $bytes; sha256 = $sha256 })
 }
-foreach ($file in $manifest.runtime) {
+foreach ($file in $receipt.files) {
     Copy-PinnedFile (Join-Path $source $file.path) $file.path $file.bytes $file.sha256
 }
+Copy-PinnedFile $receiptPath 'build-receipt.json' (Get-Item -LiteralPath $receiptPath).Length (Get-FileHash -LiteralPath $receiptPath -Algorithm SHA256).Hash
 foreach ($file in $manifest.tessdata.files) {
     $candidates = @(
         (Join-Path $source ('tessdata/' + $file.path)),
@@ -74,8 +69,9 @@ foreach ($file in $manifest.tessdata.files) {
     if (-not $from) { throw "Tesseract language data missing: $($file.path)" }
     Copy-PinnedFile $from ('tessdata/' + $file.path) $file.bytes $file.sha256
 }
-foreach ($file in $manifest.docs) {
-    Copy-PinnedFile (Join-Path $vendor $file.path) ('licenses/tesseract/' + $file.path) $file.bytes $file.sha256
+foreach ($name in @('LICENSE', 'AUTHORS', 'README.tesseract.md', 'NOTICE.md', 'COMPONENTS.md')) {
+    $doc = Join-Path $vendor $name
+    Copy-PinnedFile $doc ('licenses/tesseract/' + $name) (Get-Item -LiteralPath $doc).Length (Get-FileHash -LiteralPath $doc -Algorithm SHA256).Hash
 }
 Copy-PinnedFile $manifestPath 'manifest.json' (Get-Item -LiteralPath $manifestPath).Length (Get-FileHash -LiteralPath $manifestPath -Algorithm SHA256).Hash
 [void]$expected.Add('bundle-validation.json')
@@ -87,14 +83,16 @@ $unexpected = @($actual | Where-Object { -not $expected.Contains($_) })
 if ($unexpected.Count -gt 0) { throw "Unexpected files in Tesseract bundle: $($unexpected -join ', ')" }
 $engineVersion = (& (Join-Path $target 'tesseract.exe') --version 2>&1 | Select-Object -First 1)
 $languages = (& (Join-Path $target 'tesseract.exe') --list-langs --tessdata-dir (Join-Path $target 'tessdata') 2>&1) -join "`n"
-if ([string]$engineVersion -notmatch '^tesseract v5\.4\.0\.20240606$' -or $languages -notmatch '(?m)^chi_sim$' -or $languages -notmatch '(?m)^eng$') {
+if ([string]$engineVersion -ne "tesseract $($manifest.version)" -or $languages -notmatch '(?m)^chi_sim$' -or $languages -notmatch '(?m)^eng$') {
     throw "Bundled Tesseract failed its isolated smoke test: $engineVersion`n$languages"
 }
+& python (Join-Path $PSScriptRoot 'check-ocr-pe.py') (Join-Path $target 'tesseract.exe')
+if ($LASTEXITCODE -ne 0) { throw 'Bundled OCR PE dependency check failed' }
 $summary = [ordered]@{
     name = $manifest.name
     version = $manifest.version
     engine = $engineVersion
-    destination = $target
+    destination = 'tesseract/'
     files = $copied
     languages = @('chi_sim', 'eng')
     isolatedSmokeTest = $true

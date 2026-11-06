@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "cargo": [
+    {
+      "name": "cssparser",
+      "version": "0.37.0"
+    },
+    {
+      "name": "cssparser-macros",
+      "version": "0.7.1"
+    },
+    {
+      "name": "dtoa-short",
+      "version": "0.3.5"
+    },
+    {
+      "name": "option-ext",
+      "version": "0.2.0"
+    },
+    {
+      "name": "selectors",
+      "version": "0.38.0"
+    }
+  ],
+  "downloads": [
+    {
+      "file": "elkjs-0.9.3.tar.gz",
+      "url": "https://codeload.github.com/kieler/elkjs/tar.gz/a8304cf79fde75bc2ab1a89d28320f53f8637436",
+      "sha256": "850418c89dd35dbd94ea0100a7becbc09d320c153fda4c4ea4a88c67e12121a9"
+    },
+    {
+      "file": "elk-0.9.1.tar.gz",
+      "url": "https://codeload.github.com/eclipse-elk/elk/tar.gz/62d5909f96fad541bc101ad52dabaece6b7eab7e",
+      "sha256": "51212e3edb105296e2ec8e288e6097d3fc124d25af98a5a64f09655aa1fca842"
+    },
+    {
+      "file": "eigen-1d8b82b.zip",
+      "url": "https://github.com/eigen-mirror/eigen/archive/1d8b82b0740839c0de7f1242a3585e3390ff5f33/eigen-1d8b82b0740839c0de7f1242a3585e3390ff5f33.zip",
+      "sha256": "6a60d76351f97132669daeeb721d6bf14b008101883ad2d687a3201c5c461eb0",
+      "subdirectory": "onnxruntime-eigen"
+    }
+  ],
+  "local_files": [
+    "third-party/elkjs/elk-955.patch",
+    "third-party/elkjs/README.md",
+    "third-party/native-notices/onnxruntime-1.28.0/deps.txt",
+    "third-party/native-notices/onnxruntime-1.28.0/ORIGIN.json"
+  ]
+}

@@ -8,7 +8,7 @@ tempfile = { path = "third-party/tempfile" }
 mobi = { path = "third-party/mobi" }
 
 [workspace.package]
-version = "1.0.1"
+version = "1.0.2"
 edition = "2024"
 rust-version = "1.98"
 publish = false

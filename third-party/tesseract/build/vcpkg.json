@@ -1,0 +1,8 @@
+{
+  "name": "spanseek-ocr-runtime",
+  "version-string": "5.5.4",
+  "builtin-baseline": "dbb76fb224d7696f99d7a33cf35db4a86b1b2f44",
+  "dependencies": [
+    { "name": "tesseract", "default-features": false }
+  ]
+}

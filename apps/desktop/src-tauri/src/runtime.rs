@@ -361,7 +361,7 @@ pub(crate) fn ocr_config(app: &AppHandle) -> Option<pkms_app::OcrConfig> {
         .map(|directory| directory.join("tesseract"));
     let debug_root = cfg!(debug_assertions).then(|| {
         std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-            .join("../../../.local-archive/dependencies/tesseract-5.4.0.20240606")
+            .join("../../../.local-archive/dependencies/tesseract-5.5.4")
     });
     resolve_ocr_config(
         std::env::var_os("PKMS_TESSERACT_EXE").map(std::path::PathBuf::from),

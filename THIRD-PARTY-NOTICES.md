@@ -1,92 +1,77 @@
 # spanseek 第三方组件声明
 
-本文件由 `node scripts/build-notices.mjs` 从 `Cargo.lock`、前端 `package.json` + 已安装包清单、`third-party/` 随包资产生成；**不要手改**，改动依赖后重跑。
-许可文本本身随各组件自带的 LICENSE/NOTICE 文件分发；本文件只做索引与计数，不替代许可原文。
+由 `scripts/build-notices.mjs` 根据完整许可材料生成；修改依赖后先运行 `python scripts/build-license-bundle.py`。
 
-生成时间：2026-11-05T13:36:22.491Z
+安装目录 `licenses/dependencies/` 和 Release 附件均提供：
 
-## 随包第三方资产
+- `THIRD-PARTY-LICENSES.txt`：上游许可、版权与 NOTICE 全文。
+- `THIRD-PARTY-COMPONENTS.json`：版本、许可文件 SHA-256、补充材料的来源。
+- `THIRD-PARTY-SOURCES.zip`：MPL Rust 组件、Eigen、ELK/elkjs 的源码与构建说明。
+- `THIRD-PARTY-SOURCE-INFO.txt`：适用许可与源码说明。
 
-| 组件 | 版本 | 许可 |
-| --- | --- | --- |
-| Inter | 4.x (third-party/inter) | OFL-1.1（third-party/inter/LICENSE.txt） |
-| tempfile (vendored crate) | 3.27.0 | MIT OR Apache-2.0（third-party/tempfile/LICENSE-*） |
-| calamine (vendored crate, locally patched) | 0.37.0 | MIT（third-party/calamine/LICENSE-MIT.md + PATCHES.md） |
-| mobi (vendored crate, locally patched) | 0.8.0 | MIT（third-party/mobi/LICENSE + NOTICE.md） |
-| huffcdic (adapted from kindling-mobi) | 0.45.6 | MIT（third-party/mobi/LICENSE-kindling） |
-| docx-preview | 0.4.1 | Apache-2.0（third-party/docx-preview/LICENSE） |
-| JSZip | 3.10.2 | MIT (dual-licensed; MIT chosen)（third-party/jszip/LICENSE.markdown） |
-| KaTeX fonts | katex-fonts (third-party/rich-format) | OFL-1.1（third-party/rich-format/katex-fonts/font-notices.json） |
-| PDFium (pdfium-binaries chromium/7881) | 7881 | MIT（.local-archive/dependencies/pdfium-7881/LICENSE） |
-| Tesseract OCR runtime + chi_sim+eng | 5.4.0.20240606 | Apache-2.0; bundled native components listed in COMPONENTS.md（third-party/tesseract/LICENSE + COMPONENTS.md + runtime-manifest.json） |
+本索引覆盖已解析 Rust 依赖和已安装前端依赖，包括开发/构建工具；不表示每个包都进入安装包。第三方组件继续适用各自许可，不受 spanseek 专有许可限制。
 
-## Rust 依赖
+## 原生组件与资产
 
-共 661 个（来自 `cargo metadata --locked`，不含本仓库自身 crate）。
+- Tesseract 5.5.4：Apache-2.0；固定 vcpkg 源码构建，静态 MSVC CRT/库。完整依赖版权、源码哈希与端口补丁位于 `tesseract/licenses/`，实际文件哈希见 `tesseract/build-receipt.json`。
+- chi_sim / eng：tessdata_fast 固定提交，Apache-2.0。
+- PDFium chromium/7881：BSD-3-Clause；预编译包装项目为 MIT。本体及依赖许可证全文位于 `pdfium/licenses/`，包装许可为 `pdfium/LICENSE`。
+- ONNX Runtime 1.28.0：MIT；完整第三方声明纳入许可文本，Eigen 对应源码附在源码包中。
+- Inter / KaTeX 字体：OFL-1.1；随包保留原始字体许可。
+- 本仓库修改过的 tempfile、calamine、mobi 保留原许可与补丁说明，源码随仓库公开。
+- DOMPurify 按 Apache-2.0 选项使用；JSZip 按 MIT 选项使用。
+- WebView2 由系统或安装器 bootstrap 提供，不在本包复制其运行库。
 
-- MIT OR Apache-2.0: 306
-- MIT: 142
-- Apache-2.0 OR MIT: 59
-- Unicode-3.0: 24
-- MIT/Apache-2.0: 23
-- Zlib OR Apache-2.0 OR MIT: 17
-- Unlicense OR MIT: 11
-- Apache-2.0: 9
-- BSD-3-Clause: 7
-- CC0-1.0: 6
-- MPL-2.0: 5
-- ISC: 5
-- Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT: 5
-- MIT OR Apache-2.0 OR Zlib: 4
-- Zlib: 3
-- Apache-2.0/MIT: 3
-- Apache-2.0 OR ISC OR MIT: 3
-- MIT OR Zlib OR Apache-2.0: 2
-- BSD-3-Clause OR Apache-2.0: 2
-- BSD-3-Clause OR MIT OR Apache-2.0: 2
-- MIT OR Apache-2.0 OR LGPL-2.1-or-later: 2
-- Unlicense/MIT: 2
-- BSD-2-Clause OR Apache-2.0 OR MIT: 2
+## 依赖许可声明统计
+
+Rust：735；npm：421。
+
+- (Apache-2.0 OR MIT) AND BSD-3-Clause: 1
+- (MIT AND Zlib): 1
+- (MIT OR Apache-2.0) AND Apache-2.0: 1
+- (MIT OR Apache-2.0) AND Unicode-3.0: 1
+- (MIT OR GPL-3.0-or-later): 1
+- (MPL-2.0 OR Apache-2.0): 1
+- 0BSD OR CC0-1.0: 1
 - 0BSD OR MIT OR Apache-2.0: 1
+- Apache-2.0: 101
+- Apache-2.0 / MIT: 1
+- Apache-2.0 AND ISC: 1
+- Apache-2.0 AND MIT: 2
+- Apache-2.0 OR BSL-1.0: 1
+- Apache-2.0 OR ISC OR MIT: 3
+- Apache-2.0 OR MIT: 53
+- Apache-2.0 OR MIT OR Zlib: 2
+- Apache-2.0/MIT: 3
+- BSD-2-Clause: 4
+- BSD-2-Clause OR Apache-2.0 OR MIT: 2
+- BSD-3-Clause: 18
+- BSD-3-Clause AND MIT: 1
+- BSD-3-Clause OR Apache-2.0: 2
+- BSD-3-Clause/MIT: 1
+- BSL-1.0: 1
+- CC0-1.0: 7
+- CC0-1.0 OR Apache-2.0 OR Apache-2.0 WITH LLVM-exception: 1
+- CC0-1.0 OR MIT-0 OR Apache-2.0: 2
+- CDLA-Permissive-2.0: 1
+- EPL-2.0: 1
+- ISC: 50
 - ISC AND (Apache-2.0 OR ISC): 1
 - ISC AND (Apache-2.0 OR ISC) AND Apache-2.0 AND MIT AND BSD-3-Clause AND (Apache-2.0 OR ISC OR MIT) AND (Apache-2.0 OR ISC OR MIT-0): 1
-- BSD-3-Clause AND MIT: 1
-- BSD-3-Clause/MIT: 1
-- Apache-2.0 AND MIT: 1
-- CC0-1.0 OR MIT-0 OR Apache-2.0: 1
-- (Apache-2.0 OR MIT) AND BSD-3-Clause: 1
-- MIT OR Apache-2.0 OR BSD-1-Clause: 1
-- Apache-2.0 / MIT: 1
-- MIT AND BSD-3-Clause: 1
-- Apache-2.0 AND ISC: 1
-- 0BSD OR CC0-1.0: 1
-- Apache-2.0 OR BSL-1.0: 1
-- Apache-2.0 WITH LLVM-exception: 1
-- (MIT OR Apache-2.0) AND Unicode-3.0: 1
-- CDLA-Permissive-2.0: 1
+- MIT: 495
+- MIT AND BSD-3-Clause: 2
+- MIT OR Apache-2.0: 295
+- MIT OR Apache-2.0 OR Zlib: 4
+- MIT OR Zlib OR Apache-2.0: 2
+- MIT/Apache-2.0: 32
+- MPL-2.0: 7
+- Unicode-3.0: 26
+- Unlicense: 1
+- Unlicense OR MIT: 11
+- Unlicense/MIT: 6
+- Zlib: 4
+- Zlib OR Apache-2.0 OR MIT: 3
 
-## 前端依赖
+## 材料完整性检查
 
-共 35 个（`apps/desktop` 与 `packages/contracts` 的直接依赖）。
-
-- MIT: 28
-- Apache-2.0: 3
-- Apache-2.0 OR MIT: 2
-- ISC: 2
-
-## 富格式导出内置包（third-party/rich-format）
-
-共 66 个；许可原文逐包保存在 `third-party/rich-format/<包>/LICENSE*`。
-
-- see LICENSE: 41
-- MIT: 19
-- see LICENSE.txt: 4
-- see LICENSE.md: 2
-
-## 系统组件（不随安装包分发）
-
-- Microsoft Edge WebView2 Runtime：由系统和安装器 bootstrap 提供，不随包复制。
-
-## 未决
-
-- 无。
+缺失许可文本：0。构建检查校验补充文本哈希、原生来源、对应源码归档哈希和未审阅的新许可；本清单不是法律意见。

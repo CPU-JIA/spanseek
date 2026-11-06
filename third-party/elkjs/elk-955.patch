@@ -1,0 +1,184 @@
+diff --git a/plugins/org.eclipse.elk.alg.common/src/org/eclipse/elk/alg/common/nodespacing/internal/NodeContext.java b/plugins/org.eclipse.elk.alg.common/src/org/eclipse/elk/alg/common/nodespacing/internal/NodeContext.java
+index a86770ef8..e69ad4b31 100644
+--- a/plugins/org.eclipse.elk.alg.common/src/org/eclipse/elk/alg/common/nodespacing/internal/NodeContext.java
++++ b/plugins/org.eclipse.elk.alg.common/src/org/eclipse/elk/alg/common/nodespacing/internal/NodeContext.java
+@@ -86,6 +86,8 @@ public final class NodeContext {
+     public final double portLabelSpacingVertical;
+     /** Margin to leave around the set of ports on each side. */
+     public final ElkMargin surroundingPortMargins;
++    /** Whether node is being laid out in top-down layout mode. */
++    public final boolean topdownLayout;
+ 
+ 
+     /////////////////////////////////////////////////////////////////////////////////
+@@ -131,6 +133,9 @@ public NodeContext(final GraphAdapter<?> parentGraph, final NodeAdapter<?> node)
+         this.node = node;
+         this.nodeSize = new KVector(node.getSize());
+         
++        // Top-down layout
++        topdownLayout = node.getProperty(CoreOptions.TOPDOWN_LAYOUT);
++        
+         // Compound node
+         treatAsCompoundNode = node.isCompoundNode() || node.getProperty(CoreOptions.INSIDE_SELF_LOOPS_ACTIVATE);
+         
+diff --git a/plugins/org.eclipse.elk.alg.common/src/org/eclipse/elk/alg/common/nodespacing/internal/algorithm/NodeSizeCalculator.java b/plugins/org.eclipse.elk.alg.common/src/org/eclipse/elk/alg/common/nodespacing/internal/algorithm/NodeSizeCalculator.java
+index dae9ee8e8..b03f1341a 100644
+--- a/plugins/org.eclipse.elk.alg.common/src/org/eclipse/elk/alg/common/nodespacing/internal/algorithm/NodeSizeCalculator.java
++++ b/plugins/org.eclipse.elk.alg.common/src/org/eclipse/elk/alg/common/nodespacing/internal/algorithm/NodeSizeCalculator.java
+@@ -46,8 +46,13 @@ public static void setNodeWidth(final NodeContext nodeContext) {
+             // Simply use the node's current width
+             width = nodeSize.x;
+         } else {
+-            // Ask the cell system how wide it would like to be
+-            width = nodeContext.nodeContainer.getMinimumWidth();
++            // Ask the cell system how wide it would like to be or take the node's width if it has already been set to a
++            // greater value
++            if (nodeContext.topdownLayout) {
++                width = Math.max(nodeSize.x, nodeContext.nodeContainer.getMinimumWidth());
++            } else {
++                width = nodeContext.nodeContainer.getMinimumWidth();
++            }
+             
+             // If we include node labels and outside node labels are not to overhang, we need to include those as well
+             if (nodeContext.sizeConstraints.contains(SizeConstraint.NODE_LABELS)
+@@ -95,8 +100,13 @@ public static void setNodeHeight(final NodeContext nodeContext) {
+             // Simply use the node's current height
+             height = nodeSize.y;
+         } else {
+-            // Ask the cell system how heigh it would like to be
+-            height = nodeContext.nodeContainer.getMinimumHeight();
++            // Ask the cell system how high it would like to be or take the node's height if it has already been set to 
++            // a greater value
++            if (nodeContext.topdownLayout) {
++                height = Math.max(nodeSize.y, nodeContext.nodeContainer.getMinimumHeight());
++            } else {
++                height = nodeContext.nodeContainer.getMinimumHeight();
++            }
+             
+             // If we include node labels and outside node labels are not to overhang, we need to include those as well
+             if (nodeContext.sizeConstraints.contains(SizeConstraint.NODE_LABELS)
+diff --git a/test/org.eclipse.elk.alg.topdown.test/src/org/eclipse/elk/alg/topdown/layered/test/PortPlacementCalculationTest.java b/test/org.eclipse.elk.alg.topdown.test/src/org/eclipse/elk/alg/topdown/layered/test/PortPlacementCalculationTest.java
+new file mode 100644
+index 000000000..8c128f517
+--- /dev/null
++++ b/test/org.eclipse.elk.alg.topdown.test/src/org/eclipse/elk/alg/topdown/layered/test/PortPlacementCalculationTest.java
+@@ -0,0 +1,119 @@
++/*******************************************************************************
++ * Copyright (c) 2023 Kiel University and others.
++ * 
++ * This program and the accompanying materials are made available under the
++ * terms of the Eclipse Public License 2.0 which is available at
++ * http://www.eclipse.org/legal/epl-2.0.
++ * 
++ * SPDX-License-Identifier: EPL-2.0 
++ *******************************************************************************/
++package org.eclipse.elk.alg.topdown.layered.test;
++
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.fail;
++
++import java.util.EnumSet;
++
++import org.eclipse.elk.alg.test.PlainJavaInitialization;
++import org.eclipse.elk.core.LayoutConfigurator;
++import org.eclipse.elk.core.RecursiveGraphLayoutEngine;
++import org.eclipse.elk.core.UnsupportedGraphException;
++import org.eclipse.elk.core.data.LayoutAlgorithmResolver;
++import org.eclipse.elk.core.options.CoreOptions;
++import org.eclipse.elk.core.options.SizeConstraint;
++import org.eclipse.elk.core.options.TopdownNodeTypes;
++import org.eclipse.elk.core.util.BasicProgressMonitor;
++import org.eclipse.elk.core.util.ElkUtil;
++import org.eclipse.elk.graph.ElkNode;
++import org.eclipse.elk.graph.ElkPort;
++import org.eclipse.elk.graph.util.ElkGraphUtil;
++import org.junit.Test;
++
++/**
++ * Test interaction between top-down layout and the node size calculation 
++ * performed for port placement in layered layout.
++ *
++ */
++public class PortPlacementCalculationTest {
++    
++    /**
++     * Tests that during a bottom-up layout the port positions are calculated
++     * according to the minimum size they require.
++     */
++    @Test
++    public void testBottomUp() {
++        PlainJavaInitialization.initializePlainJavaLayout();
++        ElkNode graph = ElkGraphUtil.createGraph();
++ 
++        final double portSpacing = 10.0;
++        
++        ElkNode node = ElkGraphUtil.createNode(graph);
++        node.setProperty(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.PORTS));
++        node.setProperty(CoreOptions.SPACING_PORT_PORT, portSpacing);
++        node.setDimensions(20, 60);
++        
++        // create three ports that would require less than 60 height
++        ElkPort port1 = ElkGraphUtil.createPort(node);
++        ElkPort port2 = ElkGraphUtil.createPort(node);
++        ElkPort port3 = ElkGraphUtil.createPort(node);
++        
++        // prepare layout engine
++        LayoutConfigurator config = new LayoutConfigurator();
++        ElkUtil.applyVisitors(graph, config, new LayoutAlgorithmResolver());
++        // call layout with layout engine
++        try {
++            new RecursiveGraphLayoutEngine().layout(graph, new BasicProgressMonitor());
++        } catch (UnsupportedGraphException exception) {
++            fail(exception.toString());
++        }
++        
++        assertEquals(portSpacing, Math.abs(port1.getY() - port2.getY()), 0.0001);
++        assertEquals(portSpacing, Math.abs(port2.getY() - port3.getY()), 0.0001);
++    }
++    
++    /**
++     * Tests that during a top-down layout the actually set node size is considered
++     * beside the port placement requirements. If the node is already larger the 
++     * ports will need to be placed further apart.
++     */
++    @Test
++    public void testTopDown() {
++        PlainJavaInitialization.initializePlainJavaLayout();
++        ElkNode graph = ElkGraphUtil.createGraph();
++        graph.setProperty(CoreOptions.TOPDOWN_LAYOUT, true);
++        graph.setProperty(CoreOptions.TOPDOWN_NODE_TYPE, TopdownNodeTypes.ROOT_NODE);
++        
++        final double portSpacing = 10.0;
++        final double fixedNodeHeight = 60.0;
++        
++        ElkNode node = ElkGraphUtil.createNode(graph);
++        node.setProperty(CoreOptions.TOPDOWN_LAYOUT, true);
++        node.setProperty(CoreOptions.TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE);
++        node.setProperty(CoreOptions.NODE_SIZE_FIXED_GRAPH_SIZE, true);
++        node.setProperty(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.PORTS));
++        node.setProperty(CoreOptions.SPACING_PORT_PORT, portSpacing);
++        node.setDimensions(20, fixedNodeHeight);
++        
++        // create three ports that would require less than 60 height
++        ElkPort port1 = ElkGraphUtil.createPort(node);
++        ElkPort port2 = ElkGraphUtil.createPort(node);
++        ElkPort port3 = ElkGraphUtil.createPort(node);
++        
++        // prepare layout engine
++        LayoutConfigurator config = new LayoutConfigurator();
++        ElkUtil.applyVisitors(graph, config, new LayoutAlgorithmResolver());
++        // call layout with layout engine
++        try {
++            new RecursiveGraphLayoutEngine().layout(graph, new BasicProgressMonitor());
++        } catch (UnsupportedGraphException exception) {
++            fail(exception.toString());
++        }
++        
++        // Since the node size is fixed, the port spacing should now be the height
++        // divided by the number of ports plus one
++        double expectedPortSpacing = fixedNodeHeight / 4;
++        assertEquals(expectedPortSpacing, Math.abs(port1.getY() - port2.getY()), 0.0001);
++        assertEquals(expectedPortSpacing, Math.abs(port2.getY() - port3.getY()), 0.0001);
++    }
++
++}

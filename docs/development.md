@@ -1,6 +1,6 @@
 # 开发指南
 
-跨索采用 Tauri 2、React/TypeScript 和独立 Rust 核心。当前版本为 1.0.1，支持 Windows x64；应用内部 crate 和包名保留 `pkms`，安装身份保留 `com.pkms.desktop`。
+跨索采用 Tauri 2、React/TypeScript 和独立 Rust 核心。当前版本为 1.0.2，支持 Windows x64；应用内部 crate 和包名保留 `pkms`，安装身份保留 `com.pkms.desktop`。
 
 ## 环境
 
@@ -8,7 +8,7 @@
 - Visual Studio 2022 Build Tools 的“使用 C++ 的桌面开发”及 Windows SDK。
 - Rust/Cargo 1.98.0，带 rustfmt 和 clippy。
 - Node 24.19.0、pnpm 10.25.0。
-- 7-Zip：用于提取固定版本的 OCR 运行库；不运行 OCR 安装程序、不修改系统安装。GitHub `windows-2025` 已包含它。
+- Git 与 C++ 工具链：OCR 通过固定 vcpkg baseline 从源码构建；vcpkg 自动获取所需 CMake/Ninja 工具。
 - Python 3.11 或更高版本：生成发布清单；应用运行不依赖 Python。
 
 ```powershell
@@ -42,13 +42,16 @@ pnpm desktop
 
 Cargo 默认写入 `target/`。需要换盘时可复制 `.cargo/config.example.toml` 为 `.cargo/config.toml`，或在当前 PowerShell 设置 `$env:CARGO_TARGET_DIR`。本机绝对路径不提交。
 
-资源脚本固定下载版本并检查 SHA-256；命中缓存也要核对。OCR 的运行库、语言数据及许可清单以 `third-party/tesseract/runtime-manifest.json` 为准。自定义已安装的 OCR 来源可用：
+资源脚本固定版本并验证来源与哈希，命中缓存也要核对。OCR 以 `third-party/tesseract/runtime-manifest.json` 和 `build/vcpkg.json` 为准，使用 Tesseract 5.5.4、MSVC 静态 CRT/库；不需要安装系统级 OCR。可将原生构建缓存放到其他磁盘：
 
 ```powershell
-pwsh -NoProfile -File scripts/prepare-tesseract.ps1 -SourceRoot 'D:/tools/tesseract'
+$env:SPANSEEK_NATIVE_BUILD_ROOT = 'D:/spanseek-native-cache'
+pwsh -NoProfile -File scripts/prepare-tesseract.ps1
 ```
 
-版本或哈希不符会失败，不会换成其他版本或跳过 OCR。下载位置分别在 `.local-archive/dependencies/` 和 `.local-archive/tooling/`；这些目录可以从固定来源重新生成。
+源码、版本或哈希不符会失败。默认下载位置为 `.local-archive/dependencies/`、`.local-archive/tooling/` 与 `.local-archive/native-ocr/`。原生二进制缓存按 vcpkg ABI 复用；准备脚本校验 PE 依赖、版本和语言包。
+
+`python scripts/build-license-bundle.py` 从锁定依赖收集完整许可文本，校验补充文本和对应源码哈希。生成的 `.local-archive/license-bundle/` 随安装包分发，同时作为 Release 附件提供。缺失材料会阻止构建；仅 SPDX 名称不算许可原文。更换依赖时须同步受影响的 `third-party/license-supplements/`、原生声明和 `copyleft-sources.json`。
 
 ## 检查与构建
 

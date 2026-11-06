@@ -2,7 +2,7 @@
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "spanseek",
   "mainBinaryName": "spanseek",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "identifier": "com.pkms.desktop",
   "build": {
     "beforeDevCommand": "pwsh -NoProfile -File ../../scripts/prepare-desktop-resources.ps1 -Dev",
@@ -48,7 +48,8 @@
       "../../../.local-archive/dependencies/pdfium-7881/LICENSE": "pdfium/LICENSE",
       "../../../.local-archive/dependencies/pdfium-7881/licenses/": "pdfium/licenses/",
       "../../../.local-archive/dependencies/pdfium-7881/VERSION": "pdfium/VERSION",
-      "../../../.local-archive/dependencies/tesseract-5.4.0.20240606/": "tesseract/",
+      "../../../.local-archive/dependencies/tesseract-5.5.4/": "tesseract/",
+      "../../../.local-archive/license-bundle/": "licenses/dependencies/",
       "../../../third-party/tempfile/LICENSE-MIT": "licenses/tempfile/LICENSE-MIT",
       "../../../third-party/tempfile/LICENSE-APACHE": "licenses/tempfile/LICENSE-APACHE",
       "../../../third-party/tempfile/PKMS-PATCH.md": "licenses/tempfile/PKMS-PATCH.md",
