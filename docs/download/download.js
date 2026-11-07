@@ -147,8 +147,8 @@ function positionCaptions() {
   if (!measure) return;
   measure.font = `500 ${fontSize}px ${getComputedStyle(motionVideo).fontFamily}`;
   const usableWidth = pictureWidth * 0.88;
-  const controlClearance = Math.min(88, Math.max(64, height * 0.13));
-  const bottom = Math.min(pictureTop + pictureHeight * 0.94, height - controlClearance);
+  // Keep the caption in the film's footer, just above its gold rule.
+  const bottom = pictureTop + pictureHeight * 0.955;
   for (const track of motionVideo.textTracks) {
     for (const cue of track.cues || []) {
       const lines = Math.max(1, Math.ceil(measure.measureText(cue.text).width / usableWidth));
@@ -227,6 +227,7 @@ if (motionVideo) {
     });
   motionVideo.textTracks.addEventListener('change', () => {
     captionsEnabled = [...motionVideo.textTracks].some((track) => track.mode === 'showing');
+    positionCaptions();
     if (motionCC) {
       motionCC.textContent = captionsEnabled ? '字幕：开' : '字幕：关';
       motionCC.setAttribute('aria-pressed', String(captionsEnabled));

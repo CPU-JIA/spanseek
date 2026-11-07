@@ -1992,11 +1992,13 @@ a {
 .motion-video::cue {
   /* Native cue boxes need explicit film colors in both website themes. */
   color: #17181b;
-  background: rgb(247 243 232 / 94%);
+  background: transparent;
   font-family: 'Segoe UI Variable', 'Segoe UI', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
   font-size: clamp(14px, 1.55vw, 24px);
   font-weight: 500;
   line-height: 1.45;
+  /* Percentage-positioned native cues otherwise inherit white-space: pre. */
+  white-space: pre-line;
   text-shadow: none;
 }
 .motion-video:fullscreen {
