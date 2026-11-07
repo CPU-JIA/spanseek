@@ -34,6 +34,22 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+          fetch-depth: 0
+      - name: Select checks from the actual diff
+        id: scope
+        run: python scripts/ci-scope.py
+      - name: Node 24
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.19.0'
+      - name: Verify website and scope selection
+        run: |
+          python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: --require-hashes -r scripts/ci-python-requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Website validation tool installation failed' }
+          python -m unittest discover -s scripts -p test_ci_scope.py
+          if ($LASTEXITCODE -ne 0) { throw 'Check-scope regression failed' }
+          python scripts/check-website.py
+          if ($LASTEXITCODE -ne 0) { throw 'Website validation failed' }
       - name: Reject inconsistent release versions
         env:
           RELEASE_TAG: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || '' }}
@@ -44,11 +60,14 @@ jobs:
       - name: Check committed source inputs before compilation
         run: python scripts/check-source-inputs.py
       - name: Prepare tools and caches
+        if: steps.scope.outputs.full == 'true'
         id: setup
         uses: ./.github/actions/windows-setup
       - name: Rust formatting
+        if: steps.scope.outputs.full == 'true'
         run: cargo fmt --all -- --check
       - name: Prepare and verify native downloads
+        if: steps.scope.outputs.full == 'true'
         run: |
           ./scripts/fetch-pdfium.ps1
           ./scripts/prepare-tesseract.ps1
@@ -56,11 +75,12 @@ jobs:
           python scripts/fetch-onnxruntime.py --repair-cargo-cache
           if ($LASTEXITCODE -ne 0) { throw 'Native download verification failed' }
       - name: Verify Unicode OCR before compiling workers
+        if: steps.scope.outputs.full == 'true'
         run: |
           python scripts/verify-ocr-runtime.py --engine-only --runtime .local-archive/dependencies/tesseract-5.5.4 --output .local-archive/test-runs/ci/ocr-engine
           if ($LASTEXITCODE -ne 0) { throw 'OCR engine Unicode path check failed' }
       - name: Preserve verified native resources before later checks
-        if: github.event_name != 'pull_request' && steps.setup.outputs.native-cache-hit != 'true'
+        if: steps.scope.outputs.full == 'true' && github.event_name != 'pull_request' && steps.setup.outputs.native-cache-hit != 'true'
         uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           key: ${{ steps.setup.outputs.native-cache-key }}
@@ -76,6 +96,7 @@ jobs:
             .local-archive/native-ocr/downloads
             .local-archive/tooling/protoc-36.2
       - name: Prepare native workers and license resources
+        if: steps.scope.outputs.full == 'true'
         run: |
           ./scripts/prepare-desktop-resources.ps1
           if ($LASTEXITCODE -ne 0) { throw 'Native resource preparation failed' }
@@ -84,14 +105,18 @@ jobs:
           $protocPath = Join-Path $env:GITHUB_WORKSPACE '.local-archive/tooling/protoc-36.2/bin/protoc.exe'
           "PROTOC=$protocPath" >> $env:GITHUB_ENV
       - name: Real bilingual OCR and scanned PDF with Unicode paths
+        if: steps.scope.outputs.full == 'true'
         run: |
           python scripts/verify-ocr-runtime.py --runtime .local-archive/dependencies/tesseract-5.5.4 --worker target/debug/pkms-worker.exe --pdfium .local-archive/dependencies/pdfium-7881/bin/pdfium.dll --output .local-archive/test-runs/ci/ocr
           if ($LASTEXITCODE -ne 0) { throw 'Bundled OCR integration failed' }
       - name: Rust workspace tests
+        if: steps.scope.outputs.full == 'true'
         run: cargo test --workspace --locked
       - name: Rust Clippy
+        if: steps.scope.outputs.full == 'true'
         run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - name: Generate contracts and reject drift
+        if: steps.scope.outputs.full == 'true'
         run: |
           pnpm contracts:generate
           if ($LASTEXITCODE -ne 0) { throw 'Contract generation failed' }
@@ -99,19 +124,45 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Contract status check failed' }
           if ($contractChanges) { throw 'Regenerate and commit the Rust-defined TypeScript contracts.' }
       - name: TypeScript checks
+        if: steps.scope.outputs.full == 'true'
         run: pnpm typecheck
       - name: Serial frontend behavior tests
+        if: steps.scope.outputs.full == 'true'
         run: pnpm --filter @pkms/desktop exec node --experimental-strip-types --test --test-concurrency=1 tests/*.test.mjs
       - name: Frontend production build
+        if: steps.scope.outputs.full == 'true' && github.event_name == 'pull_request'
         run: pnpm --filter @pkms/desktop build
+      - name: Save successful check compilation snapshot
+        if: steps.scope.outputs.full == 'true' && github.event_name != 'pull_request'
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: target/debug
+          key: ${{ steps.setup.outputs.debug-cache-key }}
+      - name: Restore compiled release targets
+        if: steps.scope.outputs.full == 'true' && github.event_name != 'pull_request'
+        id: release-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: target/release
+          key: windows-x64-rust-1.98-release-v2-${{ steps.setup.outputs.rust-input-hash }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            windows-x64-rust-1.98-release-v2-${{ steps.setup.outputs.rust-input-hash }}-${{ github.sha }}-
+            windows-x64-rust-1.98-release-v2-${{ steps.setup.outputs.rust-input-hash }}-
+            windows-x64-rust-1.98-release-v2-
       - name: Build unsigned Windows installer
-        if: github.event_name != 'pull_request'
+        if: steps.scope.outputs.full == 'true' && github.event_name != 'pull_request'
         run: pnpm desktop:build
+      - name: Save successful release compilation snapshot
+        if: steps.scope.outputs.full == 'true' && github.event_name != 'pull_request'
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: target/release
+          key: ${{ steps.release-cache.outputs.cache-primary-key }}
       - name: Collect installer, checksums and inventory
-        if: github.event_name != 'pull_request'
+        if: steps.scope.outputs.full == 'true' && github.event_name != 'pull_request'
         run: ./scripts/package-release.ps1
       - name: Retain build artifacts
-        if: github.event_name != 'pull_request'
+        if: steps.scope.outputs.full == 'true' && github.event_name != 'pull_request'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: spanseek-windows-x64-${{ github.sha }}

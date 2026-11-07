@@ -7,13 +7,15 @@ outputs:
   native-cache-hit:
     description: Whether the exact native download cache was restored
     value: ${{ steps.native-cache.outputs.cache-hit }}
+  debug-cache-key:
+    description: New snapshot key for this successful check run
+    value: ${{ steps.debug-cache.outputs.cache-primary-key }}
+  rust-input-hash:
+    description: Lockfiles, toolchain and build configuration fingerprint
+    value: ${{ steps.cargo.outputs.input-hash }}
 runs:
   using: composite
   steps:
-    - name: Node 24
-      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-      with:
-        node-version: '24.19.0'
     - name: Pinned package manager and Rust
       shell: pwsh
       run: |
@@ -38,15 +40,57 @@ runs:
         path: ${{ steps.pnpm.outputs.path }}
         key: windows-x64-pnpm-10.25.0-${{ hashFiles('pnpm-lock.yaml') }}
         restore-keys: windows-x64-pnpm-10.25.0-
-    - name: Cargo dependencies and compiled crates
+    - name: Locate Cargo and fingerprint build inputs
+      id: cargo
+      shell: pwsh
+      env:
+        RUST_INPUT_HASH: ${{ hashFiles('Cargo.lock', '**/Cargo.toml', '.cargo/**', 'rust-toolchain*', '.github/workflows/windows-checks.yml', '.github/actions/windows-setup/action.yml') }}
+      run: |
+        $cargoPath = if ($env:CARGO_HOME) { $env:CARGO_HOME } else { Join-Path $env:USERPROFILE '.cargo' }
+        "path=$cargoPath" >> $env:GITHUB_OUTPUT
+        "input-hash=$env:RUST_INPUT_HASH" >> $env:GITHUB_OUTPUT
+    - name: Cargo package cache
+      id: cargo-packages
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: |
+          ${{ steps.cargo.outputs.path }}/registry
+          ${{ steps.cargo.outputs.path }}/git
+        key: windows-x64-cargo-packages-v2-${{ hashFiles('Cargo.lock') }}
+        restore-keys: windows-x64-cargo-packages-v2-
+    - name: Restore compiled check targets
+      id: debug-cache
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: target/debug
+        key: windows-x64-rust-1.98-check-v2-${{ steps.cargo.outputs.input-hash }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+        restore-keys: |
+          windows-x64-rust-1.98-check-v2-${{ steps.cargo.outputs.input-hash }}-${{ github.sha }}-
+          windows-x64-rust-1.98-check-v2-${{ steps.cargo.outputs.input-hash }}-
+          windows-x64-rust-1.98-check-v2-
+    - name: Bootstrap once from the previous dependency cache
+      if: steps.cargo-packages.outputs.cache-matched-key == '' && steps.debug-cache.outputs.cache-matched-key == ''
       uses: Swatinem/rust-cache@e9d7b9f1e587218970671bac74e5511ed9506e6a # v2
       with:
         shared-key: windows-x64-rust-1.98-v1
         workspaces: '. -> target'
         cache-workspace-crates: 'true'
-        cache-on-failure: 'true'
         cache-bin: 'false'
-        save-if: ${{ github.event_name != 'pull_request' }}
+        save-if: 'false'
+    - name: Fill the locked Cargo package cache
+      if: steps.cargo-packages.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        cargo fetch --locked --target x86_64-pc-windows-msvc
+        if ($LASTEXITCODE -ne 0) { throw 'Cargo package download failed' }
+    - name: Preserve all locked Cargo packages
+      if: github.event_name != 'pull_request' && steps.cargo-packages.outputs.cache-hit != 'true'
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: |
+          ${{ steps.cargo.outputs.path }}/registry
+          ${{ steps.cargo.outputs.path }}/git
+        key: ${{ steps.cargo-packages.outputs.cache-primary-key }}
     - name: Verified native downloads
       id: native-cache
       uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4

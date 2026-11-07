@@ -8,28 +8,37 @@
 
 构建工作流：[windows-checks.yml](../.github/workflows/windows-checks.yml)；tag 草稿工作流：[release-draft.yml](../.github/workflows/release-draft.yml)；公共环境准备：[windows-setup](../.github/actions/windows-setup/action.yml)。
 
-| 触发                   | 执行内容                                                                        | 结果位置                         |
-| ---------------------- | ------------------------------------------------------------------------------- | -------------------------------- |
-| Pull request           | 版本一致性、fmt、Rust 测试、clippy、DTO 漂移、typecheck、串行桌面测试、前端构建 | Actions 运行日志                 |
-| 推送 main              | 上述检查 + Windows NSIS 安装包及清单                                            | 本次运行的 Artifacts，保留 14 天 |
-| 手工 workflow_dispatch | 与 main 相同                                                                    | Actions Artifacts                |
-| 推送 `v*` tag          | 核对 tag/版本/提交；复用同一提交的成功 main 构建，逐文件校验后创建 Release **草稿** | Releases 草稿 |
+| 触发                                    | 执行内容                                                                            | 结果位置                             |
+| --------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------ |
+| 仅官网/已列明用户文档的 PR 或 main push | 网站链接、字幕时间、视频完整解码、JavaScript 语法、版本一致性及源码输入检查         | Actions 运行日志；不重复打桌面安装包 |
+| 其他 Pull request                       | 上述检查 + fmt、Rust 测试、clippy、DTO 漂移、typecheck、串行桌面测试、前端构建      | Actions 运行日志                     |
+| 其他 main push                          | 上述完整检查 + Windows NSIS 安装包及清单                                            | 本次运行的 Artifacts，保留 14 天     |
+| 手工 workflow_dispatch                  | 与 main 相同                                                                        | Actions Artifacts                    |
+| 推送 `v*` tag                           | 核对 tag/版本/提交；复用同一提交的成功 main 构建，逐文件校验后创建 Release **草稿** | Releases 草稿                        |
 
 构建使用 `windows-2025`、Rust 1.98.0、Node 24.19.0 和 pnpm 10.25.0。所有外部 Action 固定到提交 SHA。普通检查只有 `contents: read`；仅 tag 的独立草稿上传 job 有 `contents: write`，使用 GitHub 提供的临时 token，无须保存个人访问令牌。
 
+`scripts/ci-scope.py` 根据完整 Git 差异判断范围，未知文件、缺失历史、首次 push、手工运行都执行完整检查；移动文件同时检查删除和新增路径。工作流始终运行 `windows` 必需检查，不在触发层按路径跳过，避免分支保护永久等待。仅官网改动时仍验证真实媒体和本地链接；安装器模板中的两个下载路径由正式制品准备脚本核验。视频解码使用固定版本、固定 Windows wheel SHA-256 的 FFmpeg 工具包，不需要编译桌面程序。
+
 流程不会自动公开 Release，不覆盖已发布的同名版本。首次远程运行成功前，只能称工作流已准备并经过本地静态/脚本验证；不能称 GitHub 构建已通过。
+
+若要给一个仅文档或官网改动的提交创建新版本 tag，先在 main 上手工运行本工作流，取得该准确提交的完整安装包与清单，再按后述步骤发布。快速网站检查的成功记录不能代替安装包构建。
 
 ## 缓存复用
 
-| 缓存     | 键与失效条件                                                           | 内容                                                 |
-| -------- | ---------------------------------------------------------------------- | ---------------------------------------------------- |
-| pnpm     | 系统/架构、pnpm 版本、`pnpm-lock.yaml`；锁变化可恢复同版本旧 store     | 包 store；安装仍执行 `--frozen-lockfile`             |
-| Rust     | 固定 shared key，加 Rust 工具链、Cargo 清单/锁文件和编译环境的自动哈希 | Cargo registry/git 和 `target` 中依赖/工作区构建结果 |
-| 原生资源 | 系统/架构、下载/构建脚本、vcpkg baseline/triplet、来源清单哈希 | PDFium、OCR/语言包、ONNX Runtime 静态库、vcpkg 下载及 ABI 二进制缓存、protoc、对应源码归档 |
+| 缓存         | 键与失效条件                                                                                      | 内容                                                                                       |
+| ------------ | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| pnpm         | 系统/架构、pnpm 版本、`pnpm-lock.yaml`；锁变化可恢复同版本旧 store                                | 包 store；安装仍执行 `--frozen-lockfile`                                                   |
+| Cargo 包     | `Cargo.lock`；命中旧键后先用 `cargo fetch --locked` 补全当前 Windows 依赖                         | Cargo registry/git；只在补全成功后由非 PR 运行保存                                         |
+| Rust 检查    | 工具链/平台前缀、清单/构建配置指纹、提交 SHA、run ID、attempt；逐级恢复同提交/同配置/同工具链快照 | `target/debug` 的依赖和工作区编译结果                                                      |
+| Rust release | 同上，独立的 release 命名空间                                                                     | `target/release`，仅需要安装包时恢复                                                       |
+| 原生资源     | 系统/架构、下载/构建脚本、vcpkg baseline/triplet、来源清单哈希                                    | PDFium、OCR/语言包、ONNX Runtime 静态库、vcpkg 下载及 ABI 二进制缓存、protoc、对应源码归档 |
 
-main 构建也生成 release 产物，使后续 tag 可以复用默认分支的编译缓存；PR 不保存 Rust 缓存。GitHub 缓存受分支作用域、容量和回收策略限制，命中率不作保证。每次都运行必要检查和资源校验，缓存命中不代表构建或测试已经成功。
+完整 main 构建生成 release 产物，后续 tag 直接复用同提交制品；PR 只读取 Rust 缓存。GitHub 缓存受分支作用域、容量和回收策略限制，命中率不作保证。每次都运行必要检查和资源校验，缓存命中不代表构建或测试已经成功。
 
-pnpm 在依赖安装完成后保存缓存，原生资源在校验完成后保存；受信任分支的 Rust 编译缓存也会在后续检查失败时保留，避免失败后重新编译全部依赖。测试失败仍会阻止安装包和 Release 草稿交付。
+pnpm 在依赖安装完成后保存缓存，原生资源在校验完成后保存。GitHub 缓存不能覆盖已有键；编译缓存每轮使用新快照键，检查完成后保存 debug、安装包构建成功后保存 release，避免“精确命中旧缓存→新编译结果永远不回存”。安装包后续清单校验失败不会抹掉已经成功编译并保存的缓存，但仍阻止制品交付。首轮新缓存缺失时只读复用原来的依赖缓存，此后恢复完整新快照。
+
+缓存保留不同 profile/features 的编译产物；新版本仍须重编译受改动影响的 crate。热构建约 15 分钟是优化目标，须用真实连续运行的阶段耗时验证，不能仅凭缓存命中宣布达标。首次完整缓存填充、工具链/依赖升级可能显著更久；滚动快照也会受仓库容量与自动回收影响。
 
 CI 的 `ORT_CACHE_DIR` 固定到 `.local-archive/dependencies/ort`，与 Cargo 编译缓存一起恢复。`fetch-onnxruntime.py` 在编译前验证压缩包及两个原生文件的 SHA-256，缺失时从固定来源恢复；若 Cargo 的 `ort-sys` 链接记录指向其他目录，只清理并重建该 crate。已验证的原生下载在 worker 编译前保存，后续编译失败不会使下载缓存丢失。
 
