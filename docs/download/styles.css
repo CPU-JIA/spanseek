@@ -1990,9 +1990,18 @@ a {
   color: var(--muted);
 }
 .motion-video::cue {
-  color: #fff;
-  background: rgba(0, 0, 0, 0.8);
-  font-size: 18px;
+  /* Native cue boxes need explicit film colors in both website themes. */
+  color: #17181b;
+  background: rgb(247 243 232 / 94%);
+  font-family: 'Segoe UI Variable', 'Segoe UI', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+  font-size: clamp(14px, 1.55vw, 24px);
+  font-weight: 500;
+  line-height: 1.45;
+  text-shadow: none;
+}
+.motion-video:fullscreen {
+  object-fit: contain;
+  border-radius: 0;
 }
 @media (max-width: 720px) {
   .entry-grid {
@@ -2020,7 +2029,7 @@ a {
     gap: 8px;
   }
   .motion-video::cue {
-    font-size: 13px;
+    font-size: 14px;
   }
   .motion-controls button,
   .motion-controls a {

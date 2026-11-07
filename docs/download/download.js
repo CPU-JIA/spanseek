@@ -132,6 +132,34 @@ function setCaptions() {
     motionCC.textContent = captionsEnabled ? '字幕：开' : '字幕：关';
     motionCC.setAttribute('aria-pressed', String(captionsEnabled));
   }
+  positionCaptions();
+}
+function positionCaptions() {
+  if (!motionVideo?.videoWidth || !motionVideo.clientWidth || !motionVideo.clientHeight) return;
+  const width = motionVideo.clientWidth;
+  const height = motionVideo.clientHeight;
+  const ratio = motionVideo.videoWidth / motionVideo.videoHeight;
+  const pictureWidth = Math.min(width, height * ratio);
+  const pictureHeight = Math.min(height, width / ratio);
+  const pictureTop = (height - pictureHeight) / 2;
+  const fontSize = innerWidth <= 720 ? 14 : Math.min(24, Math.max(14, innerWidth * 0.0155));
+  const measure = document.createElement('canvas').getContext('2d');
+  if (!measure) return;
+  measure.font = `500 ${fontSize}px ${getComputedStyle(motionVideo).fontFamily}`;
+  const usableWidth = pictureWidth * 0.88;
+  const controlClearance = Math.min(88, Math.max(64, height * 0.13));
+  const bottom = Math.min(pictureTop + pictureHeight * 0.94, height - controlClearance);
+  for (const track of motionVideo.textTracks) {
+    for (const cue of track.cues || []) {
+      const lines = Math.max(1, Math.ceil(measure.measureText(cue.text).width / usableWidth));
+      const top = Math.max(pictureTop, bottom - lines * fontSize * 1.45);
+      cue.snapToLines = false;
+      cue.line = (top / height) * 100;
+      cue.position = 50;
+      cue.size = (usableWidth / width) * 100;
+      cue.align = 'center';
+    }
+  }
 }
 async function playMotion() {
   if (!motionVideo) return;
@@ -178,6 +206,11 @@ if (motionVideo) {
   for (const name of ['play', 'pause', 'ended', 'volumechange', 'seeked'])
     motionVideo.addEventListener(name, setMotionState);
   motionVideo.addEventListener('loadedmetadata', setCaptions);
+  for (const track of motionVideo.querySelectorAll('track'))
+    track.addEventListener('load', positionCaptions);
+  new ResizeObserver(positionCaptions).observe(motionVideo);
+  document.addEventListener('fullscreenchange', positionCaptions);
+  window.addEventListener('resize', positionCaptions);
   const failed = () => {
     motionFailed = true;
     motionVideo.pause();
