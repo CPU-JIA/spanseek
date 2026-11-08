@@ -74,6 +74,8 @@ git push origin v1.0.2
 
 ## 制品与公开前检查
 
+官网已于 2026-11-08 另行部署到 [spanseek.com](https://spanseek.com)，由香港服务器 Caddy 提供服务。下载信息通过独立定时任务跟随 GitHub 最新正式 Release；部署、校验与回滚说明见 [website/README.md](../website/README.md)。
+
 `scripts/package-release.ps1` 汇总实际安装包、`SHA256SUMS.txt`、`BUILD-INFO.json`、依赖清单、第三方声明和版本记录。清单记录实际 commit、大小、哈希和 Authenticode 状态。当前没有代码签名证书配置，输出应如实为 `NotSigned`。
 
 安装包和 Release 附件均须包含完整 `THIRD-PARTY-LICENSES.txt`、组件文件哈希清单、`THIRD-PARTY-SOURCES.zip` 与源码说明。OCR 从固定源码构建，并通过真实中英文 PNG/扫描 PDF/中文路径测试；PDFium 与 ONNX Runtime 的上游第三方声明也纳入许可材料。`build-license-bundle.py` 的缺失项必须为 0，元数据清单不能替代许可原文。
@@ -91,5 +93,7 @@ pwsh -NoProfile -File scripts/prepare-download-site.ps1 -ReleaseDirectory '<已�
 ```
 
 脚本核对 `BUILD-INFO.json`、安装包和全部 `SHA256SUMS.txt` 条目，仅复制 Git 跟踪的官网、网页指南与校验后的制品，生成 `site/docs/download/install.html`。本地开发记录不会进入输出；既有目录不会被覆盖。通过 HTTP 服务预览输出目录，并核对下载与哈希复制后，再按授权部署整个输出目录。官网及下载目录不会在 Actions 或此脚本中自动部署。
+
+正式域名网站使用 [website 部署工具](../website/README.md)：从同一正式制品校验后生成域名根目录版本与 Caddy 站点配置，安装包与许可附件连接已有 GitHub Release。香港服务器现有 Caddy 提供 HTTPS、静态文件及视频 Range，`www.spanseek.com` 跳转到 `spanseek.com`。首次上线前备份原配置，验证新配置和公开文件哈希，再无中断重载；该流程不编译或重新发布桌面应用。
 
 参考：[GitHub 缓存机制](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)、[Rust cache](https://github.com/Swatinem/rust-cache)、[Windows runner 软件清单](https://github.com/actions/runner-images/blob/main/images/windows/Windows2025-Readme.md)。
