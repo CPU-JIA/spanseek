@@ -1,0 +1,12 @@
+[Unit]
+Description=Check spanseek GitHub release every five minutes
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=5min
+AccuracySec=10s
+RandomizedDelaySec=5s
+Unit=spanseek-release-sync.service
+
+[Install]
+WantedBy=timers.target

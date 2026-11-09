@@ -1,0 +1,14 @@
+[Unit]
+Description=Synchronize spanseek website downloads with GitHub Releases
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /data/caddy/data/spanseek/tools/release_sync.py --root /data/caddy/data/spanseek --base /data/caddy/data/spanseek/base
+TimeoutStartSec=300
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/data/caddy/data/spanseek
